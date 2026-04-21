@@ -8,10 +8,10 @@ Created `hooks/autoload-superra` (extensionless bash, `chmod +x`) and `tests/hoo
 
 - Parses stdin UserPromptSubmit JSON via python3, extracting `prompt` and `transcript_path` as tab-separated so `IFS=$'\t' read` splits cleanly even when the prompt contains spaces.
 - Fast-path `grep -iqE '(^|[^[:alnum:]])super[-_ ]?ra([^[:alnum:]]|$)'` on the prompt. No match → `{}`.
-- Transcript gate: `grep -iEq '"skill"[[:space:]]*:[[:space:]]*"superRA:using-superRA"' "$transcript_path"`. Match → `{}`. Fails-open when transcript_path is missing or empty (V5).
-- Emits `additionalContext` via the three-way platform branch (`CURSOR_PLUGIN_ROOT` / `CLAUDE_PLUGIN_ROOT` / fallback) matching `merge-guard`, `ask-user-question-logger`, and `exit-plan-mode`.
+- Transcript gate: `grep -iEq '"skill"[[:space:]]*:[[:space:]]*"superRA:using-superRA"' "$transcript_path"` — case-insensitive, whitespace-tolerant around the colon so minor format drift does not produce duplicate reminders. Match → `{}`. Fails-open when transcript_path is missing or empty (V5).
+- JSON-escapes the reminder text through `python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))'` before splicing into the payload, so inner `"` / `\` in the reminder cannot invalidate the JSON. The three-way platform branch (`CURSOR_PLUGIN_ROOT` / `CLAUDE_PLUGIN_ROOT` / fallback) matches `merge-guard`, `ask-user-question-logger`, and `exit-plan-mode` while emitting the already-quoted JSON string.
 
-Regression suite (`tests/hooks/test-autoload-superra.sh`, 12 vectors):
+Regression suite (`tests/hooks/test-autoload-superra.sh`, 16 vectors — V6 family added per review finding 3; every non-empty payload asserted via `python3 -m json.tool` per finding 2):
 
 ```
 PASS  V1 no-mention                                      (got silent)
@@ -26,11 +26,15 @@ PASS  V3 superrant                                       (got silent)
 PASS  V4 already-loaded                                  (got silent)
 PASS  V4b other-superRA-skill                            (got reminder)
 PASS  V5 empty-transcript-path                           (got reminder)
+PASS  V6a embedded-dquote                                (got reminder)
+PASS  V6b embedded-bslash                                (got reminder)
+PASS  V6c multiline-prompt                               (got reminder)
+PASS  V6d non-ascii                                      (got reminder)
 
-Passed: 12    Failed: 0
+Passed: 16    Failed: 0
 ```
 
-The V4b vector ("transcript shows `superRA:planning-workflow` loaded but not `using-superRA`") deliberately triggers the reminder — the transcript gate is specifically about the master skill.
+The V4b vector ("transcript shows `superRA:planning-workflow` loaded but not `using-superRA`") deliberately triggers the reminder — the transcript gate is specifically about the master skill. V6a–d cover JSON-special and non-ASCII prompts; the hook does not embed the prompt into its output, but the vectors fence against a future regression that would.
 
 ## Task 2: Register the hook in hooks.json and hooks-cursor.json
 
