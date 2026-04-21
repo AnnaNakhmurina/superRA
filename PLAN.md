@@ -84,6 +84,12 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 >
 > **Rationale:** User wants hard enforcement — soft reminders are acceptable for the user-prompt case where the agent still has discretion, but once a workflow skill is actually being invoked, the companion skills must be loaded. Two files keep each hook's concern single-purpose; PreToolUse deny-and-retry is the only primitive the harness exposes for hard enforcement. Affects: Task 3 added (write hooks 2 & 3), Task 4 reframed to register all new hooks, old Task 3 (live verification) renumbered to Task 5 and expanded to cover all three hooks.
 
+> **Orchestrator decision (2026-04-21):** S4 in Task 6 fails because `autoload-superra` injects a reminder on any user prompt containing "superRA", and compliant models load `using-superRA` voluntarily before reaching the workflow-skill call — so `ensure-using-superra` never sees the "not-loaded" state. Fix via `--settings '{"hooks":{"UserPromptSubmit":[]}}'` on S4's `claude -p` invocation only, which strips `UserPromptSubmit` hooks for that one session and lets the hard gate fire in isolation.
+>
+> **Question asked:** Option 1 (expected-fail regression signal), Option 2 (disable autoload for S4 via settings override), Option 3 (drop S4 since stdin-synthesis unit tests cover the same code path).
+>
+> **Rationale:** The CLI suite's unique value is validating registration + wiring of the hard gate against the real harness — stdin-synthesis can't exercise that. Option 1 is a test nobody reads; Option 3 loses the wiring-validation coverage. Option 2 isolates exactly what S4 claims to test. Settings-override is preferred over prompt-rewording because it does not depend on the autoload-superra trigger regex staying stable. Affects: Task 6 Step 2 reworked to add the `--settings` override for S4 only and re-run the FULL suite to confirm 7/7 PASS.
+
 ---
 
 ## Task 1: Write the autoload-superra hook script
