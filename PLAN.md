@@ -118,11 +118,11 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 - In `hooks/hooks-cursor.json`, add a `userPromptSubmit` array mirroring the existing style: `{ "command": "./hooks/autoload-superra" }`.
 
 **Steps:**
-- [ ] Edit `hooks/hooks.json`; validate JSON (`python3 -m json.tool < hooks/hooks.json`).
-- [ ] Edit `hooks/hooks-cursor.json`; validate JSON.
-- [ ] Commit as `hooks: register autoload-superra for UserPromptSubmit`.
+- [x] Edit `hooks/hooks.json`; validate JSON (`python3 -m json.tool < hooks/hooks.json`).
+- [x] Edit `hooks/hooks-cursor.json`; validate JSON.
+- [x] Commit as `hooks: register autoload-superra for UserPromptSubmit`.
 
-**Review status:**
+**Review status:** IMPLEMENTED
 
 ---
 
