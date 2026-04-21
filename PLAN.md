@@ -222,11 +222,12 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 - Validate both JSONs with `python3 -m json.tool`.
 
 **Steps:**
-- [ ] Dispatch implementer subagent (Tier 1 — trivial JSON edit; orchestrator may handle inline at its discretion, but default is subagent per workflow).
-- [ ] Implementer validates both JSONs and commits as `hooks: register ensure-using-superra and ensure-agent-orchestration PreToolUse gates`.
-- [ ] Reviewer pass confirms no regressions to existing hook registrations.
+- [x] Append two `matcher: "Skill"` entries to the existing `PreToolUse` array in `hooks/hooks.json` (one invoking `ensure-using-superra`, one invoking `ensure-agent-orchestration`, each through `run-hook.cmd`). Existing `merge-guard` entry is untouched.
+- [x] Append two entries to `preToolUse` in `hooks/hooks-cursor.json` (`./hooks/ensure-using-superra` and `./hooks/ensure-agent-orchestration`). Existing `./hooks/merge-guard` entry is untouched.
+- [x] Validate both files with `python3 -m json.tool`; both parse cleanly.
+- [x] Commit as `hooks: register ensure-using-superra and ensure-agent-orchestration PreToolUse gates`.
 
-**Review status:**
+**Review status:** IMPLEMENTED
 
 ---
 

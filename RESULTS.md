@@ -107,7 +107,11 @@ V3 uses the *other* companion's transcript fixture — e.g. the `ensure-using-su
 
 ## Task 4: Register the two new hooks in hooks.json and hooks-cursor.json
 
-**Status:** Not started
+**Status:** IMPLEMENTED
+
+Appended two `"matcher": "Skill"` entries to the existing `PreToolUse` array in `hooks/hooks.json` — one for `ensure-using-superra`, one for `ensure-agent-orchestration` — each routed through `"${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd"`. Appended two parallel entries (`./hooks/ensure-using-superra` and `./hooks/ensure-agent-orchestration`) to `preToolUse` in `hooks/hooks-cursor.json`. The existing `merge-guard` / Bash entry is untouched in both files, as are the `UserPromptSubmit` (autoload-superra) and `PostToolUse` blocks. Both hooks will run in parallel on every `PreToolUse:Skill` event; if both companions are missing, both deny — Claude loads them across two retries, then the third retry of the original workflow-skill call passes silently.
+
+`python3 -m json.tool < hooks/hooks.json` and `python3 -m json.tool < hooks/hooks-cursor.json` both parse cleanly (stdout omitted, exit 0).
 
 ## Task 5: End-to-end verification in a fresh session
 
