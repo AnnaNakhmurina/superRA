@@ -89,7 +89,26 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 - [x] Run `bash tests/hooks/test-autoload-superra.sh`; record the output in RESULTS.md Task 1. All 12 vectors pass.
 - [x] Commit as `hooks: add autoload-superra UserPromptSubmit hook + tests`.
 
-**Review status:** IMPLEMENTED
+**Review status:** REVISE
+
+> **Review notes (2026-04-20):**
+>
+> 1. **CRITICAL — invalid JSON output on match** (`hooks/autoload-superra:63-71`). The reminder `context` string contains literal unescaped double quotes (`Skill(skill="superRA:using-superRA")`, twice). The three `printf` lines use `%s` to splice `$context` directly into a JSON string literal, so the emitted payload is:
+>
+>    ```
+>    {"additionalContext":"<IMPORTANT>...Skill(skill="superRA:using-superRA")...</IMPORTANT>"}
+>    ```
+>
+>    which fails `json.load` with `Expecting ',' delimiter`. Reproduced locally: `printf '{"session_id":"t","transcript_path":"","cwd":".","hook_event_name":"UserPromptSubmit","prompt":"superRA"}' | bash hooks/autoload-superra | python3 -m json.tool` errors out. Claude Code / Cursor will either drop the reminder or log a hook-payload error — the feature silently fails on its happy path. Fix: either (a) escape `$context` with `python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))'` before splicing, then embed the already-quoted JSON string, or (b) rewrite the reminder to avoid inner double quotes (e.g., `invoke Skill with skill=superRA:using-superRA`, or use single quotes). Option (a) is more robust because it handles any future reminder-text edit without re-introducing the bug. Compare `hooks/merge-guard:48` — the existing convention works only because its reminder text happens to contain no `"`.
+>
+> 2. **MAJOR — test suite does not assert output JSON validity.** `tests/hooks/test-autoload-superra.sh:54-60` classifies output by a plain `grep -q 'additionalContext'`, which happily matches the malformed payload in finding 1. A single `python3 -m json.tool` pipe on the reminder branch would have caught the bug; the "12/12 PASS" headline is therefore misleading. Fix: add a JSON-validity check to `run_case` (e.g., `echo "$out" | python3 -c 'import json,sys; json.load(sys.stdin)'` whenever `expect=expect-reminder`) and re-run.
+>
+> 3. **MAJOR — no coverage for prompts containing JSON-special characters.** Real user prompts routinely contain `"`, `\`, backticks, and emoji. V2a–V2f are all plain ASCII with no metacharacters. Because of finding 1, a prompt like `use superRA "properly"` would compound into JSON that is broken twice over (once from the reminder text, once from any naive future change that embeds the prompt itself). Fix: add vectors for (a) prompt containing embedded `"`, (b) prompt containing `\`, (c) multi-line prompt with JSON-escaped newline, (d) non-ASCII prompt — all expect-reminder with JSON-validity assertion. The hook currently does NOT embed the prompt into its output, so the non-ASCII / embedded-quote cases should continue to work once finding 1 is fixed, but the regression fence is worth adding.
+>
+> 4. **MINOR — docstring claims `"skill":"superRA:using-superRA"` literal grep, code uses tolerant regex.** Hook header comment at line 12 and the RESULTS.md Task 1 bullet both describe the transcript gate as matching the exact literal string `"skill":"superRA:using-superRA"` (also the PLAN.md Methodology). The actual implementation at line 58 uses `grep -iEq '"skill"[[:space:]]*:[[:space:]]*"superRA:using-superRA"'` — case-insensitive, whitespace-tolerant. The tolerant form is fine (and probably preferable), but the docstring / RESULTS.md / PLAN.md Methodology are out of sync with the code. Fix: update the hook header comment and the RESULTS.md Task 1 gate-description bullet to describe the actual regex; PLAN.md Methodology can stay or be tightened at orchestrator's discretion.
+>
+> 5. **MINOR — re-check after finding 1 is fixed:** once the reminder text is either escaped or rewritten, rerun the full 12-vector suite plus the new adversarial vectors from finding 3 and confirm `Passed: N    Failed: 0` with JSON-validity assertions enabled. Non-blocking on its own, but the APPROVE hinges on a clean test run after the fix.
+
 
 ---
 
@@ -122,7 +141,7 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 - [x] Edit `hooks/hooks-cursor.json`; validate JSON.
 - [x] Commit as `hooks: register autoload-superra for UserPromptSubmit`.
 
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 
 ---
 
