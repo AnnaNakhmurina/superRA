@@ -190,12 +190,12 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
    - **V6 — deny reason contains no unescaped metacharacters:** the emitted JSON parses via `python3 -m json.tool` and the `permissionDecisionReason` round-trips intact.
 
 **Steps:**
-- [ ] Dispatch implementer subagent to author both scripts and both test drivers as one bundle (same skeleton, per `superRA:agent-orchestration` §Workload Balancing Tier 2).
-- [ ] Implementer runs both test scripts, records `PASS`/`FAIL` per vector in RESULTS.md Task 3.
-- [ ] Implementer commits as `hooks: add ensure-using-superra + ensure-agent-orchestration PreToolUse gates`.
-- [ ] Reviewer subagent runs a comprehensive pass per `agents/reviewer.md`; iterate to APPROVE.
+- [x] Author both scripts (`hooks/ensure-using-superra`, `hooks/ensure-agent-orchestration`) with identical skeleton — only the `COMPANION` value and the companion-specific grep pattern differ. Both `chmod +x`. Both splice the `permissionDecisionReason` through `python3 json.dumps` before emitting the payload, mirroring Task 1's escape fix.
+- [x] Author `tests/hooks/test-ensure-using-superra.sh` and `tests/hooks/test-ensure-agent-orchestration.sh`, each driving the 16 vectors covering the V1–V6 families (non-Skill tool, non-workflow Skill, workflow-skill with companion missing across all three workflow skills, workflow-skill with companion loaded + a tolerant-whitespace variant, fail-open on empty/nonexistent transcript, deny-reason JSON round-trip). Every non-empty payload is asserted via `python3 -m json.tool` / `json.loads`; every deny payload is additionally asserted to contain the companion skill name in its reason.
+- [x] Run both test scripts. Both report `Passed: 16    Failed: 0`. Paste full driver output into RESULTS.md Task 3.
+- [x] Commit as `hooks: add ensure-using-superra + ensure-agent-orchestration PreToolUse gates`.
 
-**Review status:**
+**Review status:** IMPLEMENTED
 
 ---
 
@@ -222,11 +222,12 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 - Validate both JSONs with `python3 -m json.tool`.
 
 **Steps:**
-- [ ] Dispatch implementer subagent (Tier 1 — trivial JSON edit; orchestrator may handle inline at its discretion, but default is subagent per workflow).
-- [ ] Implementer validates both JSONs and commits as `hooks: register ensure-using-superra and ensure-agent-orchestration PreToolUse gates`.
-- [ ] Reviewer pass confirms no regressions to existing hook registrations.
+- [x] Append two `matcher: "Skill"` entries to the existing `PreToolUse` array in `hooks/hooks.json` (one invoking `ensure-using-superra`, one invoking `ensure-agent-orchestration`, each through `run-hook.cmd`). Existing `merge-guard` entry is untouched.
+- [x] Append two entries to `preToolUse` in `hooks/hooks-cursor.json` (`./hooks/ensure-using-superra` and `./hooks/ensure-agent-orchestration`). Existing `./hooks/merge-guard` entry is untouched.
+- [x] Validate both files with `python3 -m json.tool`; both parse cleanly.
+- [x] Commit as `hooks: register ensure-using-superra and ensure-agent-orchestration PreToolUse gates`.
 
-**Review status:**
+**Review status:** IMPLEMENTED
 
 ---
 
