@@ -83,13 +83,13 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
    - **V5 — missing transcript file:** prompt matches, `transcript_path` empty or points to nonexistent file → reminder is emitted (fail-open to the useful side).
 
 **Steps:**
-- [ ] Implement `hooks/autoload-superra` with header comment + test vectors listed as a regression table.
-- [ ] `chmod +x hooks/autoload-superra`.
-- [ ] Implement `tests/hooks/test-autoload-superra.sh` driving all five vectors; the script prints `PASS`/`FAIL` per vector and exits non-zero if any fail.
-- [ ] Run `bash tests/hooks/test-autoload-superra.sh`; record the output in RESULTS.md Task 1.
-- [ ] Commit as `hooks: add autoload-superra UserPromptSubmit hook + tests`.
+- [x] Implement `hooks/autoload-superra` with header comment + test vectors listed as a regression table.
+- [x] `chmod +x hooks/autoload-superra`.
+- [x] Implement `tests/hooks/test-autoload-superra.sh` driving 12 vectors (the V1–V5 families in the Methodology table expanded for each spelling variant); the script prints `PASS`/`FAIL` per vector and exits non-zero if any fail.
+- [x] Run `bash tests/hooks/test-autoload-superra.sh`; record the output in RESULTS.md Task 1. All 12 vectors pass.
+- [x] Commit as `hooks: add autoload-superra UserPromptSubmit hook + tests`.
 
-**Review status:**
+**Review status:** IMPLEMENTED
 
 ---
 
