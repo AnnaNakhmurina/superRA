@@ -38,6 +38,14 @@ The V4b vector ("transcript shows `superRA:planning-workflow` loaded but not `us
 
 Added `UserPromptSubmit` array to `hooks/hooks.json` (Claude Code) routing through `run-hook.cmd autoload-superra`, and a `userPromptSubmit` entry to `hooks/hooks-cursor.json` (Cursor) invoking `./hooks/autoload-superra` directly. Both JSONs validate via `python3 -m json.tool`. No `matcher` field on the Claude Code registration — `UserPromptSubmit` does not scope by tool name.
 
-## Task 3: End-to-end verification in a fresh session
+## Task 3: Write the two PreToolUse workflow-skill gate hooks + tests
+
+**Status:** Not started
+
+## Task 4: Register the two new hooks in hooks.json and hooks-cursor.json
+
+**Status:** Not started
+
+## Task 5: End-to-end verification in a fresh session
 
 **Status:** Not started
