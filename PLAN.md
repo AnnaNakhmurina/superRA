@@ -77,7 +77,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Task 1: Create the `theory-modeling` domain skill and its stage-scoped references
 **Depends on:** *(none)*
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(set during integration — not filled at planning time)*
 
 **Script:** `skills/theory-modeling/SKILL.md`, `skills/theory-modeling/references/*.md`
