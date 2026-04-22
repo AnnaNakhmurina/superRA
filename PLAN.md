@@ -49,6 +49,9 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 > **User decision (2026-04-22):** Skip Phase A drift-test creation and proceed directly to Phase B integration review for this branch.
 > **Question asked:** Which key results should be protected with drift tests before integration?
+>
+> **User decision (2026-04-22):** Use `origin/main` as the Phase B integration base for this branch.
+> **Question asked:** Is `origin/main` the correct integration base, or did this branch split from some other base branch?
 
 ### Task 1: Update the Codex harness adapter so superRA invocation authorizes named-agent dispatch
 **Depends on:** *(none)*
