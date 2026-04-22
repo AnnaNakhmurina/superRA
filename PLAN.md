@@ -91,7 +91,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Task 2: Wire the new vertical into runtime surfaces, docs, and discovery
 **Depends on:** *(none)*
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(set during integration — not filled at planning time)*
 
 **Script:** Existing workflow/docs/hook/test files named in the Implementation Inventory, plus `.agents/skills/theory-modeling`
@@ -102,16 +102,6 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - [x] Generalize `skills/handoff-doc/references/plan-anatomy.md` and `hooks/exit-plan-mode` so planning guidance and reminders support both data-analysis and theory-modeling hard gates.
 - [x] Update `README.md`, `skills/CATEGORIES.md`, and `CLAUDE.md` so the vertical is documented as implemented rather than roadmap-only.
 - [x] Add `.agents/skills/theory-modeling` and extend `tests/check-harness-compatibility.sh` with the new discovery/wiring assertions.
-
-> **Review notes:**
-> 1. [MAJOR] Canonical subagent prompts still steer theory-modeling work through data-analysis-specific instructions (`agents/implementer.md:39`, `agents/reviewer.md:48`, generated `.codex/agents/*`), which contradicts the new domain split.
->    → implemented: generalized the canonical implementer/reviewer prompts to describe active-domain discipline instead of data-only rules, then regenerated `.codex/agents/superra_implementer.toml` and `.codex/agents/superra_reviewer.toml`
-> 2. [MAJOR] Integration and merge references still preserve only data-analysis artifacts (`skills/refactor-and-integrate/references/codebase-integration.md`, `skills/refactor-and-integrate/references/merge-quality.md`), so theory-modeling is not first-class through Phase B / semantic-merge.
->    → implemented: generalized the generic integration and merge references to load the active domain integration guidance and preserve theory-modeling artifacts alongside data-analysis artifacts
-> 3. [MINOR] The theory-modeling planning template does not explicitly surface timing, notation conventions, or solution concept even though the hard gate requires them (`skills/theory-modeling/references/planning.md`).
->    → implemented: added explicit `Timing / Information Structure`, `Solution Concept`, and `Notation Conventions` sections to the Model Inventory / Assumption Map template
-> 4. [MINOR] The compatibility check would not catch the major regressions above because it only asserted manifest/planning mentions and file existence (`tests/check-harness-compatibility.sh`).
->    → implemented: extended the compatibility check to assert theory-modeling coverage in canonical agent prompts and generic integration/merge references
 
 ### Task 3: Verify the new vertical end to end and reconcile any drift
 **Depends on:** Task 1, Task 2
