@@ -4,13 +4,13 @@
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
 **Last updated:** 2026-04-22 (Task 1)
-**Status:** In Progress
+**Status:** Completed
 
 ---
 
 ## Task 1: Update the Codex harness adapter for named-agent dispatch and warm-agent lifecycle guidance
 
-**Status:** In Progress (integration follow-up updated 2026-04-22)
+**Status:** Completed (Task 1 integration follow-up approved 2026-04-22)
 
 ### Key Findings
 - `skills/using-superRA/references/codex-tools.md` now tells Codex to
