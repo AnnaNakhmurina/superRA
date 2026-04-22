@@ -50,6 +50,9 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 > **Question asked:** Should this contract change be implemented directly from the supplied plan, or should a new plan be authored first?
 > **Rationale (if given):** "following superRA workflows to implement. start by writing down the plan.md"
 
+> **User decision (2026-04-22):** Use `origin/main` as the integration base for Phase B.
+> **Question asked:** Is `origin/main` the correct integration base for this branch?
+
 > **Orchestrator re-entry (2026-04-22):** Independent reviewer agents audited commit `4036130` and found four MAJOR issues plus one MINOR that require a normal fix / re-review loop. Re-open Task 1 for the no-material-overlap re-entry lifecycle gap in `plan-anatomy.md` / `agents/implementer.md` and the reviewer-protocol side of the whole-diff confirmation mismatch. Re-open Task 2 for the same no-overlap lifecycle gap in `integration-workflow` plus the unresolved interaction between branch-wide hunk confirmation and narrow re-review. Re-open Task 3 because `refactor-and-integrate` applies the frozen-anchor rule to non-Phase-B uses. Re-open Task 4 because the structural guard encodes that over-broad rule and the handoff write-up overstates no-material-overlap coverage.
 > **Boxes unchecked:** `Execution complete` only. `Plan approved` still stands, and no later workflow milestone had been checked.
 
