@@ -26,7 +26,7 @@
 - [x] **Execution complete** — direct-mode fix/re-review loop completed on 2026-04-22 after the reopened Tasks 1-4 issues were resolved and verification passed.
 - [ ] **Drift tests created** — not applicable to this workflow/doc task; leave unchecked.
 - [x] **Refactored** — Phase B integration reviewer approved the cumulative diff on 2026-04-22 with zero task annotations; `origin/main` still matched the frozen merge base, so the merge step was a no-op.
-- [ ] **Docs finalized** — not applicable to this workflow/doc task; leave unchecked.
+- [x] **Docs finalized** — the permanent results record landed at `docs/plans/2026-04-22-phase-b-upstream-intent-contract-results.md`, Task 4 returned to `Review status: APPROVED`, and the doc-reviewer approved the matured file on 2026-04-22.
 - [ ] **Merged** — not applicable to this workflow/doc task; leave unchecked.
 
 ## Project Conventions
