@@ -4,13 +4,13 @@
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
 **Last updated:** 2026-04-22 (Task 1)
-**Status:** Completed
+**Status:** In Progress
 
 ---
 
 ## Task 1: Update the Codex harness adapter for named-agent dispatch and warm-agent lifecycle guidance
 
-**Status:** Completed (Task 1 integration follow-up approved 2026-04-22)
+**Status:** In Progress (integration follow-up updated 2026-04-22)
 
 ### Key Findings
 - `skills/using-superRA/references/codex-tools.md` now tells Codex to
@@ -23,6 +23,9 @@
   normal, should not be shut down eagerly, and can be contacted with
   warm-agent messaging when the orchestrator needs to steer a running
   subagent.
+- `skills/using-superRA/SKILL.md` now explicitly tells Codex agents to
+  load `references/codex-tools.md` whenever they load the master skill,
+  so the adapter is no longer only implied by the harness-adapter note.
 
 ### Notes
 - Existing shared workflow files already carried the general
