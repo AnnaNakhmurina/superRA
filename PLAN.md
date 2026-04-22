@@ -122,10 +122,12 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 **Input:** Completed outputs from Tasks 1 and 2
 **Output:** Passing targeted checks, updated handoff docs, and a final repo state ready for integration
 
-- [x] Run `tests/check-harness-compatibility.sh` and fix any failures.
+- [x] Run `tests/check-harness-compatibility.sh` and fix any failures surfaced by the first verification round.
 - [x] Run a targeted smoke check on the new routing and repo-local discovery surfaces.
 - [x] If any agent or doc examples were touched, run the matching generated-artifact check and reconcile drift.
-- [x] Replace `RESULTS.md` Task 3 with the final verification outcome, remaining risks, and the exact checks that passed.
+- [ ] Generalize the Tier 3 / Never-list wording in `skills/refactor-and-integrate/references/merge-quality.md` so theory/modeling is first-class in the blocking checklist text.
+- [ ] Tighten the merge-quality assertion in `tests/check-harness-compatibility.sh` so it verifies the generalized wording or explicitly fails on the old data-only phrases.
+- [ ] Re-run the structural verification checks, then replace `RESULTS.md` Task 3 with the final verification outcome, remaining risks, and the exact checks that passed.
 
 > **Review notes:**
 > 1. [MAJOR] `skills/refactor-and-integrate/references/merge-quality.md:100` The actual `[BLOCKING]` Tier 3 enforcement bullets still collapse back to data-analysis language (`sample construction`, `econometric specifications`, `data processing`, `removing data discipline artifacts`) even though the prose above was generalized. Rewrite the blocking bullets so the merge checklist itself preserves theory/modeling as a first-class domain rather than only mentioning it in surrounding prose.
