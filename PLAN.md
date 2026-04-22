@@ -98,7 +98,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 2: Wire the new vertical into runtime surfaces, docs, and discovery
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** *(set during integration — not filled at planning time)*
+**Integration status:** REVISE
 
 **Script:** Existing workflow/docs/hook/test files named in the Implementation Inventory, plus `.agents/skills/theory-modeling`
 **Input:** The approved skill name, the new file layout from Task 1, and the current runtime/docs wording in the repo
@@ -109,10 +109,13 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - [x] Update `README.md`, `skills/CATEGORIES.md`, and `CLAUDE.md` so the vertical is documented as implemented rather than roadmap-only.
 - [x] Add `.agents/skills/theory-modeling` and extend `tests/check-harness-compatibility.sh` with the new discovery/wiring assertions.
 
+> **Review notes (integration):**
+> 1. [MAJOR] Task 2's scope contract is limited to the Implementation Inventory surfaces plus `.agents/skills/theory-modeling`, but the cumulative diff also ships the separate objective-first task-shape refactor across canonical agent/workflow/test surfaces and records that broadened scope in the handoff docs. Examples: `agents/reviewer.md:41`, `skills/implementation-workflow/SKILL.md:95`, `tests/claude-code/test-objective-first-task-semantics.sh:1`, and `RESULTS.md:34`. This fails the minimum-net-diff / focused-diff integration gate. Fix by removing or splitting the objective-first feature work off this branch, or by routing it through `planning-workflow §User Feedback and Changing Plans` as its own planned task before asking for Phase B approval again.
+
 ### Task 3: Verify the new vertical end to end and reconcile any drift
 **Depends on:** Task 1, Task 2
 **Review status:** APPROVED
-**Integration status:** *(set during integration — not filled at planning time)*
+**Integration status:** REVISE
 
 **Script:** Verification commands and any touched files needed to resolve resulting failures
 **Input:** Completed outputs from Tasks 1 and 2
@@ -124,3 +127,6 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - [x] Generalize the Tier 3 / Never-list wording in `skills/refactor-and-integrate/references/merge-quality.md` so theory/modeling is first-class in the blocking checklist text.
 - [x] Tighten the merge-quality assertion in `tests/check-harness-compatibility.sh` so it verifies the generalized wording or explicitly fails on the old data-only phrases.
 - [x] Re-run the structural verification checks, then replace `RESULTS.md` Task 3 with the final verification outcome, remaining risks, and the exact checks that passed.
+
+> **Review notes (integration):**
+> 1. [MAJOR] Task 3's verification/output contract does not cover the archived objective-first handoff bundle and release-ledger entry now in the branch. `docs/plans/2026-04-22-objective-first-task-step-semantics-plan.md:1`, `docs/plans/2026-04-22-objective-first-task-step-semantics-results.md:9`, and `RELEASE-NOTES.md:16` document a different feature branch/PR, not theory-modeling verification. Keeping them in this Phase B diff breaks handoff-doc coherence and the minimum-net-diff rule. Remove these unrelated artifacts from the theory-modeling branch, or route them through their own planned integration path before re-dispatching integration review.
