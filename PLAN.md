@@ -59,8 +59,8 @@ Not applicable — this is plugin tooling, not an analysis pipeline.
 ## Workflow Status
 
 - [x] Plan approved
-- [ ] Implementation complete
-- [ ] Review passed
+- [x] Implementation complete
+- [x] Review passed
 - [ ] Integration complete
 
 ## Project Conventions
@@ -89,6 +89,12 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 > **Question asked:** Option 1 (expected-fail regression signal), Option 2 (disable autoload for S4 via settings override), Option 3 (drop S4 since stdin-synthesis unit tests cover the same code path).
 >
 > **Rationale:** The CLI suite's unique value is validating registration + wiring of the hard gate against the real harness — stdin-synthesis can't exercise that. Option 1 is a test nobody reads; Option 3 loses the wiring-validation coverage. Option 2 isolates exactly what S4 claims to test. Settings-override is preferred over prompt-rewording because it does not depend on the autoload-superra trigger regex staying stable. Affects: Task 6 Step 2 reworked to add the `--settings` override for S4 only and re-run the FULL suite to confirm 7/7 PASS.
+
+> **User decision (2026-04-21):** Accept S4 in its current opportunistic-pass form; do not apply the `--settings` override; remove the `CLAUDE_E2E_FULL` gate so the full suite runs by default. The fragility is documented inline in `tests/hooks/test-e2e-cli.sh` (S4 docstring) so a future regression has a clear disposition path.
+>
+> **Question asked:** Implementer raised three options after the Option-2 plan above turned out to rest on a false premise — `--settings` JSON *merges* with plugin-registered hooks rather than overriding them, so the empty-array trick cannot disable the plugin's `UserPromptSubmit` hook (verified against Claude Code settings docs: "Array settings ... merge across scopes rather than replacing each other"). Alternatives surveyed: (a) disable the whole superRA plugin for S4 via `enabledPlugins:false` (also disables the gate being tested — wrong); (b) ship a stripped test-only plugin-dir fixture under `tests/hooks/fixtures/no-autoload/` (correct but adds maintenance surface); (c) drop S4 entirely.
+>
+> **Rationale:** S4 currently passes opportunistically because Haiku obeys the in-prompt instruction to ignore the injected reminder. The user judged the fragility minor enough to accept, given (i) `tests/hooks/test-ensure-using-superra.sh` already covers the deny *logic* via stdin-synthesis, (ii) S5 redundantly validates the PreToolUse:Skill *wiring* against the live CLI, and (iii) any future regression on S4 specifically (a model that prefers injected reminders over system prompts) is safe to resolve by deleting S4 — losing only the marginal duplication of S5's wiring assertion. The header `--settings`-override decision above is therefore obsolete; this entry supersedes it.
 
 ---
 
@@ -239,29 +245,11 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 
 ## Task 5: End-to-end verification in a fresh session
 
-**Depends on:** 4
+**Status:** SUPERSEDED by Task 6.
 
-**Objective:** Confirm all three hooks fire as designed in a real Claude Code session — soft reminder on first superRA mention; hard deny-and-retry when a workflow skill is invoked without companions loaded; silent pass-through otherwise.
+The manual probe protocol described here was replaced by `tests/hooks/test-e2e-cli.sh`, which automates the same coverage non-interactively against the real `claude` CLI. See Task 6 for the executed scenarios and outputs.
 
-**Input:** All three hooks registered in both configs.
-
-**Output:** Transcript excerpts pasted into RESULTS.md Task 5 showing (a) soft-reminder fire on first-mention, (b) suppression on second mention, (c) hard deny-and-retry when the user asks the agent to invoke `Skill(superRA:planning-workflow)` in a fresh session, (d) control prompt with no trigger.
-
-**Methodology:**
-1. User opens a fresh Claude Code session in this worktree.
-2. **Probe A (soft):** User sends `"quick superRA sanity check — what phase am I in?"`. Expected: hook 1 injects reminder; Claude invokes `Skill(superRA:using-superRA)`; response proceeds.
-3. **Probe B (suppression):** User sends another superRA-containing prompt. Expected: no new reminder.
-4. **Probe C (hard gate):** User opens a *different* fresh session and asks the agent to load the planning workflow directly without first loading `using-superRA` (phrased so the agent does not invoke `using-superRA` on its own). Expected: `Skill(superRA:planning-workflow)` is denied by hook 2; agent loads `using-superRA`, retries; hook 3 may then deny pending `agent-orchestration`; agent loads it; third retry of the workflow-skill call passes.
-5. **Probe D (control):** A non-superRA prompt → no hook output.
-6. User pastes outcomes; orchestrator records in RESULTS.md and marks APPROVED or files issues.
-
-**Steps:**
-- [ ] Orchestrator announces the verification protocol to the user.
-- [ ] User runs the four probes above in two fresh sessions (Probes A/B/D in session 1; Probe C in session 2).
-- [ ] Orchestrator records outcomes in RESULTS.md Task 5.
-- [ ] Commit as `hooks: verify all three autoload hooks end-to-end`.
-
-**Review status:**
+**Review status:** SUPERSEDED
 
 ---
 
@@ -301,7 +289,8 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 - [x] Implementer authors `tests/hooks/test-e2e-cli.sh`. Methodology revisions during implementation: (a) `--tools ""` + `--append-system-prompt` does NOT suppress model turns on CLI 2.1.116; every invocation therefore passes `--model haiku` instead to cap cost. (b) `CLAUDE_CONFIG_DIR` is NOT overridden because a fresh dir breaks auth; isolation uses per-scenario temp cwd + `--no-session-persistence` + trap-cleanup of matching `~/.claude/projects/<cwd-hash>/`. (c) `hook_name` in the event stream is the event (plus matcher), not the hook script; assertions target the `stdout` payload of `hook_response` records grouped by `hook_event`. No fixture files are written.
 - [x] Implementer runs the default suite (S1 S2 S3 S6) and the full suite (adds S4 S5 under `CLAUDE_E2E_FULL=1`). Default: 5/5 PASS at ~$0.08 total. Full adds S5 PASS + S4 FAIL; S4 fails structurally because `autoload-superra` makes compliant models load `using-superRA` before the workflow-skill call, so `ensure-using-superra` is never in the deny state. See RESULTS.md Task 6 for full outputs and a discussion of the S4 design trade-off.
 - [x] Implementer commits as `hooks: add CLI-driven end-to-end test suite for autoload + gate hooks`.
-- [ ] Reviewer subagent runs a comprehensive pass: confirms assertions target event-stream structure (not prose), session-isolation prevents state leakage, cost envelope is honored, retries are bounded.
-- [ ] On APPROVE, orchestrator harvests the branch back via `git merge --no-ff`.
+- [x] Reviewer subagent runs a comprehensive pass: confirms assertions target event-stream structure (not prose), session-isolation prevents state leakage, cost envelope is honored, retries are bounded.
+- [x] Per the 2026-04-21 user decision in §Decisions, remove the `CLAUDE_E2E_FULL` gate, document S4's structural fragility inline in `tests/hooks/test-e2e-cli.sh`, and re-run the now-default-full suite. Result: 7/7 PASS at ~$0.27. S4 currently passes opportunistically (Haiku obeys the in-prompt countermand against the autoload reminder); the inline note in the S4 docstring records the disposition path if a future model regresses S4.
+- [x] Orchestrator harvests the branch back via `git merge --no-ff` (already on this branch as commit `e6dfb8b`).
 
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED

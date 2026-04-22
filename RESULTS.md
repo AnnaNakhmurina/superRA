@@ -115,11 +115,11 @@ Appended two `"matcher": "Skill"` entries to the existing `PreToolUse` array in 
 
 ## Task 5: End-to-end verification in a fresh session
 
-**Status:** Not started
+**Status:** SUPERSEDED by Task 6 — manual probe protocol replaced by `tests/hooks/test-e2e-cli.sh`.
 
 ## Task 6: Automate end-to-end verification via the claude CLI
 
-**Status:** IMPLEMENTED (with one scenario flagged for design discussion — see Concerns)
+**Status:** APPROVED — full suite (S1 S2 S3 S4 S5 S6) passes 7/7 by default; S4 documented as opportunistic per the 2026-04-21 user decision in PLAN.md §Decisions.
 
 Delivered `tests/hooks/test-e2e-cli.sh`, a driver that runs the real `claude` CLI (2.1.116) with `--include-hook-events --output-format=stream-json` and asserts on the NDJSON event stream. Every invocation passes `--model haiku` (claude-haiku-4-5) to keep cost minimal, and uses `--plugin-dir $REPO_ROOT` so the in-tree `hooks.json` registration is the one under test.
 
@@ -144,66 +144,56 @@ The driver therefore asserts on the *set* of `stdout` payloads per event rather 
 
 ### Cost discipline
 
-The dispatch proposed `--tools ""` + `--append-system-prompt` to make hook-only scenarios free of model turns. **This did not work on 2.1.116** — the model still takes one turn per `claude -p` invocation even with zero tools enabled; `--tools ""` only prevents tool *invocation*, not the turn itself. As fallback the driver passes `--model haiku` on every invocation. Observed cost on the runs below: ~$0.01–$0.03 per hook-only scenario, ~$0.05–$0.10 for S4/S5 (multi-turn). S4/S5 are gated behind `CLAUDE_E2E_FULL=1`.
+The dispatch proposed `--tools ""` + `--append-system-prompt` to make hook-only scenarios free of model turns. **This did not work on 2.1.116** — the model still takes one turn per `claude -p` invocation even with zero tools enabled; `--tools ""` only prevents tool *invocation*, not the turn itself. As fallback the driver passes `--model haiku` on every invocation. Observed cost: ~$0.01–$0.02 per hook-only scenario; ~$0.09–$0.10 each for S4/S5 (multi-turn deny-and-retry chains pull the full bodies of `using-superRA` and `agent-orchestration` into subsequent turns).
 
-### Default-run output (S1/S2/S3/S6, no CLAUDE_E2E_FULL)
+### Full-suite output
 
 ```
 claude CLI: 2.1.116
-plugin dir: /Users/zhiyufu/Dropbox/package_dev/econ-superpowers.worktrees/task6-cli-tests
+plugin dir: /Users/zhiyufu/Dropbox/package_dev/superRA-dev
 mode:       DEFAULT (CLAUDE_E2E_FULL=0)
 
 === S1 ===
 PASS  S1 autoload reminder fires on superRA                        (reminder injected)
-       cost: $0.0136
+       cost: $0.0150
 
 === S2 ===
 PASS  S2 setup load using-superRA                                  (setup skill loaded)
 PASS  S2 autoload suppressed after skill load                      (silent as expected)
-       setup cost: $0.0191    check cost: $0.0177
+       setup cost: $0.0194    check cost: $0.0180
 
 === S3 ===
 PASS  S3 autoload silent without trigger                           (silent as expected)
-       cost: $0.0118
+       cost: $0.0123
 
 === S6 ===
 PASS  S6 non-workflow Skill passes through both gates silently     (all PreToolUse silent)
-       cost: $0.0177
+       cost: $0.0181
 
-
-Passed: 5    Failed: 0
-```
-
-Total default-run cost: ~$0.08. Pre/post `~/.claude/projects/` diff empty (NO_LEAK).
-
-### Full-run output (CLAUDE_E2E_FULL=1, adds S4 + S5)
-
-```
 === S4 (FULL) ===
-FAIL  S4 ensure-using-superra denies workflow skill                no deny payload naming superRA:using-superRA
-       cost: $0.0473
+PASS  S4 ensure-using-superra denies workflow skill                (deny with superRA:using-superRA in reason)
+       cost: $0.0893
 
 === S5 (FULL) ===
 PASS  S5 ensure-agent-orchestration denies after using-superRA loads (deny with superRA:agent-orchestration in reason)
-       cost: $0.0844
+       cost: $0.0988
 
 
-Passed: 6    Failed: 1
+Passed: 7    Failed: 0
 ```
 
-### S4 failure mode (discussion needed — see Concerns below)
+Total cost: ~$0.27. Pre/post `~/.claude/projects/` diff empty (NO_LEAK). S4 and S5 are the dominant cost: each runs a multi-turn deny-and-retry sequence that loads `using-superRA` and (S5 only) `agent-orchestration`, both of which add their full skill bodies to every subsequent turn's input.
 
-S4 fails because the three hooks *interact* in a way S4 was written to probe naively: `autoload-superra` fires on the user prompt and injects a reminder naming `superRA:using-superRA`. A compliant model (Haiku here) reads the reminder and loads `superRA:using-superRA` BEFORE attempting the workflow skill. By the time `Skill(superRA:planning-workflow)` is dispatched, the companion is already in the transcript and `ensure-using-superra` passes silently — so no `permissionDecision: deny` naming `superRA:using-superRA` ever appears in the stream.
+### S4 fragility (deferred design issue, accepted)
 
-In other words, in the live system the soft reminder wins and the hard gate never needs to fire for compliant models. The hard gate's actual purpose — to catch model non-compliance — is **structurally invisible** to a CLI probe that uses the same model the soft reminder is supposed to persuade.
+S4 is structurally hard to test in isolation because `autoload-superra` injects a `superRA:using-superRA` reminder into the user-prompt context, and a compliant model loads the companion before reaching the workflow-skill call — which makes `ensure-using-superra` silently pass and the assertion fail. The driver works around this by instructing the model in its system prompt to *ignore the injected reminder* and proceed straight to `Skill(superRA:planning-workflow)`. Haiku obeys, so S4 currently passes.
 
-The S4 FAIL is therefore *expected* under the combined system as currently designed, not a bug in the hooks. S5 still validates the hard-gate deny mechanism because by the time S5 probes `ensure-agent-orchestration`, `using-superRA` has already been loaded, so `autoload-superra` has nothing to inject. S5 is the cleanest live-CLI assertion the three-hook system admits.
+The cleaner fix would suppress the `UserPromptSubmit` hook for S4's invocation only, but Claude Code's `--settings` JSON merges array-shaped settings (including hooks) across scopes rather than overriding them, so the obvious `--settings '{"hooks":{"UserPromptSubmit":[]}}'` trick does not strip plugin-registered hooks. Per the 2026-04-21 user decision (PLAN.md §Decisions), the residual fragility is accepted: the deny *logic* is already covered by the stdin-synthesis unit test in `tests/hooks/test-ensure-using-superra.sh`, and S5 redundantly covers the `PreToolUse:Skill` *wiring* against the live CLI. If a future model regresses S4 by preferring injected reminders over its system prompt, the disposition path (delete S4) is documented inline in the test's S4 docstring.
 
 ### Run this locally
 
 ```bash
-bash tests/hooks/test-e2e-cli.sh                  # S1 S2 S3 S6
-CLAUDE_E2E_FULL=1 bash tests/hooks/test-e2e-cli.sh # + S4 S5
+bash tests/hooks/test-e2e-cli.sh    # all six scenarios
 ```
 
 Requires `claude` on PATH (logged in via keychain), `python3`, and `uuidgen`. Not part of default `tests/` runs.
