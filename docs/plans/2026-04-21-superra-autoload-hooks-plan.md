@@ -100,6 +100,8 @@ Hooks are **extensionless bash scripts** at `hooks/<name>` (so Windows auto-dete
 >
 > **Rationale:** S4 currently passes opportunistically because Haiku obeys the in-prompt instruction to ignore the injected reminder. The user judged the fragility minor enough to accept, given (i) `tests/hooks/test-ensure-using-superra.sh` already covers the deny *logic* via stdin-synthesis, (ii) S5 redundantly validates the PreToolUse:Skill *wiring* against the live CLI, and (iii) any future regression on S4 specifically (a model that prefers injected reminders over system prompts) is safe to resolve by deleting S4 — losing only the marginal duplication of S5's wiring assertion. The header `--settings`-override decision above is therefore obsolete; this entry supersedes it.
 
+> **Convention applied (2026-04-21, no user prompt):** Phase C disposition follows the established `docs/plans/<YYYY-MM-DD>-<slug>-{plan,results}.md` convention (17 sibling pairs already in `docs/plans/` on origin/main). PLAN.md and RESULTS.md were moved to `docs/plans/2026-04-21-superra-autoload-hooks-{plan,results}.md` (Option 1 of the Phase C Step 4 disposition menu). The doc-writer / doc-reviewer maturation pass was skipped: RESULTS.md is plugin-tooling dev log with no figures, math, or LaTeX, and the integration reviewer already verified content currency in commit `85847d7`. Workflow stop point bypassed because the convention is unambiguous and the answer would not change with user input.
+
 ---
 
 ## Task 1: Write the autoload-superra hook script
