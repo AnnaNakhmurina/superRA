@@ -4,13 +4,13 @@
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
 **Last updated:** 2026-04-22 (Task 1)
-**Status:** Completed
+**Status:** In Progress
 
 ---
 
-## Task 1: Update the Codex harness adapter so superRA invocation authorizes named-agent dispatch
+## Task 1: Update the Codex harness adapter for named-agent dispatch and warm-agent lifecycle guidance
 
-**Status:** Completed (Task 1 approved 2026-04-22)
+**Status:** In Progress (integration follow-up updated 2026-04-22)
 
 ### Key Findings
 - `skills/using-superRA/references/codex-tools.md` now tells Codex to
@@ -19,6 +19,10 @@
 - The Codex adapter now states that reviewer dispatch remains mandatory
   by default and that direct mode is only a fallback when the user opts
   out, the task is trivial, or agent tools are unavailable.
+- The Codex adapter now also says that long-running warm agents are
+  normal, should not be shut down eagerly, and can be contacted with
+  warm-agent messaging when the orchestrator needs to steer a running
+  subagent.
 
 ### Notes
 - Existing shared workflow files already carried the general
