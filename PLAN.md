@@ -23,7 +23,7 @@
 ## Workflow Status
 
 - [x] **Plan approved** - researcher requested the material redesign toward mechanisms over contingency prose on 2026-04-23.
-- [x] **Execution complete** - Tasks 1-4 are reviewer-approved; static verification and skill validation passed for the documentation-only implementation.
+- [ ] **Execution complete** - resolver wording clarity change is in progress for Tasks 2 and 4.
 - [ ] **Drift tests created** - not yet reached; documentation/package integration gate remains pending.
 - [ ] **Refactored** - not yet reached; integration review remains pending.
 - [ ] **Docs finalized** - not yet reached; this RESULTS.md is Stage 1 handoff state.
@@ -68,6 +68,10 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **Question asked:** Should the lengthy resolver be narrowed to guidance agents cannot reliably infer themselves?
 > **Rationale (if given):** The current resolver reads like a condition-by-condition scenario tree. This affects Tasks 1-4, clears their implementation/review validity, and unchecks `Execution complete`; the implementation must now add the missing runtime workflow/adaptability overview and keep only evidence discipline, affected-frontier calculation, owner routing, and safety gates.
 
+> **User decision (2026-04-23):** Improve the resolver prose for clarity without changing the design.
+> **Question asked:** Should the current resolver wording be tightened and reviewed by reviewer agents?
+> **Rationale (if given):** The mechanism is accepted, but the current writing is too verbose and unclear. This affects Task 2 and Task 4 only; Task 1 and Task 3 remain approved.
+
 ---
 
 ### Task 1: Add Runtime Workflow Overview and Resolver Value Proposition
@@ -93,7 +97,7 @@ Keep the resolver's mechanism in `main-agent.md`; avoid named state taxonomies o
 
 ### Task 2: Replace Contingency Taxonomy with a Frontier Mechanism
 **Depends on:** Task 1
-**Review status:** APPROVED
+**Review status:** *(not started)*
 **Integration status:** *(not started)*
 
 **Script:** Not applicable; documentation/reference edit.
@@ -115,6 +119,10 @@ Replace the `needs ...` taxonomy with a canonical-order procedure: repair/log pl
 - [x] **Step 4: Keep only safety invariants**
 
 Retain explicit guards where unpredictable behavior is likely: no unlogged material user decision, no new global `Current state` field, no clearing unrelated task statuses, no integration before implementation validation and logged disposition, and no merge/PR before integration, documentation, and freshness gates.
+
+- [ ] **Step 5: Tighten resolver prose for clarity**
+
+Rewrite the resolver section so the distinction between diagnosis, routing, plan-change handling, and workflow-owned actions is clear. Avoid abstract phrases such as "boxes whose guarantee is false"; use direct language about workflow milestones, task-level status, and the owning workflow.
 
 ### Task 3: Simplify Workflow Call Sites Around the Mechanism
 **Depends on:** Task 2
@@ -139,7 +147,7 @@ Make sure `handoff-doc` and other utility/domain skills remain usable directly a
 
 ### Task 4: Audit Against Adaptive-Composable Design
 **Depends on:** Task 1, Task 2, Task 3
-**Review status:** APPROVED
+**Review status:** *(not started)*
 **Integration status:** *(not started)*
 
 **Script:** Static documentation audit.
@@ -165,3 +173,7 @@ Confirm the diff respects the AGENTS.md ownership table and does not put workflo
 - [x] **Step 5: Run diff hygiene check**
 
 Run `git diff --check`.
+
+- [ ] **Step 6: Review clarity with parallel reviewers**
+
+Spawn reviewer agents after the prose edit. One reviewer should focus on plain-language clarity and ambiguity; another should focus on consistency with workflow ownership and the change-plan protocol.

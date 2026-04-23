@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (implementation verification)
-**Status:** Implementation complete and verified; awaiting researcher disposition.
+**Last updated:** 2026-04-23 (clarity revision planned)
+**Status:** Resolver clarity revision in progress.
 
 ---
 
@@ -38,13 +38,14 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 
 ## Task 2: Replace Contingency Taxonomy with a Frontier Mechanism
 
-**Status:** Approved.
+**Status:** Reopened for clarity revision.
 
 ### Findings
 - Replaced the resolver's named `needs ...` outcome list with an ordered mechanism in `skills/using-superRA/references/main-agent.md`.
 - Preserved the evidence contract: git state, handoff-doc presence and consistency, workflow rollups, decisions, upstream intent, task dependencies/statuses/review notes, and RESULTS.md sections.
 - Preserved the decision object: affected frontier, preserved-approved tasks, invalidated milestones, next owner/layer, and required stop point.
 - Kept explicit safety invariants for the predictable failure modes: no global `Current state` field, no unlogged material decisions, no clearing unrelated task statuses, no implementation advancement without review/adjudication, no integration before reproducibility/disposition, and no merge/PR before integration/docs/freshness gates.
+- The next revision will tighten wording so the resolver reads as a clear diagnostic and routing mechanism, not as an abstract rule list.
 
 ### Files Changed
 - `skills/using-superRA/references/main-agent.md`
@@ -68,13 +69,14 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 
 ## Task 4: Audit Against Adaptive-Composable Design
 
-**Status:** Approved.
+**Status:** Reopened for clarity review.
 
 ### Findings
 - The modified resolver reads as a mechanism: evidence first, affected-frontier calculation, ordered owner routing, and safety invariants.
 - The loaded runtime overview is in `skills/using-superRA/SKILL.md`, not only README or AGENTS.
 - Ownership boundaries remain aligned with AGENTS.md: `using-superRA` owns the shared workflow map, `main-agent.md` owns the resolver, workflow skills own local gates, `agent-orchestration` owns dispatch/status mechanics, and `handoff-doc` owns document semantics.
 - Design-text search no longer finds the old resolver state labels in modified resolver/call-site prose. Remaining hits are intentional non-taxonomy uses: the explicit `Current state` prohibition, local `skip` / `re-entry` wording in workflow gates and adapter/domain skills, and unrelated discard/AskUserQuestion wording.
+- The next audit will add reviewer feedback specifically on clarity and the boundary between resolver routing and the change-plan protocol.
 
 ### Verification Commands
 - `rg -n "needs plan repair|needs implementation|awaiting review|needs validation|Current state|state machine|skip|resume|re-entry|if .* then|under .* condition" skills/using-superRA skills/*/SKILL.md`
