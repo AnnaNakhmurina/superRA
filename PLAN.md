@@ -70,7 +70,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 1: Update the Codex instructions surface for dispatch, warm-agent lifecycle, and load semantics
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** IMPLEMENTED
+**Integration status:** REVISE
 
 **Script:** `skills/using-superRA/references/codex-instructions.md` and `skills/using-superRA/SKILL.md` (primary); `tests/check-harness-compatibility.sh`, `skills/using-superRA/references/main-agent.md`, `skills/agent-orchestration/SKILL.md`, and `README.md` only if adjacent wording becomes misleading
 **Input:** repo-root contributor docs, current Codex harness adapter wording, current execution-mode/orchestration wording
@@ -79,3 +79,5 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - [x] Confirmed the ownership boundary between shared workflow text and Codex-specific harness adapters.
 - [x] Added the Codex-specific delegation, warm-agent lifecycle, explicit instructions-load rules, and renamed the Codex reference to match its broader role.
 - [x] Checked adjacent docs for stale or contradictory claims; no consistency edits were needed.
+
+> 1. **MAJOR — `CLAUDE.md:68`**: The root contributor guidance still says harness-specific tool/runtime behavior belongs in `skills/using-superRA/references/<harness>-tools.md`, but this task deliberately renamed the Codex adapter to `codex-instructions.md` and broadened its role beyond tool-name mapping. Under the Phase B Project Doc Audit, root docs must match the current adapter surface. Update that bullet so future contributors are not pointed back to a superseded naming pattern/path.
