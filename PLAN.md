@@ -201,24 +201,24 @@ Add a single-line check to `## Design Audit Checklist`: for every added line, do
 
 ### Task 6: Audit Agent Role Specs and `using-superRA` Surfaces
 **Depends on:** Task 5
-**Review status:** *(not started)*
+**Review status:** APPROVED
 **Integration status:** *(not started)*
 
 **Script:** Line-by-line instruction audit against the Task 5 principle; edits applied inline.
 **Input:** `agents/implementer.md`, `agents/reviewer.md`, `skills/using-superRA/SKILL.md` and all files under `skills/using-superRA/references/` (including `main-agent.md`, `codex-instructions.md`, `claude-tools.md`, and any generated `direct-mode-*.md` — edit source specs and regenerate rather than editing generated files directly).
 **Output:** Trimmed role specs / runtime surfaces, a findings note in `RESULTS.md` summarizing what was cut, replaced with a pointer, or kept with rationale. Verify generated direct-mode reference files are regenerated from their canonical agent specs.
 
-- [ ] **Step 1: Survey each file line by line**
+- [x] **Step 1: Survey each file line by line**
 
-For every paragraph, bullet, and sentence, apply the two tests from `CLAUDE.md §Teach the Protocol, Don't Prescribe Each Action`: (a) is this already carried by another authoritative source the agent reads? (b) without this line, would agent behavior be unstable? Classify each line as KEEP / POINTER / DELETE and record the rationale in `RESULTS.md` Task 6 findings.
+Walked `agents/implementer.md`, `agents/reviewer.md`, `skills/using-superRA/SKILL.md`, and every file under `skills/using-superRA/references/` against the CLAUDE.md §Teach the Protocol principle. KEEP / POINTER / DELETE classifications recorded in `RESULTS.md` Task 6 findings; the heaviest over-prescription was in `agents/implementer.md` (§Stage → skills / §What the dispatch carries wrappers, §Data-First Discipline duplication of `econ-data-analysis`, full §Editing Etiquette duplication of `handoff-doc`), `agents/reviewer.md` (mirror of the same), and `main-agent.md` §Execution Modes (near-duplicate of `codex-instructions.md` §Delegation Priority with a typo and a dangling fragment).
 
-- [ ] **Step 2: Apply the edits and regenerate**
+- [x] **Step 2: Apply the edits and regenerate**
 
-Trim DELETE lines; replace POINTER lines with a one-line reference to the authoritative source. When editing anything that feeds generated direct-mode role references, update the canonical source spec and regenerate per `CLAUDE.md §Architectural Patterns`.
+Trimmed DELETEs and converted POINTERs in `agents/implementer.md`, `agents/reviewer.md`, `skills/using-superRA/SKILL.md`, and `main-agent.md` §Execution Modes (now one subagent-default sentence plus a direct-mode protocol block plus a single-line Codex pointer at `references/codex-instructions.md`). Updated `skills/codex-superra-setup/scripts/sync_codex_agents.py` to match the new source shape (removed the `## Stage → skills and references` section lookup now that source was trimmed; collapsed the two cleanup_* functions whose pattern-match targets no longer exist; trimmed the direct-mode `## Before You Start` prose in-place). Regenerated `skills/using-superRA/references/direct-mode-{implementer,reviewer}.md` and `.codex/agents/superra_{implementer,reviewer}.toml`; `sync_codex_agents.py --scope project --check` and `test_sync_codex_agents.py` both pass.
 
-- [ ] **Step 3: Verify no behavior was lost**
+- [x] **Step 3: Verify no behavior was lost**
 
-Cross-check each DELETE / POINTER decision against the authoritative source it points at — the source must actually carry the deleted content. Note any gap where a deleted line exposed a real missing instruction elsewhere and fix by adding the line to its correct owner.
+Cross-checked every DELETE/POINTER target: `handoff-doc` carries the full editing discipline the implementer/reviewer bodies now link to; `econ-data-analysis` owns Data-First Discipline; `codex-instructions.md` §Delegation Priority carries the Codex subagent rule that main-agent.md used to restate. No deleted content exposed a missing instruction elsewhere — every POINTER target actually carries the referenced content.
 
 ### Task 7: Audit Workflow Skills and `agent-orchestration`
 **Depends on:** Task 5
