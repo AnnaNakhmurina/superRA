@@ -47,7 +47,7 @@ is repo-local Codex skill discovery, not a stray custom-agent artifact.
 - [x] **Drift tests created** — drift tests passing on baseline (`integration-workflow` Phase A)
 - [x] **Refactored** — integration reviewer `APPROVED` on the unified sync+refactor diff (`integration-workflow` Phase B)
 - [x] **Docs finalized** — RESULTS.md matured, project docs audited, doc-reviewer `APPROVED` (`integration-workflow` Phase C)
-- [ ] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
+- [x] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
 
 ---
 
@@ -90,6 +90,8 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 > **Integration note (2026-04-22):** The existing open PR still targets `main`, matching the earlier branch-level integration-base decision recorded in `docs/plans/2026-04-22-codex-agent-dispatch-preference-plan.md`. `origin/main` remained an ancestor of this branch during Phase B, so no mechanical merge commit was needed; the only cumulative-diff fix was trailing whitespace in `skills/using-superRA/references/main-agent.md`, after which `git diff --check addc9ca7fe1bdbedb080d92095facb649074c1e4..HEAD` and `bash tests/check-harness-compatibility.sh` both passed.
 >
 > **Integration note (2026-04-22):** Phase C moved this follow-up plan alongside its matured results at `docs/plans/2026-04-22-direct-mode-role-references-plan.md` and `docs/plans/2026-04-22-direct-mode-role-references-results.md`, matching the repo's existing permanent-record convention for completed branches.
+>
+> **Integration note (2026-04-22):** Phase D kept the existing GitHub handoff path: PR [#19](https://github.com/FuZhiyu/superRA/pull/19) remains the integration vehicle against `main` and was marked ready for review after the follow-up landed.
 
 ### Task 1: Add skill-owned direct-mode role references and wire main-agent direct mode to them
 **Depends on:** *(none)*

@@ -73,6 +73,8 @@ permanent plan companion is
 - Supplementary integration cleanliness check:
   `git diff --check addc9ca7fe1bdbedb080d92095facb649074c1e4..HEAD`
 - Both checks passed on this branch after the Phase B cleanup.
+- PR [#19](https://github.com/FuZhiyu/superRA/pull/19) is open against
+  `main` and has been marked ready for review.
 
 ## Scope Notes
 
