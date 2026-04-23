@@ -3,14 +3,14 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Task 4, Step 5)
-**Status:** In Progress - implementation complete, awaiting review
+**Last updated:** 2026-04-23 (Implementation verification)
+**Status:** Implementation complete and verified; awaiting researcher disposition
 
 ---
 
 ## Task 1: Add Main-Agent Frontier Resolver
 
-**Status:** Revised implementation on 2026-04-23; awaiting narrow re-review.
+**Status:** Approved on 2026-04-23 after narrow re-review.
 
 ### Key Findings
 - `skills/using-superRA/references/main-agent.md` now has a `Workflow Frontier Resolver` section.
@@ -31,7 +31,7 @@
 
 ## Task 2: Simplify Workflow Re-Entry Prose
 
-**Status:** Revised implementation on 2026-04-23; awaiting narrow re-review.
+**Status:** Approved on 2026-04-23 after narrow re-review.
 
 ### Key Findings
 - `planning-workflow` keeps the material plan-change protocol and now delegates post-edit entry selection to the main-agent resolver.
@@ -52,7 +52,7 @@
 
 ## Task 3: Clarify Handoff-Doc State Semantics
 
-**Status:** Completed implementation on 2026-04-23; review pending.
+**Status:** Approved on 2026-04-23.
 
 ### Key Findings
 - `skills/handoff-doc/references/plan-anatomy.md` now describes `Review status` and `Integration status` as task-local validity markers.
@@ -67,7 +67,7 @@
 
 ## Task 4: Audit and Tighten References
 
-**Status:** Completed implementation on 2026-04-23; review pending.
+**Status:** Approved on 2026-04-23.
 
 ### Key Findings
 - Static search found the intended resolver references and remaining local gate language.
@@ -82,5 +82,5 @@
 - `rg -n "continue from next incomplete|Execution complete.*skip|unchecked.*APPROVED|Resume the appropriate workflow|resume implementation-workflow|When to Lighten|state label|single global state|Current state" skills`
 
 ### Notes
-- Because the implementation was performed directly before these handoff docs were created, all task `Review status` values remain `IMPLEMENTED`, not `APPROVED`.
-- The next safe workflow frontier is implementation review for Tasks 1-4.
+- All task `Review status` values are `APPROVED`.
+- Implementation verification passed on 2026-04-23: `git status` was clean, `PLAN.md` showed all tasks approved, the declared pipeline was not applicable, and `git diff --check` passed.
