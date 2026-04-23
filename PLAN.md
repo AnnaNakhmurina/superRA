@@ -45,7 +45,7 @@ is repo-local Codex skill discovery, not a stray custom-agent artifact.
 - [x] **Plan approved** — researcher signed off on data inventory + plan (`planning-workflow` Phase 2)
 - [x] **Execution complete** — all tasks `APPROVED`, pipeline reproducible (`implementation-workflow` Step 3)
 - [x] **Drift tests created** — drift tests passing on baseline (`integration-workflow` Phase A)
-- [ ] **Refactored** — integration reviewer `APPROVED` on the unified sync+refactor diff (`integration-workflow` Phase B)
+- [x] **Refactored** — integration reviewer `APPROVED` on the unified sync+refactor diff (`integration-workflow` Phase B)
 - [ ] **Docs finalized** — RESULTS.md matured, project docs audited, doc-reviewer `APPROVED` (`integration-workflow` Phase C)
 - [ ] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
 
@@ -86,11 +86,13 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 > **Question asked:** These results seem like the key findings to protect with drift tests before integration: (1) direct mode must load `references/direct-mode-implementer.md` / `references/direct-mode-reviewer.md`, not raw `agents/*.md`; (2) the harness check must fail if those mirror refs are missing or if `main-agent.md` regresses back to raw agent-file loads. Any result to add or remove before I log that coverage and continue?
 >
 > **Integration note (2026-04-22):** Phase A uses the direct-mode assertions already added to `tests/check-harness-compatibility.sh` as the drift guard for this follow-up; `bash tests/check-harness-compatibility.sh` re-ran green on the current branch baseline before Phase B.
+>
+> **Integration note (2026-04-22):** The existing open PR still targets `main`, matching the earlier branch-level integration-base decision recorded in `docs/plans/2026-04-22-codex-agent-dispatch-preference-plan.md`. `origin/main` remained an ancestor of this branch during Phase B, so no mechanical merge commit was needed; the only cumulative-diff fix was trailing whitespace in `skills/using-superRA/references/main-agent.md`, after which `git diff --check addc9ca7fe1bdbedb080d92095facb649074c1e4..HEAD` and `bash tests/check-harness-compatibility.sh` both passed.
 
 ### Task 1: Add skill-owned direct-mode role references and wire main-agent direct mode to them
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** IMPLEMENTED
+**Integration status:** APPROVED
 
 **Script:** `skills/using-superRA/references/direct-mode-implementer.md`, `skills/using-superRA/references/direct-mode-reviewer.md`, `skills/using-superRA/references/main-agent.md`
 **Input:** canonical role protocols in `agents/implementer.md` and `agents/reviewer.md`, current direct-mode bullets in `skills/using-superRA/references/main-agent.md`
@@ -104,7 +106,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 2: Document and validate the temporary manual-mirror approach
 **Depends on:** 1
 **Review status:** APPROVED
-**Integration status:** *(not started)*
+**Integration status:** APPROVED
 
 **Script:** `CLAUDE.md`, `tests/check-harness-compatibility.sh`, archived 2026-04-22 plan/results pair, `RESULTS.md`
 **Input:** the new direct-mode references from Task 1, current contributor guidance, current compatibility guard, and the user concern about repo-local `.agents` surfaces
