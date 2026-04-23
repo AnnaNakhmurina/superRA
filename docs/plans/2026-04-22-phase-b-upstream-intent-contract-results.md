@@ -15,14 +15,14 @@ permalink: "docs/plans/2026-04-22-phase-b-upstream-intent-contract-results"
 
 # Tighten Phase B Upstream-Intent and Minimum-Net-Diff Contract — Results
 
-**Status:** Complete — Tasks 1-4 are approved, Phase B integration review returned zero task annotations, and this file is the Phase C permanent record for the branch's results. [`PLAN.md`](../../PLAN.md)
+**Status:** Complete — Tasks 1-4 are approved, Phase B integration review returned zero task annotations, and this file is the Phase C permanent record for the branch's results. [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md)
 **Branch:** `tighten-integration-rules`
-**Frozen merge base:** `addc9ca7fe1bdbedb080d92095facb649074c1e4` against `origin/main`. [`PLAN.md`](../../PLAN.md)
-**Companion plan:** [`PLAN.md`](../../PLAN.md)
+**Frozen merge base:** `addc9ca7fe1bdbedb080d92095facb649074c1e4` against `origin/main`. [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md)
+**Companion plan:** [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md)
 
 ## Objective
 
-Recast Phase B around a frozen-base upstream-intent contract so the base branch is authoritative by default, branch deltas survive only when they serve approved task objectives, and implementers receive task-local upstream-intent instructions without reconstructing git history. [`PLAN.md`](../../PLAN.md)
+Recast Phase B around a frozen-base upstream-intent contract so the base branch is authoritative by default, branch deltas survive only when they serve approved task objectives, and implementers receive task-local upstream-intent instructions without reconstructing git history. [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md)
 
 ## Source Surfaces
 
@@ -41,9 +41,9 @@ The integration pass covered three layers. First, the handoff and role surfaces 
 
 ### Approved branch state
 
-The approved Phase B round used `origin/main` as the integration base and froze merge base `addc9ca7fe1bdbedb080d92095facb649074c1e4`. That round ended with zero task annotations, and the merge step was a no-op because `origin/main` still matched the frozen base. [`PLAN.md`](../../PLAN.md)
+The approved Phase B round used `origin/main` as the integration base and froze merge base `addc9ca7fe1bdbedb080d92095facb649074c1e4`. That round ended with zero task annotations, and the merge step was a no-op because `origin/main` still matched the frozen base. [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md)
 
-Because the approved round found no material overlap, this branch did not carry an active `## Upstream Intent` section into Phase C. The permanent record therefore documents the shipped contract surfaces rather than a live branch-specific overlap log. [`PLAN.md`](../../PLAN.md) [`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md)
+Because the approved round found no material overlap, this branch did not carry an active `## Upstream Intent` section into Phase C. The permanent record therefore documents the shipped contract surfaces rather than a live branch-specific overlap log. [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md) [`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md)
 
 ### Handoff and role contract
 
@@ -53,7 +53,7 @@ Because the approved round found no material overlap, this branch did not carry 
 
 ### Phase B choreography
 
-[`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md) freezes `MERGE_BASE_SHA` before reviewer dispatch and records the active-round anchor in `PLAN.md`. The reviewer writes `## Upstream Intent` only when the base-side scan finds material overlap; if a new round finds no material overlap, a stale prior-round section is deleted in the same review pass instead of being re-anchored. [`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md)
+[`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md) freezes `MERGE_BASE_SHA` before reviewer dispatch and records the active-round anchor in the companion plan. The reviewer writes `## Upstream Intent` only when the base-side scan finds material overlap; if a new round finds no material overlap, a stale prior-round section is deleted in the same review pass instead of being re-anchored. [`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md)
 
 The review loop no longer treats an empty branch-wide section as the completion criterion. The completion condition is that in-scope tasks reach `Integration status: APPROVED` and the reviewer confirms that every surviving hunk in `git diff <MERGE_BASE_SHA>..HEAD` is justified by approved task objectives plus the recorded upstream contract. [`skills/integration-workflow/SKILL.md`](../../skills/integration-workflow/SKILL.md)
 
@@ -73,7 +73,7 @@ The review loop no longer treats an empty branch-wide section as the completion 
 
 This branch changes workflow, handoff, and verification instructions only. It does not produce an empirical dataset, analysis table, or figure output.
 
-`PLAN.md` remains at the repo root because Phase C Step 4 disposition has not happened yet. This document is the permanent results record; the plan remains the live workflow scaffold for the branch. [`PLAN.md`](../../PLAN.md)
+The workflow scaffold is archived alongside this permanent results record as [`2026-04-22-phase-b-upstream-intent-contract-plan.md`](./2026-04-22-phase-b-upstream-intent-contract-plan.md). This document is the permanent results record for the branch's outcome; the companion plan preserves the prescriptive handoff state that produced it.
 
 ## Reproducibility
 

@@ -59,6 +59,12 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 > **Convention applied (2026-04-22, no user prompt):** `RESULTS_DIR` = `docs/plans/`, target filename `2026-04-22-phase-b-upstream-intent-contract-results.md`, following the established `docs/plans/<YYYY-MM-DD>-<slug>-results.md` convention already used for superRA workflow refactors in this repo.
 > **Rationale:** `docs/plans/` is the permanent archive for refactor plans and results in this repo, and this branch's deliverable is workflow/plugin documentation rather than analysis code co-located elsewhere. There are no figures in the current Stage 1 `RESULTS.md`, so the attachments step is expected to be a no-op unless the doc-writer materializes new assets.
 
+> **Convention applied (2026-04-22, no user prompt):** Phase C Step 4 disposition = Option 1. Move `PLAN.md` alongside the matured results record as `docs/plans/2026-04-22-phase-b-upstream-intent-contract-plan.md`.
+> **Rationale:** This repo already archives superRA workflow refactor handoff pairs under `docs/plans/<YYYY-MM-DD>-<slug>-{plan,results}.md`, and this branch follows the same permanent-record convention. There is no `results_attachments/` directory to move.
+
+> **User decision (2026-04-22):** Phase D disposition — push `tighten-integration-rules` to `origin` and open a draft PR against `main`; do not perform a local merge in this worktree.
+> **Question asked:** After Phase C, should this branch be merged locally, left as-is, or published as a PR?
+
 > **Orchestrator re-entry (2026-04-22):** Independent reviewer agents audited commit `4036130` and found four MAJOR issues plus one MINOR that require a normal fix / re-review loop. Re-open Task 1 for the no-material-overlap re-entry lifecycle gap in `plan-anatomy.md` / `agents/implementer.md` and the reviewer-protocol side of the whole-diff confirmation mismatch. Re-open Task 2 for the same no-overlap lifecycle gap in `integration-workflow` plus the unresolved interaction between branch-wide hunk confirmation and narrow re-review. Re-open Task 3 because `refactor-and-integrate` applies the frozen-anchor rule to non-Phase-B uses. Re-open Task 4 because the structural guard encodes that over-broad rule and the handoff write-up overstates no-material-overlap coverage.
 > **Boxes unchecked:** `Execution complete` only. `Plan approved` still stands, and no later workflow milestone had been checked.
 
