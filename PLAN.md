@@ -67,12 +67,8 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 ### Task 1: Add Main-Agent Frontier Resolver
 **Depends on:** *(none)*
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(not started)*
-
-> **Review notes:**
-> 1. [MAJOR][BLOCKING] `skills/using-superRA/references/main-agent.md` still needs an explicit all-approved-but-not-yet-validated frontier. The current resolver blocks direct integration unless integration / PR intent exists, but it should also make the normal post-approval state route to reproducibility verification and the implementation-workflow Step 4 disposition before integration can be selected.
->    → implemented: added `needs validation/completion` and gated `needs integration` on `Execution complete`, current reproducibility, and logged Step 4 integration / PR disposition (`skills/using-superRA/references/main-agent.md:43` and `skills/using-superRA/references/main-agent.md:44`).
 
 **Script:** Not applicable; documentation/reference edit.
 **Input:** User handoff plan; `skills/using-superRA/references/main-agent.md`.
@@ -100,12 +96,8 @@ Add guarantees for review approval before advancement, logging user decisions be
 
 ### Task 2: Simplify Workflow Re-Entry Prose
 **Depends on:** Task 1
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(not started)*
-
-> **Review notes:**
-> 1. [MAJOR][BLOCKING] `skills/implementation-workflow/SKILL.md` continues locally only for implementation / review / adjudication frontiers. Add the validation/completion frontier to this guard so all-approved work re-enters implementation-workflow for Step 3 reproducibility verification and Step 4 completion-menu logging before integration can be selected.
->    → implemented: added `needs validation/completion` to the Step 1 guard and routed that frontier to Step 3 / Step 4 before integration selection (`skills/implementation-workflow/SKILL.md:31` and `skills/implementation-workflow/SKILL.md:73`).
 
 **Script:** Not applicable; documentation/reference edit.
 **Input:** `skills/planning-workflow/SKILL.md`, `skills/implementation-workflow/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/agent-orchestration/SKILL.md`.
