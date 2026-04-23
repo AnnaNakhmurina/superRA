@@ -243,7 +243,7 @@ Re-check `CLAUDE.md §Ownership Boundaries`. After trimming, each concern should
 
 ### Task 8: Audit Utility, Domain, and Meta Skills
 **Depends on:** Task 5
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(not started)*
 
 **Script:** Line-by-line instruction audit against the Task 5 principle; edits applied inline.
