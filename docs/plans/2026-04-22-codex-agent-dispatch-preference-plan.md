@@ -1,6 +1,4 @@
-# Codex Agent Dispatch Preference Plan
-
-> **For agentic workers:** REQUIRED DISCIPLINE: Use `superRA:handoff-doc` for all `PLAN.md` / `RESULTS.md` editing. Use `skill-creator` when modifying any `skills/*/SKILL.md`. Keep shared workflow text canonical; put Codex-specific runtime guidance in the Codex adapter reference unless a cross-reference becomes misleading.
+# PLAN — Codex Agent Dispatch Preference
 
 **Objective:** Make Codex treat a user-invoked superRA workflow as explicit authorization for the named-agent workflow, with reviewer dispatch still mandatory, warm-agent lifecycle guidance explicit, and a canonical Codex instructions reference guaranteed to load whenever `using-superRA` loads.
 
@@ -8,7 +6,7 @@
 
 **Conventions:** Prefer one source of truth, minimal wording, and harness-specific placement. Do not fork shared workflow behavior into Codex-only copies.
 
-**Output:** Updated Codex harness instructions in `skills/using-superRA/references/codex-instructions.md` and the canonical `skills/using-superRA/SKILL.md` load rule, covering named-agent dispatch preference, reviewer-default behavior, Codex-only warm-agent lifecycle guidance, high-level Codex-specific instructions, and explicit Codex instructions loading, plus any narrowly necessary consistency edits if an adjacent document becomes misleading after the change.
+**Output:** committed Codex adapter updates that (a) treat user-invoked superRA workflow/skills as explicit delegation preference in Codex, (b) keep reviewer dispatch mandatory unless the user explicitly says no or agent tools are unavailable, (c) tell Codex orchestrators not to shut down warm agents eagerly and to use warm-agent messaging when coordination is needed, (d) explicitly tell Codex agents to load `references/codex-instructions.md` whenever they load `using-superRA`, (e) establish that file as the home for high-level must-know Codex-specific instructions, (f) preserve the shared workflow files as the source of truth, and (g) land the permanent Phase C records at `docs/plans/2026-04-22-codex-agent-dispatch-preference-plan.md` and `docs/plans/2026-04-22-codex-agent-dispatch-preference-results.md`.
 
 **Expected Results / Hypotheses:** A Codex agent that has loaded superRA and is following its workflow should read the Codex instructions reference as explicit user preference for named-agent dispatch in Codex, rather than treating the harness-default anti-delegation guidance as dominant. Reviewer dispatch should remain non-optional by default, Codex orchestrators should treat long-running warm agents as normal rather than closing them eagerly, and Codex agents should explicitly load `references/codex-instructions.md` whenever they load `using-superRA`.
 
@@ -24,7 +22,7 @@
 - [x] **Execution complete** — all tasks `APPROVED`, pipeline reproducible (`implementation-workflow` Step 3)
 - [ ] **Drift tests created** — drift tests passing on baseline (`integration-workflow` Phase A)
 - [x] **Refactored** — integration reviewer `APPROVED` on the unified sync+refactor diff (`integration-workflow` Phase B)
-- [ ] **Docs finalized** — RESULTS.md matured, project docs audited, doc-reviewer `APPROVED` (`integration-workflow` Phase C)
+- [x] **Docs finalized** — RESULTS.md matured, project docs audited, doc-reviewer `APPROVED` (`integration-workflow` Phase C)
 - [x] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
 
 ---
@@ -40,10 +38,10 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - `/README.md` (HEAD at `addc9ca`): user-facing product overview. superRA promises an implementer-reviewer pair at every step, keeps Codex support split between plugin skills and named custom agents, and describes worktrees as optional workflow infrastructure.
 
 ### Module-level docs walked
-- *(none beyond repo root; no nested guidance docs lie on the planned diff path)*
+- `/docs/plans/`: permanent archive for completed plan/results pairs; current naming convention is dated sibling files with `-plan.md` and `-results.md` suffixes.
 
 ### Not walked (not reachable from the planned diff)
-- `docs/`, `tests/`, and skill directories outside the orchestration/Codex instruction surfaces — out of scope unless the authoritative change forces a consistency edit.
+- `docs/` outside `docs/plans/`, `tests/`, and skill directories outside the orchestration/Codex instruction surfaces — out of scope unless the authoritative change forces a consistency edit.
 
 ## Decisions
 
@@ -75,6 +73,14 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 > **User decision (2026-04-22):** Polish the Codex adapter wording so the Codex action map uses concrete Codex tool names, replacing `SendMessage` with `send_input` and preserving the explicit load rule.
 > **Question asked:** Review and polish the local edits so the instruction file uses the correct Codex tool names?
 > **Rationale (if given):** Keep the Codex adapter concrete and unambiguous for harness-specific actions without weakening the previously approved load semantics.
+>
+> **User decision (2026-04-22):** Mature the working plan/results pair into `docs/plans/2026-04-22-codex-agent-dispatch-preference-plan.md` and `docs/plans/2026-04-22-codex-agent-dispatch-preference-results.md` so the branch is ready to merge.
+> **Question asked:** Mature plan and results into the right place so the branch can be merged?
+> **Rationale (if given):** Follows the repo's established `docs/plans/` convention for permanent plan/results records.
+>
+> **Integration note (2026-04-22):** No root `results_attachments/` directory existed on this branch, so Phase C only relocated the plan/results markdown files.
+>
+> **Integration note (2026-04-22):** Permanent records landed at `docs/plans/2026-04-22-codex-agent-dispatch-preference-plan.md` and `docs/plans/2026-04-22-codex-agent-dispatch-preference-results.md`.
 
 ### Task 1: Update the Codex instructions surface for dispatch, warm-agent lifecycle, and load semantics
 **Depends on:** *(none)*
@@ -83,9 +89,10 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 **Script:** `skills/using-superRA/references/codex-instructions.md` and `skills/using-superRA/SKILL.md` (primary); `tests/check-harness-compatibility.sh`, `skills/using-superRA/references/main-agent.md`, `skills/agent-orchestration/SKILL.md`, and `README.md` only if adjacent wording becomes misleading
 **Input:** repo-root contributor docs, current Codex harness adapter wording, current execution-mode/orchestration wording
-**Output:** minimal committed instruction update that (a) treats user-invoked superRA workflow/skills as explicit delegation preference in Codex, (b) keeps reviewer dispatch mandatory unless the user explicitly says no or agent tools are unavailable, (c) tells Codex orchestrators not to shut down warm agents eagerly and to use warm-agent messaging when coordination is needed, (d) explicitly tells Codex agents to load `references/codex-instructions.md` whenever they load `using-superRA`, (e) establishes that file as the home for high-level must-know Codex-specific instructions, and (f) preserves the shared workflow files as the source of truth
+**Output:** committed Codex adapter updates that (a) treat user-invoked superRA workflow/skills as explicit delegation preference in Codex, (b) keep reviewer dispatch mandatory unless the user explicitly says no or agent tools are unavailable, (c) tell Codex orchestrators not to shut down warm agents eagerly and to use warm-agent messaging when coordination is needed, (d) explicitly tell Codex agents to load `references/codex-instructions.md` whenever they load `using-superRA`, (e) establish that file as the home for high-level must-know Codex-specific instructions, (f) preserve the shared workflow files as the source of truth, and (g) land the permanent Phase C records at `docs/plans/2026-04-22-codex-agent-dispatch-preference-plan.md` and `docs/plans/2026-04-22-codex-agent-dispatch-preference-results.md`
 
 - [x] Confirmed the ownership boundary between shared workflow text and Codex-specific harness adapters.
 - [x] Added the Codex-specific delegation, warm-agent lifecycle, explicit instructions-load rules, and renamed the Codex reference to match its broader role.
 - [x] Updated the root contributor guidance after integration review surfaced the stale `<harness>-tools.md` naming pattern; no further consistency edits were needed.
 - [x] Polished the Codex action map to name concrete Codex tools (`request_user_input`, `update_plan`, `spawn_agent`, `send_input`) and restored the explicit load/inventory wording that the local follow-up edit had softened.
+- [x] Matured the working `PLAN.md` / `RESULTS.md` pair into the permanent `docs/plans/` archive using the repo's dated `-plan.md` / `-results.md` convention.
