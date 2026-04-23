@@ -27,7 +27,7 @@
 - [ ] **Drift tests created** — not applicable to this workflow/doc task; leave unchecked.
 - [x] **Refactored** — Phase B integration reviewer approved the cumulative diff on 2026-04-22 with zero task annotations; `origin/main` still matched the frozen merge base, so the merge step was a no-op.
 - [x] **Docs finalized** — the permanent results record landed at `docs/plans/2026-04-22-phase-b-upstream-intent-contract-results.md`, Task 4 returned to `Review status: APPROVED`, and the doc-reviewer approved the matured file on 2026-04-22.
-- [ ] **Merged** — not applicable to this workflow/doc task; leave unchecked.
+- [x] **Merged** — Phase D freshness check confirmed `origin/main` was still `addc9ca7fe1bdbedb080d92095facb649074c1e4`, the branch was pushed to `origin/tighten-integration-rules`, and draft PR #18 was opened against `main` on 2026-04-22.
 
 ## Project Conventions
 
@@ -64,6 +64,9 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 > **User decision (2026-04-22):** Phase D disposition — push `tighten-integration-rules` to `origin` and open a draft PR against `main`; do not perform a local merge in this worktree.
 > **Question asked:** After Phase C, should this branch be merged locally, left as-is, or published as a PR?
+
+> **Orchestrator decision (2026-04-22):** Phase D freshness check found `origin/main` unchanged since the approved Phase B round (`addc9ca7fe1bdbedb080d92095facb649074c1e4`), so no D->B re-entry was needed. The branch was pushed to `origin/tighten-integration-rules` and draft PR [#18](https://github.com/FuZhiyu/superRA/pull/18) was opened against `main`.
+> **Rationale:** Publishing through a draft PR preserves the integrated state without changing local `main`, matches the user's requested execution mode, and keeps the archived handoff pair attached to the review branch.
 
 > **Orchestrator re-entry (2026-04-22):** Independent reviewer agents audited commit `4036130` and found four MAJOR issues plus one MINOR that require a normal fix / re-review loop. Re-open Task 1 for the no-material-overlap re-entry lifecycle gap in `plan-anatomy.md` / `agents/implementer.md` and the reviewer-protocol side of the whole-diff confirmation mismatch. Re-open Task 2 for the same no-overlap lifecycle gap in `integration-workflow` plus the unresolved interaction between branch-wide hunk confirmation and narrow re-review. Re-open Task 3 because `refactor-and-integrate` applies the frozen-anchor rule to non-Phase-B uses. Re-open Task 4 because the structural guard encodes that over-broad rule and the handoff write-up overstates no-material-overlap coverage.
 > **Boxes unchecked:** `Execution complete` only. `Plan approved` still stands, and no later workflow milestone had been checked.
