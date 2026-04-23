@@ -31,4 +31,6 @@
 ### Notes
 - Existing shared workflow files already carried the general
   implementer-reviewer and direct-mode rules, so no adjacent
-  consistency edits were required after the adapter update.
+  consistency rewrites were needed beyond one root-doc audit fix in
+  `CLAUDE.md`, which now points contributors at the current adapter
+  reference pattern and names `codex-instructions.md` explicitly.

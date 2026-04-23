@@ -78,6 +78,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 - [x] Confirmed the ownership boundary between shared workflow text and Codex-specific harness adapters.
 - [x] Added the Codex-specific delegation, warm-agent lifecycle, explicit instructions-load rules, and renamed the Codex reference to match its broader role.
-- [x] Checked adjacent docs for stale or contradictory claims; no consistency edits were needed.
+- [x] Updated the root contributor guidance after integration review surfaced the stale `<harness>-tools.md` naming pattern; no further consistency edits were needed.
 
 > 1. **MAJOR — `CLAUDE.md:68`**: The root contributor guidance still says harness-specific tool/runtime behavior belongs in `skills/using-superRA/references/<harness>-tools.md`, but this task deliberately renamed the Codex adapter to `codex-instructions.md` and broadened its role beyond tool-name mapping. Under the Phase B Project Doc Audit, root docs must match the current adapter surface. Update that bullet so future contributors are not pointed back to a superseded naming pattern/path.
+>    → implemented: updated the root Codex-design bullet to point at the current adapter-reference pattern and name `codex-instructions.md` explicitly (`CLAUDE.md:68`)
