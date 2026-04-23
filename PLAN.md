@@ -222,7 +222,7 @@ Cross-check each DELETE / POINTER decision against the authoritative source it p
 
 ### Task 7: Audit Workflow Skills and `agent-orchestration`
 **Depends on:** Task 5
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(not started)*
 
 **Script:** Line-by-line instruction audit against the Task 5 principle; edits applied inline.
