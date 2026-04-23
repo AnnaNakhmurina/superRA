@@ -138,14 +138,15 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 **`skills/using-superRA/references/direct-mode-implementer.md`, `direct-mode-reviewer.md`** — regenerated from the updated source specs. Per `CLAUDE.md §Architectural Patterns` (Generated artifacts stay generated), these are not hand-edited. The generator now:
 1. No longer reads a `## Stage → skills and references` section (removed from source per Task 6); direct-mode's own §Before You Start step 1 carries the manifest-load instruction.
 2. Produces a compact direct-mode §Before You Start that mirrors the trimmed subagent version — POINTER style, no example nested bullets.
-3. Drops the cleanup_implementer_execution_protocol and cleanup_implementer_handoff pattern-replace helpers (their targets no longer exist in source); kept the reviewer-side strip_subsection of §Report Format and the "ad-hoc default" deletion because those fragments still appear in the subagent body.
+3. Keeps `cleanup_implementer_handoff` and `cleanup_reviewer_handoff` pattern-replace helpers. The implementer helper rewrites the §How You Fix Review Items opener (subagent source at `agents/implementer.md:97` references "first dispatch" and a "re-dispatch prompt" one-line delta, neither of which exists in direct mode) and strips the Parallel worktree dispatch paragraph (`agents/implementer.md:134`, a subagent dispatch-field concept) entirely. The reviewer helper rewrites the `## Upstream Intent` ownership paragraph (`agents/reviewer.md:109`) so the round context is sourced from `PLAN.md` / the current session rather than "from the dispatch." Both helpers fail loudly with `ValueError` when their expected source strings disappear — regenerator drift becomes a test failure, not a silent leak. The reviewer-side `strip_subsection` of §Report Format and the "ad-hoc default" deletion are also kept because those fragments still appear in the subagent body.
 
 ### Verification
 
 - `python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check` — PASS.
 - `python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py` — 5 tests pass (generator idempotency, direct-mode round-trip, managed-header presence, conflict handling, regenerate-hint).
 - `git diff --check` — clean.
-- Cross-check: every POINTER inserted this round points at content that actually exists at the cited source — `superRA:handoff-doc` carries the full editing-etiquette discipline; `econ-data-analysis` (per `econ-data-analysis/SKILL.md §Discipline`) carries Data-First principles; `codex-instructions.md §Delegation Priority in Codex` carries the Codex named-agent rule.
+- Cross-check: every POINTER inserted this round points at content that actually exists at the cited source — `superRA:handoff-doc` carries the full editing-etiquette discipline; `econ-data-analysis/SKILL.md` carries Data-First principles under `§The Iron Law` and the `[BLOCKING]` / `[ADVISORY]` gated checklists; `codex-instructions.md §Delegation Priority in Codex` carries the Codex named-agent rule.
+- Leak grep: `grep -nE "first dispatch|re-dispatch prompt|Parallel worktree dispatch|Worktree.*field set|in the dispatch|orchestrator passes the round context" skills/using-superRA/references/direct-mode-*.md` returns no matches after cleanup — the preface's "no dispatch prompt" sentence is the only dispatch-word occurrence, and it is intentional.
 
 ### Files Changed
 
@@ -158,6 +159,7 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 - `skills/codex-superra-setup/scripts/sync_codex_agents.py`
 - `.codex/agents/superra_implementer.toml` (regenerated)
 - `.codex/agents/superra_reviewer.toml` (regenerated)
+- `skills/agent-orchestration/references/worktree-harness-fallback.md` (cross-reference repointed after review round 1 surfaced a stale pointer to `agents/implementer.md §Before You Start`, which no longer owns the Worktree-enter step)
 
 ## Task 7: Audit Workflow Skills and `agent-orchestration`
 
