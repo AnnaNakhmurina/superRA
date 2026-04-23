@@ -24,11 +24,11 @@
 
 ## Workflow Status
 
-- [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat.
-- [ ] **Execution complete** - revised tasks are pending.
+- [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat; Task 6 added after Tasks 1-5 review to address sync-map-format ownership and procedural symmetry.
+- [ ] **Execution complete** - Tasks 1-5 APPROVED; Task 6 pending.
 - [ ] **Drift tests created** - not applicable for this skill-design change.
-- [ ] **Integrated** - pending after revised implementation and sync/integration review.
-- [ ] **Docs finalized** - pending after README/CATEGORIES/role docs/generator outputs are updated.
+- [ ] **Integrated** - pending after Task 6 approval.
+- [ ] **Docs finalized** - pending after Task 6 approval.
 - [ ] **Finished** - not requested in this session.
 
 ---
@@ -53,6 +53,10 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **User decision (2026-04-23):** Redesign Sync around generic sync author/reviewer agents plus semantic-merge mode references; keep `## Sync Map` branch-level and add task-local or standalone file-local `Sync impact` annotations.
 > **Question asked:** How should semantic sync agents, reviewers, and Sync Map / task-impact responsibilities be structured?
 > **Rationale (if given):** Avoid confusing `Stage: sync` exceptions in canonical implementer/reviewer contracts, keep semantic-merge standalone via mode references, avoid costly semantic-merge loads for integration reviewers, and ensure task-scoped agents still receive sync intent. Workflow impact: clears `Execution complete`, `Integrated`, `Docs finalized`, and `Finished`; resets task Review/Integration statuses to pending because the prior Stage-sync design is superseded.
+
+> **User decision (2026-04-23, post-Task-5 review):** Restructure the semantic-merge skill so format specs live with their owning mode (not in a shared `sync-map-format.md`) and shared procedural knowledge lives in the SKILL.md body so both modes carry equal richness.
+> **Question asked:** Does sync-map-format.md earn its keep given integration agents do not load it, and did the lean SKILL.md body lose procedural knowledge (role classification, regeneration preference, stale-reference sweep, dirty-state handling) the global semantic-merge skill carried?
+> **Rationale (if given):** Integration agents consume Sync Map / Sync impact as prose, not as format spec — the format's only real consumers are the sync author (writer) and sync reviewer (verifier), so the author can own it and the reviewer can point at it; the Standalone Merge Record has a single consumer and collapses into standalone-merge.md. Separately, the "write good sync notes" side of semantic-merge is the valuable output: if the sync author does not classify generated outputs, prefer regeneration, or sweep stale references, the Sync Map obligations they write are thinner than the global skill's equivalent. Workflow and standalone should be symmetric on that procedural knowledge. Workflow impact: adds Task 6; holds `Execution complete`, `Integrated`, and `Docs finalized` until Task 6 is APPROVED.
 
 ---
 
@@ -172,3 +176,39 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
   rg -n "Stage: sync|At sync stage|branch-level sync review|sync implementer|sync reviewer agent uses|Upstream Intent|merge-quality|NEEDS_USER_DECISION" skills agents README.md CLAUDE.md .codex tests -g '*.md' -g '*.toml' -g '*.py'
   ```
   Inspect the search results rather than requiring zero matches; the goal is to confirm remaining legacy sync terms are intentional.
+
+---
+
+### Task 6: Restructure semantic-merge skill for owner-located formats and symmetric procedural richness
+**Depends on:** Task 1, Task 2, Task 3, Task 4, Task 5
+**Review status:** *(not started)*
+**Integration status:** *(pending)*
+
+**Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/semantic-merge/references/sync-map-format.md` (to be deleted), `skills/handoff-doc/references/plan-anatomy.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, and any other file pointing at `sync-map-format.md`.
+**Input:** Current semantic-merge skill (after Task 3 DRY consolidation), the post-review decision above, and the global `semantic-merge-integration` skill as the procedural reference point.
+**Output:** Format specs live with their owning mode (workflow Sync Map + task-local Sync impact in `workflow-sync-author.md`; Standalone Merge Record in `standalone-merge.md`); `sync-map-format.md` is deleted; shared procedural knowledge (intent classification by role, regeneration preference, stale-reference sweep, mid-operation / dirty-state handling, synthesis preference) lives in `SKILL.md` so both modes carry equal richness; mode references shrink to mode-specific process + format + status return.
+
+- [ ] **Step 1: Expand SKILL.md body with shared procedural flow**
+  Add a canonical "Shared Procedure" section covering: repo-state grounding (inspect current branch / worktree / ongoing merge-or-rebase state / merge base / incoming range / touched files); dirty-state handling via a reversible named stash; intent research including role classification (behavior or API / data or schema / docs or narrative / generated outputs / tests / config or build); synthesis preference when both sides are valid; regeneration preference for generated artifacts over hand-editing; stale-reference sweep during verification (labels, paths, docs, generated outputs — not just "no conflict markers"). Keep RA framing: the agent classifies and executes, the researcher decides research-meaningful calls.
+
+- [ ] **Step 2: Move Workflow Sync Map and task-local Sync impact format into `workflow-sync-author.md`**
+  Inline the full `## Sync Map` template block and the task-local `**Sync impact:**` field anatomy into `workflow-sync-author.md` (the author is the writer). Keep the existing process steps; place the format next to the step that writes it. `workflow-sync-reviewer.md` drops any format re-statement and adds a one-line pointer to the workflow-sync-author reference when the reviewer needs to recognize the shape.
+
+- [ ] **Step 3: Move Standalone Merge Record format into `standalone-merge.md`**
+  Inline the `SEMANTIC_MERGE.md` merge-record format (headers + File / Script Impact Map) into `standalone-merge.md` next to the step that writes it.
+
+- [ ] **Step 4: Delete `sync-map-format.md` and rewire pointers**
+  Remove `skills/semantic-merge/references/sync-map-format.md`. Update every pointer that landed on it: `skills/semantic-merge/SKILL.md` (Choose a Mode bullet), `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/handoff-doc/references/plan-anatomy.md` (§Sync Map format pointer; §Task-local Sync impact format pointer), `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md` dispatch templates (sync-author and sync-reviewer reference lists). Verify with `rg -n "sync-map-format" skills agents` before committing — expected: zero matches.
+
+- [ ] **Step 5: Trim mode references so they stop repeating the SKILL.md body**
+  In `workflow-sync-author.md` and `standalone-merge.md`, remove process bullets that restate the Shared Procedure now in SKILL.md (dirty-state, intent research, conflict resolution by intent, verification checks). Keep only mode-specific content: inputs, the format spec (per Steps 2-3), the commit-shape constraint (workflow = exactly one sync commit; standalone = sync commit + propagation commits), the stop boundary, status return / report shape. `sync-quality.md` keeps the gated checklist and cross-references the SKILL.md body rather than re-teaching the procedure.
+
+- [ ] **Step 6: Verify**
+  Run:
+  ```bash
+  rg -n "sync-map-format" skills agents README.md CLAUDE.md .codex tests
+  python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check
+  python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py
+  git diff --check
+  ```
+  Confirm the first command returns no matches, generator and tests still pass, and `git diff --check` is clean. Update RESULTS.md Task 6 with a compact summary of the restructure.

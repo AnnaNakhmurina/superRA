@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Tasks 1-5 implemented; awaiting review)
-**Status:** Implementation complete; review pending
+**Last updated:** 2026-04-23 (Tasks 1-5 APPROVED; Task 6 added — restructure semantic-merge for owner-located formats + symmetric procedural richness)
+**Status:** Tasks 1-5 APPROVED; Task 6 not started
 
 ---
 
@@ -48,3 +48,9 @@ rg -n "Stage: sync|At sync stage|branch-level sync review|sync implementer|sync 
 ```
 
 The targeted terminology scan returned only the expected negative assertions in `skills/codex-superra-setup/scripts/test_sync_codex_agents.py`.
+
+## Task 6: Restructure semantic-merge skill for owner-located formats and symmetric procedural richness
+
+**Status:** Not started
+
+Implementer to fill in on completion: shared procedural flow added to `SKILL.md`, format specs relocated to their owning mode references, `sync-map-format.md` removed, pointers rewired, mode references trimmed to mode-specific content.
