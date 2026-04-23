@@ -264,21 +264,21 @@ Re-read each skill's post-edit SKILL.md as if loaded outside the superRA workflo
 
 ### Task 9: Cross-Audit Consistency Sweep
 **Depends on:** Task 6, Task 7, Task 8
-**Review status:** *(not started)*
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 **Script:** Whole-repo verification that the audit edits compose cleanly.
 **Input:** The full diff produced by Tasks 6-8.
 **Output:** A consolidated audit summary in `RESULTS.md` Task 9 listing any residual duplication, pointer targets that do not actually carry the referenced content, and any newly-introduced gaps where a deleted line's content is not recoverable from an authoritative source.
 
-- [ ] **Step 1: Pointer integrity check**
+- [x] **Step 1: Pointer integrity check**
 
-For every POINTER introduced in Tasks 6-8, confirm the cited source actually contains the referenced content at the expected location.
+Verified every POINTER introduced in Tasks 7 and 8 against the cited source (Task 6 pointers were already verified by that task's reviewer). All resolve at the named anchor. Findings in `RESULTS.md` Task 9 §Pointer Integrity.
 
-- [ ] **Step 2: Residual-duplication search**
+- [x] **Step 2: Residual-duplication search**
 
-Grep for repeated phrases across `skills/`, `agents/`, and `CLAUDE.md` for behavior-shaping instructions (not just resolver taxonomy) and confirm each concern has a single owner.
+Grepped `skills/`, `agents/`, and `CLAUDE.md` for behavior-shaping phrases (Data-First discipline, Iron Law, editing etiquette bullets, Execution Modes, Skill-Load Manifest, User Decisions Log). Each concern has one authoritative owner; every other mention is a pointer or role-scoped compact. Findings in `RESULTS.md` Task 9 §Residual Duplication.
 
-- [ ] **Step 3: Anti-pattern regression check**
+- [x] **Step 3: Anti-pattern regression check**
 
-Re-run the CLAUDE.md anti-pattern tests against the post-audit tree: (a) wrapper instructions around authoritative content, (b) "here is what you will receive" descriptions, (c) reminders of runtime defaults, (d) restatements of the Skill-Load Manifest inside dispatch or role bodies. Any surviving instance must be justified in `RESULTS.md` Task 9 as behavior-shaping.
+Re-ran the four CLAUDE.md anti-pattern categories against the post-audit tree. No surviving unjustified instance of (a) wrapper-around-authoritative, (c) runtime-default reminder, or (d) Manifest restatement. One borderline (b) "Here is what you will receive" shape survives in `agents/implementer.md §Dispatch Inputs` and `agents/reviewer.md §Dispatch Inputs`; flagged in `RESULTS.md` Task 9 §Anti-Pattern Regression as behavior-shaping (the second sentence requires a baseline of what "more than this" means) — orchestrator adjudication left open.

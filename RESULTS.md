@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (over-prescription audit scope added)
-**Status:** Tasks 1-4 approved; Task 5 approved; Task 7 implemented and awaiting review; Tasks 6, 8, 9 pending.
+**Last updated:** 2026-04-23 (Task 9 consolidated sweep implemented)
+**Status:** Tasks 1-6 approved; Tasks 7-8 implemented and awaiting review; Task 9 implemented and awaiting review.
 
 ---
 
@@ -287,4 +287,64 @@ Net change: 19 files modified, ~95 lines removed / ~69 inserted (roughly a 1:1.4
 
 ## Task 9: Cross-Audit Consistency Sweep
 
-**Status:** Not started.
+**Status:** Implemented; awaiting review.
+
+### Pointer Integrity
+
+Verified every POINTER introduced in Tasks 7 and 8 resolves to a real anchor carrying the referenced content. (Task 6's pointers — direct-mode cleanup helpers, `worktree-harness-fallback` repoint, `superRA:handoff-doc` / `codex-instructions.md` / `econ-data-analysis` targets — were verified by the Task 6 reviewer and left untouched here.)
+
+Task 7 pointers verified:
+- `planning-workflow §Living Plan and Results Docs` → `handoff-doc §references/results-anatomy.md` — `results-anatomy.md` exists with full template, pre-allocated stub discipline at line 26 and §Section ownership at line 87.
+- `planning-workflow §Execution Handoff` → `using-superra §Execution Modes` — present at `skills/using-superRA/SKILL.md:68-70`; chains to `main-agent.md §Execution Modes` at lines 126-138.
+- `implementation-workflow §Step 1` / §Autonomy → `main-agent.md §Workflow Frontier Resolver` — present at `main-agent.md:25-70`.
+- `integration-workflow §Phase Map` — `§Frontier Entry` deleted; replacement single-paragraph notice at lines 15-27 is self-contained and the Phase Map itself carries what the deleted section narrated.
+
+Task 8 pointers verified:
+- `econ-data-analysis/references/integrate-drift-tests.md §Tolerance Conventions` → `drift-test-quality.md §Tolerance calibration` — resolves at `drift-test-quality.md:9` (§How-To → Tolerance calibration, with worked examples).
+- `handoff-doc/SKILL.md §User Decisions Log` → `references/plan-anatomy.md §User Decisions Log` — resolves at `plan-anatomy.md:101`; task-scoped vs project-level rules at line 108.
+- `handoff-doc/references/plan-anatomy.md §Upstream Intent` — top-level pointer at line 65 resolves to full section at line 124.
+- `report-in-markdown/SKILL.md §figure defaults` → `rich-content.md §The attachments directory is a caller parameter` — resolves at `rich-content.md:7`.
+- `integration-workflow §Phase C Step 4` → `codebase-integration.md §Project Doc Audit` — resolves at line 19 (walk-up algorithm) and line 97 (checklist anchor).
+- `refactor-and-integrate §Load-Bearing Top Item` → `codebase-integration.md §Reviewer Verdict Protocol` — resolves at line 38.
+- `integration-workflow §Phase D Step 4` cleanup chain — `worktree-harness-fallback.md §Remove` present at line 32; `worktree-data-sync §Data Teardown` present at line 144.
+- `handoff-doc §What You May NOT Edit (reviewer)` → `plan-anatomy.md §Header ownership` — resolves at line 61.
+- `integration-workflow §Phase C Step 2` → `final-form.md §The consolidation pass — four ordered commits` — resolves at line 5.
+
+No dangling pointer was found.
+
+### Residual Duplication
+
+Grepped for behavior-shaping phrases and confirmed each concern has one authoritative owner:
+
+- **Data-First discipline / Iron Law / describe-analyze-validate** — owned exclusively by `skills/econ-data-analysis/SKILL.md`. Post-audit role specs carry no Data-First bullets (Task 6 removed them); `implementer.md:29` now points at "the domain skill you loaded for this Stage." No duplication.
+- **Editing etiquette (Inline-edit / Preserve task-block boundaries / Doc before report)** — authoritative full version in `handoff-doc/SKILL.md §Inline-Edit Rule` + §Four Principles + §Stale Content Checklist. Compact one-liners appear in `agents/implementer.md:67-69` and `agents/reviewer.md:95-98`, each with a pointer back to `superRA:handoff-doc`. The direct-mode copies (`direct-mode-implementer.md:64-66`, `direct-mode-reviewer.md:90-91,93`) are auto-regenerated from the role specs (per Task 6 §Verification). Two-way role duplication (implementer vs reviewer) is tailored per role and cannot collapse further without breaking the role-specific context. Acceptable.
+- **Execution Modes** — authoritative copy in `main-agent.md §Execution Modes` (lines 126-138); `using-superra/SKILL.md:68-70` points at it; three workflow skills (`planning-workflow:194`, `implementation-workflow:100`, `agent-orchestration:200`) all point at `using-superra §Execution Modes`. Single-chain ownership, no paraphrase duplication.
+- **Skill-Load Manifest** — authoritative copy in `using-superra/SKILL.md:72` (§Skill-Load Manifest). Eight mention sites across `skills/` and `agents/` are all pointers ("see `superRA:using-superra` §Skill-Load Manifest") — no content duplication.
+- **User Decisions Log** — authoritative full spec in `handoff-doc/references/plan-anatomy.md §User Decisions Log` (line 101); `handoff-doc/SKILL.md §User Decisions Log` (line 41) carries a one-paragraph summary and points at the spec. Every other mention across workflow skills is a pointer at the SKILL.md section. No duplicated content.
+- **Workflow Frontier Resolver** — authoritative in `main-agent.md §Workflow Frontier Resolver`. `planning-workflow:153` and `implementation-workflow:64,73` point at it as the routing mechanism. `using-superra/SKILL.md:18-26` §Runtime Workflow Map paragraph ends by naming what the resolver adds; that is a summary, not a duplicate of the mechanism.
+- **Commit Hygiene** — authoritative in `using-superra/SKILL.md §Commit Hygiene`. `agents/implementer.md:128` and `agents/reviewer.md:129` cite it rather than restate it.
+
+No residual duplication that creates a drift risk.
+
+### Anti-Pattern Regression
+
+Re-ran the four CLAUDE.md anti-pattern categories against the post-audit tree.
+
+- **(a) Wrapper instructions around authoritative content.** Grep `If the dispatch (includes|carries|contains|has) a .Worktree` returns only the CLAUDE.md example itself at line 46. Worktree-field wrapper removed from role specs (Task 6) and not reintroduced. PASS.
+- **(b) "Here is what you will receive" descriptions.** Grep finds only the CLAUDE.md example itself at line 47. However, two borderline instances survive: `agents/implementer.md:15` §Dispatch Inputs and `agents/reviewer.md:22` §Dispatch Inputs each open with "The dispatch prompt carries only the Stage, a task pointer, a git range (if reviewing), and an optional `Additionally:` steering line." The second sentence ("If the dispatch paraphrases ... treat that as over-specification and use your standard protocol + the authoritative sources it points at") is behavior-shaping and was explicitly KEPT by the Task 6 reviewer. The first sentence provides the baseline for what counts as "more than this." Removing the first sentence would leave the second without a referent. **Flagged for orchestrator judgment**, not fixed in place — this is not an unambiguous anti-pattern.
+- **(c) Reminders of runtime defaults.** No "if you are asked to load a skill, load the skill" style throat-clearing survives. `by default` hits are all substantive ("base branch is authoritative by default," "upstream deletions honored by default," "the cascade clears downstream by default") — each is a behavior-shaping default that agents would not infer. PASS.
+- **(d) Restatements of the Skill-Load Manifest inside dispatch or role bodies.** Every site (role specs, direct-mode files, workflow skills, orchestration references) is a one-line pointer, not a content restatement. The `agents/implementer.md:19` and `agents/reviewer.md:26` lines say "Load skills per `superRA:using-superra` §Skill-Load Manifest" with no per-row content. PASS.
+
+Three of four anti-pattern categories show no regression. Category (b) has one consistent borderline pattern across both role specs that the orchestrator should decide on — either accept (status quo, Task 6 reviewer approved it) or rewrite the §Dispatch Inputs opening to put the behavior-shaping rule first without a "here is what you will receive" framing.
+
+### Summary
+
+- Pointer integrity: 15/15 POINTERs verified resolvable at cited anchors.
+- Residual duplication: zero drift-risk duplications; all multi-site mentions are either pointers or role-scoped compacts over a single authoritative owner.
+- Anti-pattern regression: 3/4 categories clean; 1 borderline pattern flagged for orchestrator judgment.
+- Nothing Tasks 6-8 deleted became unrecoverable — every trimmed line's authoritative owner carries the content at a resolvable anchor.
+
+### Files Changed
+
+- `PLAN.md` (Task 9 status, step checkboxes, step notes)
+- `RESULTS.md` (Task 9 section)
