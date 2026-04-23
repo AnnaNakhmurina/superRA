@@ -67,11 +67,12 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 ### Task 1: Add Main-Agent Frontier Resolver
 **Depends on:** *(none)*
-**Review status:** REVISE
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 > **Review notes:**
 > 1. [MAJOR][BLOCKING] `skills/using-superRA/references/main-agent.md` still needs an explicit all-approved-but-not-yet-validated frontier. The current resolver blocks direct integration unless integration / PR intent exists, but it should also make the normal post-approval state route to reproducibility verification and the implementation-workflow Step 4 disposition before integration can be selected.
+>    → implemented: added `needs validation/completion` and gated `needs integration` on `Execution complete`, current reproducibility, and logged Step 4 integration / PR disposition (`skills/using-superRA/references/main-agent.md:43` and `skills/using-superRA/references/main-agent.md:44`).
 
 **Script:** Not applicable; documentation/reference edit.
 **Input:** User handoff plan; `skills/using-superRA/references/main-agent.md`.
@@ -87,7 +88,7 @@ Define the resolver as a protocol over existing durable facts: `PLAN.md`, `RESUL
 
 - [x] **Step 3: Normalize frontier categories**
 
-Include the categories `needs plan repair`, `needs implementation`, `awaiting review`, `needs revise/adjudication`, `needs integration`, `needs documentation`, `ready for merge`, `preserved-approved`, and `inconsistent`.
+Include the categories `needs plan repair`, `needs implementation`, `awaiting review`, `needs revise/adjudication`, `needs validation/completion`, `needs integration`, `needs documentation`, `ready for merge`, `preserved-approved`, and `inconsistent`.
 
 - [x] **Step 4: Encode mixed-state and rollup rules**
 
@@ -99,11 +100,12 @@ Add guarantees for review approval before advancement, logging user decisions be
 
 ### Task 2: Simplify Workflow Re-Entry Prose
 **Depends on:** Task 1
-**Review status:** REVISE
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 > **Review notes:**
 > 1. [MAJOR][BLOCKING] `skills/implementation-workflow/SKILL.md` continues locally only for implementation / review / adjudication frontiers. Add the validation/completion frontier to this guard so all-approved work re-enters implementation-workflow for Step 3 reproducibility verification and Step 4 completion-menu logging before integration can be selected.
+>    → implemented: added `needs validation/completion` to the Step 1 guard and routed that frontier to Step 3 / Step 4 before integration selection (`skills/implementation-workflow/SKILL.md:31` and `skills/implementation-workflow/SKILL.md:73`).
 
 **Script:** Not applicable; documentation/reference edit.
 **Input:** `skills/planning-workflow/SKILL.md`, `skills/implementation-workflow/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/agent-orchestration/SKILL.md`.
@@ -115,7 +117,7 @@ Update `planning-workflow` so it keeps the material plan-change protocol and sta
 
 - [x] **Step 2: Delegate implementation resume selection**
 
-Update `implementation-workflow` so it treats `## Workflow Status` and task statuses as frontier evidence and continues locally only for implementation/review/adjudication frontiers.
+Update `implementation-workflow` so it treats `## Workflow Status` and task statuses as frontier evidence and continues locally only for implementation/review/adjudication or validation/completion frontiers.
 
 - [x] **Step 3: Simplify integration entry prose**
 

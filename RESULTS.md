@@ -18,7 +18,9 @@
 - The resolver explicitly treats mixed state as normal: changed tasks and affected downstream tasks can roll back while unrelated approved/integrated tasks remain preserved.
 - The resolver returns a concrete decision shape: affected frontier, preserved-approved tasks, invalidated milestones, next safe workflow entry point, and required stop point.
 - The revised resolver treats omitted / placeholder / cleared `Review status` as valid not-started task evidence that routes to implementation, not plan repair.
-- The revised resolver does not route to integration solely because `Integration status` is unset after implementation approval; integration requires a logged implementation-workflow Step 4 disposition choosing integration / PR or a current user request with that intent.
+- The revised resolver does not route to integration solely because `Integration status` is unset after implementation approval; integration requires checked `Execution complete`, current reproducibility, and a logged implementation-workflow Step 4 disposition choosing integration / PR.
+- The resolver now has an explicit `needs validation/completion` frontier for all-approved work that still needs Step 3 reproducibility / `Execution complete` or Step 4 disposition logging.
+- `needs integration` now requires approved implementation, checked `Execution complete`, current reproducibility, and a logged Step 4 integration / PR disposition.
 - Required guarantees remain in place for review approval, logged user decisions, current handoff docs, blocking review-item handling, and merge/PR gates.
 
 ### Files Changed
@@ -29,12 +31,13 @@
 
 ## Task 2: Simplify Workflow Re-Entry Prose
 
-**Status:** Completed implementation on 2026-04-23; review pending.
+**Status:** Revised implementation on 2026-04-23; awaiting narrow re-review.
 
 ### Key Findings
 - `planning-workflow` keeps the material plan-change protocol and now delegates post-edit entry selection to the main-agent resolver.
 - `planning-workflow` now clears `Review status` and `Integration status` only for changed tasks and affected downstream dependents, while preserving unrelated `APPROVED` tasks.
-- `implementation-workflow` now reads workflow/task statuses as frontier evidence and only continues locally for implementation/review/adjudication frontiers.
+- `implementation-workflow` now reads workflow/task statuses as frontier evidence and only continues locally for implementation/review/adjudication or validation/completion frontiers.
+- The validation/completion frontier stays in `implementation-workflow`: all-approved work goes through Step 3 reproducibility verification and Step 4 disposition logging before integration can be selected.
 - `integration-workflow` no longer carries broad re-entry/lighten contingency prose; it keeps Phase A-D local gates after the resolver selects entry.
 - `agent-orchestration` now scopes task sequencing and dispatch to the selected frontier instead of owning workflow-phase choice.
 
