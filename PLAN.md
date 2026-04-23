@@ -86,7 +86,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
   Define `PRE_SYNC_BASE_SHA` for incoming intent research and `BASE_HEAD_SHA` for post-sync minimum net diff.
 
 - [x] **Step 3: Split sync from integrate**
-  Dispatch one serialized `Stage: sync` implementer for semantic sync, then dispatch integration reviewer over `BASE_HEAD_SHA..HEAD`.
+  Dispatch one serialized `Stage: sync` implementer for semantic sync, handle research-owned sync decisions through the standard implementer `NEEDS_CONTEXT` / `BLOCKED` statuses, then dispatch integration reviewer over `BASE_HEAD_SHA..HEAD`.
 
 ---
 
