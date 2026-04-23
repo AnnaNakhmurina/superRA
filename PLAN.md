@@ -25,7 +25,7 @@
 - [ ] **Drift tests created** — drift tests passing on baseline (`integration-workflow` Phase A)
 - [x] **Refactored** — integration reviewer `APPROVED` on the unified sync+refactor diff (`integration-workflow` Phase B)
 - [ ] **Docs finalized** — RESULTS.md matured, project docs audited, doc-reviewer `APPROVED` (`integration-workflow` Phase C)
-- [ ] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
+- [x] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
 
 ---
 
@@ -66,6 +66,11 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 > **User decision (2026-04-22):** Rename the Codex adapter reference from `codex-tools.md` to `codex-instructions.md` and treat it as the home for high-level must-know Codex-specific instructions, including cases where superRA intentionally overrides generic Codex agent defaults.
 > **Question asked:** Rename `codex-tools` to `codex-instructions`, and can that file hold high-level Codex instructions such as the user-invoked superRA override?
 > **Rationale (if given):** Keep the Codex-specific guidance in one obvious place and make its role broader than raw tool-name mapping.
+>
+> **User decision (2026-04-22):** Open a GitHub pull request for this branch after the approved Phase B follow-up.
+> **Question asked:** Do we have a PR up, and if not, create it?
+>
+> **Integration note (2026-04-22):** Opened draft PR [#19](https://github.com/FuZhiyu/superRA/pull/19) from `analysis/codex-agent-dispatch-preference` into `main`.
 
 ### Task 1: Update the Codex instructions surface for dispatch, warm-agent lifecycle, and load semantics
 **Depends on:** *(none)*

@@ -3,7 +3,7 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-22 (Task 1)
+**Last updated:** 2026-04-22 (Task 1 / PR open)
 **Status:** Completed
 
 ---
@@ -34,3 +34,5 @@
   consistency rewrites were needed beyond one root-doc audit fix in
   `CLAUDE.md`, which now points contributors at the current adapter
   reference pattern and names `codex-instructions.md` explicitly.
+- Draft PR [#19](https://github.com/FuZhiyu/superRA/pull/19) is open
+  against `main` from `analysis/codex-agent-dispatch-preference`.
