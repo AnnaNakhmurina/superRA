@@ -10,20 +10,22 @@
 
 ## Task 1: Add Main-Agent Frontier Resolver
 
-**Status:** Completed implementation on 2026-04-23; review pending.
+**Status:** Revised implementation on 2026-04-23; awaiting narrow re-review.
 
 ### Key Findings
 - `skills/using-superRA/references/main-agent.md` now has a `Workflow Frontier Resolver` section.
 - The resolver derives the current frontier from existing durable facts instead of introducing a new `Current state` field.
 - The resolver explicitly treats mixed state as normal: changed tasks and affected downstream tasks can roll back while unrelated approved/integrated tasks remain preserved.
 - The resolver returns a concrete decision shape: affected frontier, preserved-approved tasks, invalidated milestones, next safe workflow entry point, and required stop point.
-- Required guarantees were added for review approval, logged user decisions, current handoff docs, blocking review-item handling, and merge/PR gates.
+- The revised resolver treats omitted / placeholder / cleared `Review status` as valid not-started task evidence that routes to implementation, not plan repair.
+- The revised resolver does not route to integration solely because `Integration status` is unset after implementation approval; integration requires a logged implementation-workflow Step 4 disposition choosing integration / PR or a current user request with that intent.
+- Required guarantees remain in place for review approval, logged user decisions, current handoff docs, blocking review-item handling, and merge/PR gates.
 
 ### Files Changed
 - `skills/using-superRA/references/main-agent.md`
 
 ### Notes
-- The current resolver implementation distinguishes `needs plan repair` from `inconsistent`: missing/incomplete required plan state routes to plan repair; contradictory facts that cannot be mechanically repaired route to an explicit stop point.
+- Missing task-local status evidence is treated as repair/inconsistency only when completed work or checked workflow rollups require that evidence. Valid pre-execution omissions remain normal not-started state.
 
 ## Task 2: Simplify Workflow Re-Entry Prose
 
