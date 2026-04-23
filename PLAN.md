@@ -44,7 +44,7 @@ is repo-local Codex skill discovery, not a stray custom-agent artifact.
 
 - [x] **Plan approved** — researcher signed off on data inventory + plan (`planning-workflow` Phase 2)
 - [x] **Execution complete** — all tasks `APPROVED`, pipeline reproducible (`implementation-workflow` Step 3)
-- [ ] **Drift tests created** — drift tests passing on baseline (`integration-workflow` Phase A)
+- [x] **Drift tests created** — drift tests passing on baseline (`integration-workflow` Phase A)
 - [ ] **Refactored** — integration reviewer `APPROVED` on the unified sync+refactor diff (`integration-workflow` Phase B)
 - [ ] **Docs finalized** — RESULTS.md matured, project docs audited, doc-reviewer `APPROVED` (`integration-workflow` Phase C)
 - [ ] **Merged** — branch merged to main or PR opened (`integration-workflow` Phase D)
@@ -84,6 +84,8 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 >
 > **User decision (2026-04-22):** Treat the direct-mode load path and the new harness-regression assertions as the key results to protect in Phase A.
 > **Question asked:** These results seem like the key findings to protect with drift tests before integration: (1) direct mode must load `references/direct-mode-implementer.md` / `references/direct-mode-reviewer.md`, not raw `agents/*.md`; (2) the harness check must fail if those mirror refs are missing or if `main-agent.md` regresses back to raw agent-file loads. Any result to add or remove before I log that coverage and continue?
+>
+> **Integration note (2026-04-22):** Phase A uses the direct-mode assertions already added to `tests/check-harness-compatibility.sh` as the drift guard for this follow-up; `bash tests/check-harness-compatibility.sh` re-ran green on the current branch baseline before Phase B.
 
 ### Task 1: Add skill-owned direct-mode role references and wire main-agent direct mode to them
 **Depends on:** *(none)*
