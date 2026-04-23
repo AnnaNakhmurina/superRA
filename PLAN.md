@@ -71,14 +71,18 @@
 > **Question asked:** Scope of the new notation-discipline task — ordering check only, update mechanism only, or both?
 > **Rationale:** The existing `Define` §"defined before first use" check is weak on narrative ordering and silent on how implementers should evolve canonical notation once it is in `PLAN.md`. Covering both closes the gap and keeps the Notation Conventions table load-bearing across the whole workflow, not just at planning.
 
+> **User decision (2026-04-23):** Rebase the branch onto current `main` (HEAD `b6e0640`), dropping the 34 unrelated objective-first task/step-semantics refactor commits and keeping only the 17 theory-modeling commits (`f761c26..16dcfe7` on the pre-rebase tree).
+> **Question asked:** Reorient this branch onto current main to drop the irrelevant objective-first commits — rebase or merge?
+> **Rationale:** The objective-first refactor work sat on the same branch but is a separate initiative; the user wants the theory-modeling work to stand alone on current main. Semantic-merge resolved three conflict stops during rebase (`README.md` principle #5 wording, `plan-anatomy.md` Phase B upstream-intent synthesis, `planning-workflow/SKILL.md` Remember-list synthesis, `agents/implementer.md` + mirrored `.codex/agents/superra_implementer.toml`) — base intent preserved; theory-modeling generalizations kept; objective-first-specific phrasings dropped. Derived artifacts (`direct-mode-*.md`) regenerated from the rebased agent sources. The earlier Phase B integration reviews on Tasks 2 & 3 flagged scope creep from the now-dropped commits; those findings are structurally resolved and the stale review-notes blockquotes were removed with integration status reset to the pre-integration default so Phase B re-runs against the new rebased base.
+
 ## Project Conventions
 
 Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Repo root
-- `/CLAUDE.md` (HEAD at `7d8f123`): Contributor-facing authority for superRA changes. New verticals must be added as domain skills, not workflow forks; shared checklists are load-bearing; `skill-creator` discipline applies when editing `skills/*/SKILL.md`; README, categories, and manifest surfaces must stay in sync; Codex discovery uses `.agents/skills/` symlinks and generated `.codex/agents/` files remain derived artifacts.
+- `/CLAUDE.md` (HEAD at `b6e0640`): Contributor-facing authority for superRA changes. New verticals must be added as domain skills, not workflow forks; shared checklists are load-bearing; `skill-creator` discipline applies when editing `skills/*/SKILL.md`; README, categories, and manifest surfaces must stay in sync; Codex discovery uses `.agents/skills/` symlinks and generated `.codex/agents/` files remain derived artifacts.
 - `/AGENTS.md`: symlink to `/CLAUDE.md`; same contributor guidance for AGENTS-aware harnesses.
-- `/README.md` (HEAD at `7d8f123`): User-facing overview of the plan/implement/integrate workflow, current domain skills, utility skills, installation, and hooks. Domain skill additions need matching README updates, especially the Domain Skills table and roadmap wording.
+- `/README.md` (HEAD at `b6e0640`): User-facing overview of the plan/implement/integrate workflow, current domain skills, utility skills, installation, and hooks. Domain skill additions need matching README updates, especially the Domain Skills table and roadmap wording.
 
 ### Not walked (not needed for this plan)
 - `docs/plans/` beyond targeted reference examples, `tests/claude-code/`, and harness-specific install docs outside the repo root summaries — out of scope unless verification shows a drift.
@@ -102,7 +106,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 2: Wire the new vertical into runtime surfaces, docs, and discovery
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** REVISE
+**Integration status:** *(set during integration — not filled at planning time)*
 
 **Script:** Existing workflow/docs/hook/test files named in the Implementation Inventory, plus `.agents/skills/theory-modeling`
 **Input:** The approved skill name, the new file layout from Task 1, and the current runtime/docs wording in the repo
@@ -113,13 +117,10 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - [x] Update `README.md`, `skills/CATEGORIES.md`, and `CLAUDE.md` so the vertical is documented as implemented rather than roadmap-only.
 - [x] Add `.agents/skills/theory-modeling` and extend `tests/check-harness-compatibility.sh` with the new discovery/wiring assertions.
 
-> **Review notes (integration):**
-> 1. [MAJOR] Task 2's scope contract is limited to the Implementation Inventory surfaces plus `.agents/skills/theory-modeling`, but the cumulative diff also ships the separate objective-first task-shape refactor across canonical agent/workflow/test surfaces and records that broadened scope in the handoff docs. Examples: `agents/reviewer.md:41`, `skills/implementation-workflow/SKILL.md:95`, `tests/claude-code/test-objective-first-task-semantics.sh:1`, and `RESULTS.md:34`. This fails the minimum-net-diff / focused-diff integration gate. Fix by removing or splitting the objective-first feature work off this branch, or by routing it through `planning-workflow §User Feedback and Changing Plans` as its own planned task before asking for Phase B approval again.
-
 ### Task 3: Verify the new vertical end to end and reconcile any drift
 **Depends on:** Task 1, Task 2
 **Review status:** APPROVED
-**Integration status:** REVISE
+**Integration status:** *(set during integration — not filled at planning time)*
 
 **Script:** Verification commands and any touched files needed to resolve resulting failures
 **Input:** Completed outputs from Tasks 1 and 2
@@ -131,9 +132,6 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 - [x] Generalize the Tier 3 / Never-list wording in `skills/refactor-and-integrate/references/merge-quality.md` so theory/modeling is first-class in the blocking checklist text.
 - [x] Tighten the merge-quality assertion in `tests/check-harness-compatibility.sh` so it verifies the generalized wording or explicitly fails on the old data-only phrases.
 - [x] Re-run the structural verification checks, then replace `RESULTS.md` Task 3 with the final verification outcome, remaining risks, and the exact checks that passed.
-
-> **Review notes (integration):**
-> 1. [MAJOR] Task 3's verification/output contract does not cover the archived objective-first handoff bundle and release-ledger entry now in the branch. `docs/plans/2026-04-22-objective-first-task-step-semantics-plan.md:1`, `docs/plans/2026-04-22-objective-first-task-step-semantics-results.md:9`, and `RELEASE-NOTES.md:16` document a different feature branch/PR, not theory-modeling verification. Keeping them in this Phase B diff breaks handoff-doc coherence and the minimum-net-diff rule. Remove these unrelated artifacts from the theory-modeling branch, or route them through their own planned integration path before re-dispatching integration review.
 
 ### Task 4: Tighten notation discipline — strengthen the ordering check and add an explicit Notation Conventions update mechanism
 **Depends on:** Task 1

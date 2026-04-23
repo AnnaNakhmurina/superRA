@@ -3,8 +3,8 @@
 > Mirrors `PLAN.md` structure. Updated after each task with key findings.
 > New agents: read `PLAN.md` for what to do, `RESULTS.md` for what was found.
 
-**Last updated:** 2026-04-23 (Task 4 implemented and APPROVED; execution complete; harness compatibility checks pass)
-**Status:** Execution complete; integration review on Tasks 2–3 (pre-existing REVISE items) pending researcher follow-up
+**Last updated:** 2026-04-23 (branch rebased onto current `main` `b6e0640`, dropping 34 unrelated objective-first commits; theory-modeling commits replayed with semantic-merge conflict resolution; harness compatibility checks pass)
+**Status:** Execution complete on the rebased branch; Phase B integration review pending against the new base (prior Phase B REVISE findings structurally resolved by the dropped commits)
 
 ---
 
