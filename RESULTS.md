@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-22 (execution complete)
-**Status:** Execution complete
+**Last updated:** 2026-04-22 (Phase B approved)
+**Status:** In integration
 
 ---
 
@@ -31,6 +31,13 @@
   the change, including the new direct-mode role-mirror assertions.
 - Review: the in-session reviewer pass found no remaining blocking
   issues in the new load path or the direct-mode regression guard.
+- Phase B integration review found one cumulative-diff cleanup item:
+  trailing whitespace in
+  `skills/using-superRA/references/main-agent.md`. After that fix,
+  `git diff --check addc9ca7fe1bdbedb080d92095facb649074c1e4..HEAD` and
+  `bash tests/check-harness-compatibility.sh` both passed, and no
+  mechanical merge commit from `origin/main` was needed because
+  `origin/main` was already an ancestor of the branch.
 
 ## Task 2: Document and validate the temporary manual-mirror approach
 
@@ -44,6 +51,10 @@
   direct-mode reference files, ensure `main-agent.md` points at them,
   reject regressions back to raw `agents/*.md`, and require each mirror
   to declare its canonical source plus temporary-manual-mirror status.
+- Phase A drift coverage for this follow-up is the same harness check:
+  the direct-mode assertions in
+  `tests/check-harness-compatibility.sh` now serve as the branch's
+  drift guard, and the suite re-ran green on the integration baseline.
 - The archived 2026-04-22 plan/results pair already points at this
   follow-up plan/results from commit `cc4ea46`, so no further archive
   edit was needed in this implementation pass.
