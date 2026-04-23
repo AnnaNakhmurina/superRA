@@ -14,7 +14,7 @@
 
 **Output:** Updated workflow, semantic-merge mode references, handoff anatomy, role docs, generated Codex artifacts, tests, and public/contributor documentation.
 
-**Expected Results / Hypotheses:** The revised workflow dispatches generic sync author and sync reviewer agents that load semantic-merge mode references; `## Sync Map` records branch-level thesis and clusters; affected task blocks carry short `**Sync impact:**` pointers; standalone semantic-merge can complete a full semantic merge with follow-up propagation commits while stopping before broad refactor.
+**Expected Results / Hypotheses:** The revised workflow dispatches generic sync author and sync reviewer agents that load semantic-merge mode references; `## Sync Map` records branch-level thesis and clusters; affected task blocks carry short `**Sync impact:**` pointers; both workflow and standalone modes land exactly one minimal merge commit that leaves existing protection passing, with broader propagation deferred to `refactor-and-integrate` (workflow) or the caller (standalone).
 
 **Sensitivity Analysis:** Verify stale `Stage: sync` / branch-level exception language is removed or intentionally retained only as compatibility text. Verify integration reviewers do not need to load full semantic-merge.
 
@@ -58,6 +58,10 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **Question asked:** Does sync-map-format.md earn its keep given integration agents do not load it, and did the lean SKILL.md body lose procedural knowledge (role classification, regeneration preference, stale-reference sweep, dirty-state handling) the global semantic-merge skill carried?
 > **Rationale (if given):** Integration agents consume Sync Map / Sync impact as prose, not as format spec — the format's only real consumers are the sync author (writer) and sync reviewer (verifier), so the author can own it and the reviewer can point at it; the Standalone Merge Record has a single consumer and collapses into standalone-merge.md. Separately, the "write good sync notes" side of semantic-merge is the valuable output: if the sync author does not classify generated outputs, prefer regeneration, or sweep stale references, the Sync Map obligations they write are thinner than the global skill's equivalent. Workflow and standalone should be symmetric on that procedural knowledge. Workflow impact: adds Task 6; holds `Execution complete`, `Integrated`, and `Docs finalized` until Task 6 is APPROVED.
 
+> **User decision (2026-04-23, post-Task-6 clarification):** Collapse the sync commit shape to a single unambiguous rule for both modes — land exactly one minimal merge commit that leaves existing protection passing; defer broader propagation to Integrate (workflow) or to the caller / `refactor-and-integrate` (standalone).
+> **Question asked:** What does "exactly one sync commit" mean — does it include semantic propagation or only mechanical conflict resolution — and should workflow vs standalone have different commit-shape rules (1 vs 1+N)?
+> **Rationale (if given):** Two different commit-shape patterns across modes (1 vs 1+N) is confusing and blurs the Sync / Integrate boundary. A single rule — "one minimal commit that passes existing protection" — uses the Protection step (drift tests + key-result coverage from `integration-workflow` Phase A, or existing tests / drift tests for standalone) as the unambiguous definition of "not broken." Broader propagation (caller updates for renames, output regeneration, drift-test expectation updates, project-doc audit) defers out of semantic-merge's scope. Workflow impact: refines Task 6's semantic-merge output; no new task block needed.
+
 ---
 
 ### Task 1: Refactor semantic-merge around shared principles and mode references
@@ -79,7 +83,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
   Create or update a reference for a generic sync reviewer agent. It verifies anchors, incoming intent, conflict resolution, user-decision logging, Sync Map completeness, task-local Sync impact coverage, and scope boundary before Integrate begins.
 
 - [x] **Step 4: Add standalone full merge mode**
-  Create or update a reference for direct semantic-merge use outside integration-workflow. It reconstructs current-branch intent when no PLAN.md already carries it, creates a merge-specific record when needed, completes the sync plus follow-up semantic propagation commits, runs relevant checks/drift tests, and stops before broad codebase refactor.
+  Create or update a reference for direct semantic-merge use outside integration-workflow. It reconstructs current-branch intent when no PLAN.md already carries it, creates a merge-specific record when needed, lands exactly one minimal merge commit that leaves existing tests and drift tests passing, and defers broader propagation to the caller (or to `refactor-and-integrate` invoked after the skill returns).
 
 ---
 
