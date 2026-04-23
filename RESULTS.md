@@ -3,14 +3,14 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-22 (implementation)
-**Status:** In Progress
+**Last updated:** 2026-04-22 (execution complete)
+**Status:** Execution complete
 
 ---
 
 ## Task 1: Add skill-owned direct-mode role references and wire main-agent direct mode to them
 
-**Status:** Implemented
+**Status:** Approved
 
 - Chose a narrow manual-copy boundary: the mirrored files carry the
   direct-mode role protocol the main agent actually needs in-session
@@ -29,10 +29,12 @@
   `agents/*.md`.
 - Validation: `bash tests/check-harness-compatibility.sh` passed after
   the change, including the new direct-mode role-mirror assertions.
+- Review: the in-session reviewer pass found no remaining blocking
+  issues in the new load path or the direct-mode regression guard.
 
 ## Task 2: Document and validate the temporary manual-mirror approach
 
-**Status:** Implemented
+**Status:** Approved
 
 - Added contributor guidance in `CLAUDE.md` that direct mode must load
   the skill-owned role mirrors and that any direct-mode-relevant change
@@ -49,3 +51,5 @@
   check treat it as the repo-local Codex skill-discovery surface rather
   than a stray generated agent artifact, so this pass intentionally does
   not delete it.
+- Review: the in-session reviewer pass found the maintenance rule and
+  new harness assertions coherent with the contributor guidance.
