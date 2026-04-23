@@ -137,7 +137,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Task 4: Tighten notation discipline — strengthen the ordering check and add an explicit Notation Conventions update mechanism
 **Depends on:** Task 1
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(set during integration — not filled at planning time)*
 
 **Script:** `skills/theory-modeling/SKILL.md`, `skills/theory-modeling/references/planning.md`
