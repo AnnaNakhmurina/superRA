@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (clarity revision implemented)
-**Status:** Resolver clarity revision implemented; reviewer passes pending.
+**Last updated:** 2026-04-23 (clarity revision verified)
+**Status:** Implementation complete and verified; awaiting researcher disposition.
 
 ---
 
@@ -38,7 +38,7 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 
 ## Task 2: Replace Contingency Taxonomy with a Frontier Mechanism
 
-**Status:** Implemented; reviewer passes pending.
+**Status:** Approved.
 
 ### Findings
 - Replaced the resolver's named `needs ...` outcome list with an ordered mechanism in `skills/using-superRA/references/main-agent.md`.
@@ -71,7 +71,7 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 
 ## Task 4: Audit Against Adaptive-Composable Design
 
-**Status:** Reopened for clarity review.
+**Status:** Approved.
 
 ### Findings
 - The modified resolver reads as a mechanism: evidence first, affected-frontier calculation, ordered owner routing, and safety invariants.
@@ -79,6 +79,7 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 - Ownership boundaries remain aligned with AGENTS.md: `using-superRA` owns the shared workflow map, `main-agent.md` owns the resolver, workflow skills own local gates, `agent-orchestration` owns dispatch/status mechanics, and `handoff-doc` owns document semantics.
 - Design-text search no longer finds the old resolver state labels in modified resolver/call-site prose. Remaining hits are intentional non-taxonomy uses: the explicit `Current state` prohibition, local `skip` / `re-entry` wording in workflow gates and adapter/domain skills, and unrelated discard/AskUserQuestion wording.
 - The next audit will add reviewer feedback specifically on clarity and the boundary between resolver routing and the change-plan protocol.
+- A focused reviewer pass approved the clarity revision, including the diagnosis/routing distinction, change-plan boundary, workflow-status rollups, and task-local status preservation.
 
 ### Verification Commands
 - `rg -n "needs plan repair|needs implementation|awaiting review|needs validation|Current state|state machine|skip|resume|re-entry|if .* then|under .* condition" skills/using-superRA skills/*/SKILL.md`
