@@ -181,7 +181,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 ### Task 6: Restructure semantic-merge skill for owner-located formats and symmetric procedural richness
 **Depends on:** Task 1, Task 2, Task 3, Task 4, Task 5
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(pending)*
 
 **Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/semantic-merge/references/sync-map-format.md` (to be deleted), `skills/handoff-doc/references/plan-anatomy.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, and any other file pointing at `sync-map-format.md`.
