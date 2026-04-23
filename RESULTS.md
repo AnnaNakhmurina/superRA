@@ -3,8 +3,8 @@
 > Mirrors `PLAN.md` structure. Updated after each task with key findings.
 > New agents: read `PLAN.md` for what to do, `RESULTS.md` for what was found.
 
-**Last updated:** 2026-04-22 (execution verified; all task reviews approved)
-**Status:** Execution complete
+**Last updated:** 2026-04-23 (Task 4 added per researcher feedback — notation discipline tightening; execution re-opened)
+**Status:** Task 4 pending implementation; Tasks 1–3 approved; integration review on Tasks 2–3 pending researcher follow-up
 
 ---
 
@@ -68,3 +68,13 @@ assert 'Model Inventory / Assumption Map' in theory_planning_text, 'theory-model
 print('theory-modeling discovery/routing smoke check passed')
 PY
 ```
+
+## Task 4: Tighten notation discipline — strengthen the ordering check and add an explicit Notation Conventions update mechanism
+
+**Status:** Not started (planned 2026-04-23)
+
+### Key Findings
+- *(to be filled at implementation time)*
+
+### Notes
+- *(to be filled at implementation time)*

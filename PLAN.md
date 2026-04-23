@@ -41,7 +41,7 @@
 ## Workflow Status
 
 - [x] **Plan approved** — researcher signed off on the direction and the initial scope for v1
-- [x] **Execution complete** — all tasks `APPROVED`, verification checks pass
+- [ ] **Execution complete** — all tasks `APPROVED`, verification checks pass
 - [ ] **Drift tests created** — integration-phase protection added and passing on baseline
 - [ ] **Refactored** — integration reviewer `APPROVED`
 - [ ] **Docs finalized** — `RESULTS.md` matured, project docs audited, doc-reviewer `APPROVED`
@@ -66,6 +66,10 @@
 
 > **User decision (2026-04-22):** Use `main` as the integration base.
 > **Question asked:** Is `origin/main` the correct base for Phase B integration, or did this branch split from a different base?
+
+> **User decision (2026-04-23):** Add Task 4 covering both (a) a strengthened notation-ordering check and (b) an explicit mechanism for updating the PLAN.md Notation Conventions table during implementation.
+> **Question asked:** Scope of the new notation-discipline task — ordering check only, update mechanism only, or both?
+> **Rationale:** The existing `Define` §"defined before first use" check is weak on narrative ordering and silent on how implementers should evolve canonical notation once it is in `PLAN.md`. Covering both closes the gap and keeps the Notation Conventions table load-bearing across the whole workflow, not just at planning.
 
 ## Project Conventions
 
@@ -130,3 +134,18 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 > **Review notes (integration):**
 > 1. [MAJOR] Task 3's verification/output contract does not cover the archived objective-first handoff bundle and release-ledger entry now in the branch. `docs/plans/2026-04-22-objective-first-task-step-semantics-plan.md:1`, `docs/plans/2026-04-22-objective-first-task-step-semantics-results.md:9`, and `RELEASE-NOTES.md:16` document a different feature branch/PR, not theory-modeling verification. Keeping them in this Phase B diff breaks handoff-doc coherence and the minimum-net-diff rule. Remove these unrelated artifacts from the theory-modeling branch, or route them through their own planned integration path before re-dispatching integration review.
+
+### Task 4: Tighten notation discipline — strengthen the ordering check and add an explicit Notation Conventions update mechanism
+**Depends on:** Task 1
+**Review status:** *(set at review time)*
+**Integration status:** *(set during integration — not filled at planning time)*
+
+**Script:** `skills/theory-modeling/SKILL.md`, `skills/theory-modeling/references/planning.md`
+**Input:** Existing Define-Derive-Validate checklist (SKILL.md) and the Model Inventory / Assumption Map template (references/planning.md)
+**Output:** A stronger `Define` block that enforces narrative-order introduction of symbols and names PLAN.md's Notation Conventions table as the authoritative cross-task source, plus an explicit rule — in both the skill body and the planning reference — that implementers inline-edit the Notation Conventions table BEFORE using any newly introduced symbol in algebra, committed atomically with the work.
+
+- [ ] Rewrite the existing `Define` §`[BLOCKING]` *"Every symbol is defined before first use"* item in `skills/theory-modeling/SKILL.md` to require (a) narrative-order introduction — a symbol may not appear in any derivation, equation, proof step, or verification before the paragraph/table that introduces it; and (b) PLAN.md Notation Conventions as the authoritative source for any symbol reused across tasks.
+- [ ] Add a new `[BLOCKING]` item (either in `Define` or in `Documentation and handoff`) stating: when implementation introduces a symbol not yet in PLAN.md's Notation Conventions table, update the table via inline-edit BEFORE using the symbol in algebra, and commit the PLAN.md edit atomically with the derivation work. Reference `superRA:handoff-doc` inline-edit discipline rather than restating it.
+- [ ] Mirror the update mechanism in `skills/theory-modeling/references/planning.md` — under "Principles" or a new short subsection — so the planning reference flags that the Notation Conventions table is a living record, not a one-time planning artifact.
+- [ ] Add one row to the Common Rationalizations table in `SKILL.md` capturing the new failure mode (e.g., "I'll update the Notation Conventions table after the derivation is clean." → "Late notation updates mean the derivation was written against undefined symbols; update the table first, then derive.").
+- [ ] Sanity-read the edits for internal consistency with the Iron Law and existing checklist items; update `RESULTS.md` Task 4 with the final checklist wording and any open caveats.
