@@ -97,7 +97,7 @@ Keep the resolver's mechanism in `main-agent.md`; avoid named state taxonomies o
 
 ### Task 2: Replace Contingency Taxonomy with a Frontier Mechanism
 **Depends on:** Task 1
-**Review status:** *(not started)*
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 **Script:** Not applicable; documentation/reference edit.
@@ -120,7 +120,7 @@ Replace the `needs ...` taxonomy with a canonical-order procedure: repair/log pl
 
 Retain explicit guards where unpredictable behavior is likely: no unlogged material user decision, no new global `Current state` field, no clearing unrelated task statuses, no integration before implementation validation and logged disposition, and no merge/PR before integration, documentation, and freshness gates.
 
-- [ ] **Step 5: Tighten resolver prose for clarity**
+- [x] **Step 5: Tighten resolver prose for clarity**
 
 Rewrite the resolver section so the distinction between diagnosis, routing, plan-change handling, and workflow-owned actions is clear. Avoid abstract phrases such as "boxes whose guarantee is false"; use direct language about workflow milestones, task-level status, and the owning workflow.
 

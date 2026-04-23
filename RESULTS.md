@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (clarity revision planned)
-**Status:** Resolver clarity revision in progress.
+**Last updated:** 2026-04-23 (clarity revision implemented)
+**Status:** Resolver clarity revision implemented; reviewer passes pending.
 
 ---
 
@@ -38,14 +38,16 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 
 ## Task 2: Replace Contingency Taxonomy with a Frontier Mechanism
 
-**Status:** Reopened for clarity revision.
+**Status:** Implemented; reviewer passes pending.
 
 ### Findings
 - Replaced the resolver's named `needs ...` outcome list with an ordered mechanism in `skills/using-superRA/references/main-agent.md`.
 - Preserved the evidence contract: git state, handoff-doc presence and consistency, workflow rollups, decisions, upstream intent, task dependencies/statuses/review notes, and RESULTS.md sections.
 - Preserved the decision object: affected frontier, preserved-approved tasks, invalidated milestones, next owner/layer, and required stop point.
 - Kept explicit safety invariants for the predictable failure modes: no global `Current state` field, no unlogged material decisions, no clearing unrelated task statuses, no implementation advancement without review/adjudication, no integration before reproducibility/disposition, and no merge/PR before integration/docs/freshness gates.
-- The next revision will tighten wording so the resolver reads as a clear diagnostic and routing mechanism, not as an abstract rule list.
+- The clarity revision now separates diagnosis/routing from workflow-owned actions: `main-agent.md` says the resolver diagnoses and routes, while the owning workflow performs plan edits, implementation, integration, or merge work.
+- The rollup wording now says checked milestones are invalid when they no longer match task evidence or required global gates; the owning workflow or plan-change protocol should uncheck them and record why.
+- The plan-change boundary is explicit: material plan changes route to `planning-workflow §User Feedback and Changing Plans`, then the resolver runs again after the docs are updated.
 
 ### Files Changed
 - `skills/using-superRA/references/main-agent.md`
