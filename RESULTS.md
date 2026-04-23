@@ -24,7 +24,7 @@
 
 **Status:** Implemented; awaiting review
 
-`skills/handoff-doc/references/plan-anatomy.md` and `skills/semantic-merge/references/sync-map-format.md` now separate branch-level `## Sync Map` thesis from task-local `**Sync impact:**` pointers. Standalone mode uses `SEMANTIC_MERGE.md` with a file / script impact map when no PLAN.md task structure exists.
+`skills/semantic-merge/references/sync-map-format.md` owns the authoritative format templates for the branch-level `## Sync Map` and the task-local `**Sync impact:**` field. `skills/handoff-doc/references/plan-anatomy.md` describes the section's purpose, ownership (including the sync-reviewer minimal-map exception), lifecycle, and placement, and points at the format reference rather than duplicating the templates. Standalone mode uses `SEMANTIC_MERGE.md` with a file / script impact map when no PLAN.md task structure exists.
 
 ## Task 4: Simplify canonical role docs and post-sync integration consumption
 
