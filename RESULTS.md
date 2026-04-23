@@ -22,9 +22,9 @@
 
 ## Task 3: Define Sync Map, task-local Sync impact, and standalone file-impact anatomy
 
-**Status:** Implemented; awaiting review
+**Status:** APPROVED (Task 3 consolidated format ownership; Task 6 later relocated the format to its owning mode reference, see Task 6 section below).
 
-`skills/semantic-merge/references/sync-map-format.md` owns the authoritative format templates for the branch-level `## Sync Map` and the task-local `**Sync impact:**` field. `skills/handoff-doc/references/plan-anatomy.md` describes the section's purpose, ownership (including the sync-reviewer minimal-map exception), lifecycle, and placement, and points at the format reference rather than duplicating the templates. Standalone mode uses `SEMANTIC_MERGE.md` with a file / script impact map when no PLAN.md task structure exists.
+`skills/semantic-merge/references/workflow-sync-author.md` owns the authoritative format templates for the branch-level `## Sync Map` and the task-local `**Sync impact:**` field (moved from `sync-map-format.md` in Task 6). `skills/handoff-doc/references/plan-anatomy.md` describes the section's purpose, ownership (including the sync-reviewer minimal-map exception), lifecycle, and placement, and points at the format reference rather than duplicating the templates. Standalone mode uses `SEMANTIC_MERGE.md` with a file / script impact map defined in `skills/semantic-merge/references/standalone-merge.md` when no PLAN.md task structure exists.
 
 ## Task 4: Simplify canonical role docs and post-sync integration consumption
 
