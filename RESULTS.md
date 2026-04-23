@@ -18,7 +18,7 @@ Implementation commit `8c39023` moves semantic sync ownership into `semantic-mer
 
 **Status:** Implemented; pending review
 
-Implementation commit `8c39023` rewrites `skills/integration-workflow/SKILL.md` around Protect -> Sync -> Integrate -> Document -> Finish. The Sync step computes `PRE_SYNC_BASE_SHA` and `BASE_HEAD_SHA`, dispatches one `Stage: sync` implementer, and moves post-sync review to `BASE_HEAD_SHA..HEAD`.
+`skills/integration-workflow/SKILL.md` now runs Protect -> Sync -> Integrate -> Document -> Finish. The Sync step computes `PRE_SYNC_BASE_SHA` and `BASE_HEAD_SHA`, dispatches one `Stage: sync` implementer, handles research-owned sync decisions through the standard `NEEDS_CONTEXT` / `BLOCKED` implementer statuses, and moves post-sync review to `BASE_HEAD_SHA..HEAD`.
 
 ## Task 3: Narrow refactor-and-integrate to post-sync quality
 
