@@ -99,7 +99,65 @@ There is also an overview placement gap. README explains the PLAN -> IMPLEMENT -
 
 ## Task 6: Audit Agent Role Specs and `using-superRA` Surfaces
 
-**Status:** Not started.
+**Status:** IMPLEMENTED — scope covered role specs (`agents/implementer.md`, `agents/reviewer.md`), the master skill (`skills/using-superRA/SKILL.md`), and every reference under `skills/using-superRA/references/`. Generated direct-mode role references were regenerated from the updated source specs per `CLAUDE.md §Architectural Patterns`.
+
+### Summary of Cuts and Pointers
+
+**`agents/implementer.md`** — 54 lines removed net (~35 % shorter).
+- DELETED — §Stage → skills and references wrapper paragraph (already the exhaustive authoritative line in `superRA:using-superra` §Skill-Load Manifest; the wrapper was anti-pattern "wrapper instructions around authoritative content").
+- DELETED — §What the dispatch prompt carries — and doesn't "narration" paragraph describing which pieces live where (pure "here is what you will receive" anti-pattern). The behavior-shaping "treat paraphrased dispatch content as over-specification" sentence was KEPT and consolidated into the renamed §Dispatch Inputs section.
+- DELETED — §Execution Protocol §Data-First Discipline bullets (describe / log row counts / validate / document decisions) — owned by `econ-data-analysis`. Replaced with a one-line POINTER: "Follow the discipline of the domain skill you loaded for this Stage."
+- DELETED — §Execution Protocol §While You Work paragraph (duplicated under §Escalation already).
+- DELETED — Step 6 Worktree wrapper in §Before You Start ("If the dispatch includes a `Worktree:` field, follow the canned steering...") — explicitly called out as anti-pattern in Task 5. The substantive behavior is in the dispatch's `Additionally:` line itself and in `agent-orchestration §Parallelization`; the wrapper added nothing.
+- DELETED — example nested bullets under Step 1 ("At integration stage, you always load ...; for data analysis work, you load ...") — these are already specified in the Skill-Load Manifest.
+- POINTER — §Editing Etiquette three-rule block collapsed to three one-liners and a pointer to `superRA:handoff-doc` for the full discipline. KEPT the inline-edit / task-block-boundary / doc-before-report rules as one-liners because they are behavior-shaping for every implementer edit.
+- POINTER — Worktree-return rule in §Handoff trimmed to one line ("Return the `<branch>/parallel/<slug>` branch name and HEAD SHA in your status report. Do not merge, rebase, push, or touch worktree lifecycle — the orchestrator owns harvest-out.") since the lifecycle rules themselves live in `agent-orchestration`.
+- KEPT — the "Evidence before claims" IDENTIFY / RUN / READ / VERIFY gate (behavior-shaping and non-default); §What You Own, What You Don't (behavior-shaping ownership rules); §How You Fix Review Items on a REVISE Round (non-default ordering constraint); §Pre-Commit Self-Check checklist (behavior-shaping); §Report Format (field list is behavior-shaping).
+
+**`agents/reviewer.md`** — 38 lines removed net (~20 % shorter).
+- DELETED — §Stage → skills and references and §What the dispatch prompt carries wrapper paragraphs (same anti-patterns as in implementer.md).
+- DELETED — example nested bullets under the manifest-loading step.
+- DELETED — long "The orchestrator populated it at planning time" narration in the §Project Conventions reading step — collapsed to behavior-shaping one-liner ("code that ignores a documented convention is a MAJOR integration-review finding" is KEPT).
+- POINTER — §Editing Etiquette three-rule block collapsed to one-liners plus pointer to `superRA:handoff-doc`.
+- KEPT — §Severity Levels (authoritative severity rubric), §Verdict protocol (non-default ordering constraint), §How You Write a Review first-review and re-review procedures (non-default), §CRITICAL severity invariant, §Pre-Commit Self-Check, §Report Format.
+- Also fixed a stray `into dispatch prompts.` fragment in the frontmatter description (dangling orphan from a prior edit).
+
+**`skills/using-superRA/SKILL.md`** — 1 line tightened.
+- Trimmed the over-long paragraph describing where handoff-doc discipline lives (it is now one sentence pointing at the role-spec compact etiquette and `superRA:handoff-doc`).
+- KEPT — Runtime Workflow Map, Commit Hygiene, Skill Inventory, Skill-Load Manifest, Instruction Priority. These are all authoritative content owned by this skill.
+
+**`skills/using-superRA/references/main-agent.md`** — §Execution Modes collapsed from 28 lines to 10 lines.
+- DELETED — the Codex-agent block at the bottom of §Execution Modes (lines 139-153 pre-edit). It was a near-duplicate of `codex-instructions.md §Delegation Priority in Codex` with a typo (`spwawn`) and a dangling orphan fragment ("when the workflow allows it and the user requested it, the task is trivial, or agent tools are unavailable."). Replaced with a single-line POINTER: "Codex agents: MUST load `references/codex-instructions.md` immediately."
+- KEPT — §Session Start Actions, §Load the Handoff-Doc Skill, §Workflow Frontier Resolver (Task 2 owner), §Changes of the Plan (pointer), §Three Pause Classes, §Proceed Without Asking, §Banned Phrasings, §One Question at a Time, §Log Before You Act. All behavior-shaping; most are authoritative for their concern.
+- KEPT — Subagent-default sentence and the direct-mode protocol bullets. Behavior-shaping (they shape when the main agent dispatches vs stays inline).
+
+**`skills/using-superRA/references/codex-instructions.md`** — no edits. Audit pass confirmed this file is the authoritative owner of Codex delegation priority, warm-agent lifecycle, and tool-map content; every line is either a non-default constraint or a tool-name mapping. POINTER target check: `main-agent.md`'s §Execution Modes now cites this file correctly.
+
+**`skills/using-superRA/references/claude-tools.md`, `copilot-tools.md`, `gemini-tools.md`** — no edits. These are adapter tool-name mapping tables; every row is behavior-shaping (the tool-name mapping is the content).
+
+**`skills/using-superRA/references/direct-mode-implementer.md`, `direct-mode-reviewer.md`** — regenerated from the updated source specs. Per `CLAUDE.md §Architectural Patterns` (Generated artifacts stay generated), these are not hand-edited. The generator now:
+1. No longer reads a `## Stage → skills and references` section (removed from source per Task 6); direct-mode's own §Before You Start step 1 carries the manifest-load instruction.
+2. Produces a compact direct-mode §Before You Start that mirrors the trimmed subagent version — POINTER style, no example nested bullets.
+3. Drops the cleanup_implementer_execution_protocol and cleanup_implementer_handoff pattern-replace helpers (their targets no longer exist in source); kept the reviewer-side strip_subsection of §Report Format and the "ad-hoc default" deletion because those fragments still appear in the subagent body.
+
+### Verification
+
+- `python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check` — PASS.
+- `python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py` — 5 tests pass (generator idempotency, direct-mode round-trip, managed-header presence, conflict handling, regenerate-hint).
+- `git diff --check` — clean.
+- Cross-check: every POINTER inserted this round points at content that actually exists at the cited source — `superRA:handoff-doc` carries the full editing-etiquette discipline; `econ-data-analysis` (per `econ-data-analysis/SKILL.md §Discipline`) carries Data-First principles; `codex-instructions.md §Delegation Priority in Codex` carries the Codex named-agent rule.
+
+### Files Changed
+
+- `agents/implementer.md`
+- `agents/reviewer.md`
+- `skills/using-superRA/SKILL.md`
+- `skills/using-superRA/references/main-agent.md`
+- `skills/using-superRA/references/direct-mode-implementer.md` (regenerated)
+- `skills/using-superRA/references/direct-mode-reviewer.md` (regenerated)
+- `skills/codex-superra-setup/scripts/sync_codex_agents.py`
+- `.codex/agents/superra_implementer.toml` (regenerated)
+- `.codex/agents/superra_reviewer.toml` (regenerated)
 
 ## Task 7: Audit Workflow Skills and `agent-orchestration`
 
