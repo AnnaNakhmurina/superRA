@@ -3,26 +3,24 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-24 (Task 11 branch-wide integration refactor implemented; awaiting integration review)
-**Status:** Integration closeout is pending trusted review of `git diff origin/main..HEAD`. Tasks 8-11 are marked integration IMPLEMENTED after the branch-wide minimum-net-diff / DRY-Necessity pass.
+**Last updated:** 2026-04-24 (integration approved; release prep)
+**Status:** Tasks 1-11 are approved. The closeout archives PLAN.md / RESULTS.md and prepares the 0.1.2 release metadata; final merge / publish is not performed in this session.
 
 ---
 
-## Integration Review Quality Blocker
+## Integration Closeout
 
-The earlier `30e94f6` integration approval remains invalid as a closeout gate. Tasks 9-11 now repair the issue by splitting result protection from codebase integration, rebuilding `refactor-and-integrate` around minimum net diff, and re-auditing the full current governing diff `origin/main..HEAD`.
-
-The branch is ready for a fresh integration reviewer pass; closeout should wait for that reviewer to verify the Task 11 Final Diff Self-Check against the actual diff.
+The earlier `30e94f6` integration approval was superseded. Tasks 9-11 split result protection from codebase integration, rebuilt `refactor-and-integrate` around minimum net diff, and re-audited the full current governing diff. A direct reviewer pass approved Tasks 8-11 after that pruning.
 
 ## Task 1: Refactor semantic-merge around shared principles and mode references
 
-**Status:** Implemented; awaiting review
+**Status:** APPROVED
 
 `skills/semantic-merge/SKILL.md` now carries only shared semantic-sync principles and mode selection. New references split workflow sync authoring, workflow sync review, standalone full merge, Sync Map / impact formats, and shared sync-quality checks.
 
 ## Task 2: Rewrite integration-workflow Sync choreography for generic agents
 
-**Status:** Implemented; awaiting review
+**Status:** APPROVED
 
 `skills/integration-workflow/SKILL.md` keeps base/ref anchoring in the workflow, dispatches a `Stage: sync` generic sync author, dispatches a `Stage: sync` generic sync reviewer before Integrate, and starts Integrate only after sync review approval.
 
@@ -34,7 +32,7 @@ The branch is ready for a fresh integration reviewer pass; closeout should wait 
 
 ## Task 4: Simplify canonical role docs and post-sync integration consumption
 
-**Status:** Integration pruning fix implemented; awaiting narrow re-review
+**Status:** APPROVED after integration pruning
 
 Canonical implementer/reviewer docs no longer carry `Stage: sync` branch-level exceptions. `using-superRA` removes Sync from the task-scoped Skill-Load Manifest and records Sync as a generic semantic-merge dispatch. `refactor-and-integrate` now consumes task-local Sync impact and referenced Sync Map clusters without reloading full semantic-merge. Generated Codex agents and direct-mode role references were refreshed.
 
@@ -166,7 +164,7 @@ git diff --check  # clean
 
 ## Task 8: Reframe Sync notes as post-sync context, not integration targets
 
-**Status:** Implemented; awaiting review.
+**Status:** APPROVED.
 
 Reframed the Sync / Integrate boundary so semantic-merge resolves semantic coherence and records context, while Integrate reviews codebase coherence. Workflow Sync Map clusters, task-local `**Sync impact:**`, and standalone `SEMANTIC_MERGE.md` records now explain the approved post-sync diff; they are not unresolved semantic-sync or integration work queues.
 
@@ -195,7 +193,7 @@ The terminology scan returned only the intentional historical command record in 
 
 ## Task 9: Split result protection out of refactor-and-integrate
 
-**Status:** IMPLEMENTED for integration; awaiting integration review.
+**Status:** APPROVED.
 
 Result protection is now a standalone utility skill. Protect-stage agents load `result-protection` through the `Stage: protection` manifest row, Sync-stage agents load `semantic-merge` through the `Stage: sync` manifest row, and `refactor-and-integrate` remains the Integrate-stage codebase-coherence skill. Drift tests remain the current/default mechanism for protecting key results.
 
@@ -213,7 +211,7 @@ Task 10 removed the legacy drift-test ownership text from `refactor-and-integrat
 
 ## Task 10: Rebuild refactor-and-integrate around minimum net diff
 
-**Status:** IMPLEMENTED for integration; awaiting integration review.
+**Status:** APPROVED.
 
 `refactor-and-integrate` is now a codebase-coherence utility centered on minimum net diff, Project Doc Audit, Sync impact as justification evidence, and implementer Final Diff Self-Check. The old `codebase-integration.md`, `drift-test-quality.md`, and `merge-quality.md` references were removed from this skill's ownership surface; result-protection owns drift-test quality.
 
@@ -221,7 +219,7 @@ This pass also added an explicit caller-provided baseline override so dispatches
 
 ## Task 11: Re-audit the surviving diff under the current integration gate
 
-**Status:** IMPLEMENTED; awaiting integration review.
+**Status:** APPROVED.
 
 The governing diff for this pass is `git diff origin/main..HEAD`, not the recorded Sync base `30d6c91..HEAD`. The newer `origin/main` commits only overlapped `skills/planning-workflow/SKILL.md`; the branch now preserves main's header-field sweep while retaining this branch's Sync/Document vocabulary, so no semantic re-sync was needed for the refactor pass.
 

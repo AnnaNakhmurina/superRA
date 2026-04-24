@@ -31,11 +31,11 @@
 ## Workflow Status
 
 - [x] **Plan approved** - current semantic-sync redesign captured below.
-- [ ] **Execution complete** - blocked on Tasks 9-11 after the latest integration review exposed a minimum-net-diff failure in `refactor-and-integrate`.
+- [x] **Execution complete** - all task and integration review gates are approved.
 - [x] **Drift tests created** - not applicable for this skill-design change; no drift-test-bearing outputs changed.
-- [ ] **Integrated** - blocked until Tasks 8-11 receive trusted integration approval on `BASE_HEAD_SHA..HEAD`.
-- [ ] **Docs finalized** - pending.
-- [ ] **Finished** - not requested in this session.
+- [x] **Integrated** - Tasks 8-11 received trusted integration approval after the branch-wide pruning pass.
+- [x] **Docs finalized** - PLAN.md and RESULTS.md archived under `docs/plans/`.
+- [ ] **Finished** - final merge / publish not performed in this session.
 
 ---
 
@@ -82,6 +82,10 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 > **User decision (2026-04-24, result protection split and minimum-net-diff refactor):** Split result protection out of `refactor-and-integrate` into its own general utility: Protect should mean protecting key results, with drift tests as the current/default mechanism. Rebuild `refactor-and-integrate` around codebase coherence and minimum net diff. Integration implementers must leave a compact final diff self-check trail even when they make no code change; suspicious hunks may carry explicit justification, and the orchestrator removes temporary trails with the Sync Map at Integrate closeout. The repo-specific DRY / Necessity gate remains mandatory for `skills/*` and `agents/*`; the general minimum-net-diff discipline should be framed as avoiding unjustified scope, defensive edits, and overengineering rather than exporting this repo's "no overprescription" label everywhere.
 > **Question asked:** How should the failed Task 8 integration review be repaired structurally?
 > **Rationale (if given):** A reviewer can verify an implementer trail, but reviewing reviewers creates another prose surface. The durable mechanism is an implementer self-check that the reviewer can compare against the actual governing diff.
+
+> **User decision (2026-04-24, release prep):** Archive `PLAN.md` and `RESULTS.md` under `docs/plans/`, bump all plugin/package manifests to `0.1.2`, and prepare release notes for merge/release without performing the final merge or publish action.
+> **Question asked:** What release version and final document disposition should be used?
+> **Rationale (if given):** Keep the closeout narrow: archive the handoff record, update release metadata, and leave the branch ready for release.
 
 ## Sync Map
 
