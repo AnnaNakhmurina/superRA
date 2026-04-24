@@ -179,7 +179,7 @@ File-by-file changes:
 - `skills/semantic-merge/references/workflow-sync-reviewer.md` — sync review now checks that Sync impact is accurate context and that unresolved semantic work is not pushed into Integrate.
 - `skills/semantic-merge/references/standalone-merge.md` — `SEMANTIC_MERGE.md` uses File / Script Impact Map `Codebase context` and `## Codebase Context`.
 - `skills/integration-workflow/SKILL.md` — Integrate reads Sync notes as context and reviews codebase coherence against `BASE_HEAD_SHA..HEAD`; it does not re-review the semantic merge layer.
-- `skills/refactor-and-integrate/SKILL.md` and `skills/refactor-and-integrate/references/codebase-integration.md` — refactor/integration uses Sync impact as context for existing post-sync hunks, not as an independent work queue, and applies the minimum-net-diff gate line by line.
+- `skills/refactor-and-integrate/SKILL.md` — refactor/integration uses Sync impact as evidence for existing post-sync hunks, not as an independent work queue, and applies the minimum-net-diff gate line by line.
 - `CLAUDE.md` — Teach-the-Protocol DRY / Necessity gate now explicitly applies line by line to instruction edits under `skills/*` and `agents/*`.
 - `skills/handoff-doc/references/plan-anatomy.md` — PLAN anatomy now describes Sync Map / Sync impact as temporary context scaffolding.
 - `README.md`, `skills/CATEGORIES.md`, `skills/using-superRA/SKILL.md`, and `CLAUDE.md` — public/contributor summaries aligned with the context-not-obligation contract.

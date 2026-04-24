@@ -169,7 +169,7 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 **Review status:** APPROVED
 **Integration status:** APPROVED
 
-**Files:** `skills/semantic-merge/SKILL.md`, semantic-merge mode references, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `CLAUDE.md`, `README.md`, `skills/CATEGORIES.md`.
+**Files:** `skills/semantic-merge/SKILL.md`, semantic-merge mode references, `skills/refactor-and-integrate/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `CLAUDE.md`, `README.md`, `skills/CATEGORIES.md`.
 **Output:** Semantic-merge owns techniques for semantic coherence and commit chains; refactor-and-integrate owns techniques for codebase coherence and minimum net diff. Format specs live in their owning mode references.
 
 **Verification:** Targeted legacy-term scans returned no live design matches. Codex generator checks and `git diff --check` passed.
@@ -194,7 +194,7 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 **Review status:** IMPLEMENTED
 **Integration status:** REVISE
 
-**Files:** `skills/semantic-merge/SKILL.md`, semantic-merge mode references, `skills/integration-workflow/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `skills/CATEGORIES.md`, `README.md`, `CLAUDE.md`, `RESULTS.md`.
+**Files:** `skills/semantic-merge/SKILL.md`, semantic-merge mode references, `skills/integration-workflow/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `skills/CATEGORIES.md`, `README.md`, `CLAUDE.md`, `RESULTS.md`.
 **Output:** Sync Map clusters, task-local `**Sync impact:**`, and standalone `SEMANTIC_MERGE.md` records explain the approved post-sync diff. Integrate / refactor-and-integrate use those notes as context while reviewing codebase coherence against `BASE_HEAD_SHA..HEAD`.
 
 > **Review notes:**
@@ -230,7 +230,7 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 **Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
-**Files:** `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/refactor-and-integrate/references/drift-test-quality.md` if removed, tests that inspect refactor-and-integrate wording.
+**Files:** `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/drift-test-quality.md` if removed, tests that inspect refactor-and-integrate wording.
 **Input:** Task 8 review note; user decision above; `CLAUDE.md` DRY / Necessity gate for this repo's instruction-bearing files.
 **Output:** `refactor-and-integrate` is a codebase-coherence utility centered on minimum net diff. It requires implementer final diff self-check evidence, treats absent pruning as suspicious rather than exempt, and keeps Sync impact as a justification context only when already provided by the workflow.
 
@@ -246,30 +246,30 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 - [x] **Step 4: Keep repo-specific gates local**
   For this repo's skill/agent prose, preserve the DRY / Necessity line-by-line gate. For general codebase integration, express the broader rule as minimum net diff: no unjustified cleanup, overengineering, defensive edits, or speculative abstractions.
 
-**Final diff self-check:** `git diff 30d6c91..HEAD -- skills/refactor-and-integrate/SKILL.md skills/refactor-and-integrate/references/codebase-integration.md skills/refactor-and-integrate/references/drift-test-quality.md tests/test-sync-integration-contract.sh`; surviving-change classes: refactor-and-integrate owner narrowing, Codebase Integration Final Diff Self-Check protocol/checklist, drift-test reference deletion from refactor-and-integrate, targeted contract-test wording. Suspicious hunk justifications: `skills/refactor-and-integrate/SKILL.md:3`, `skills/refactor-and-integrate/SKILL.md:8`, and `skills/refactor-and-integrate/SKILL.md:24` implement Steps 1 and 4 by removing drift-test / semantic-boundary ownership and centering codebase minimum net diff; `skills/refactor-and-integrate/references/codebase-integration.md:55`, `skills/refactor-and-integrate/references/codebase-integration.md:60`, and `skills/refactor-and-integrate/references/codebase-integration.md:75` implement Steps 2 and 3; deleting `skills/refactor-and-integrate/references/drift-test-quality.md` removes refactor-and-integrate drift-test ownership while Task 9 owns the result-protection target.
+**Final diff self-check:** `git diff 30d6c91..HEAD -- skills/refactor-and-integrate/SKILL.md skills/refactor-and-integrate/references/drift-test-quality.md tests/test-sync-integration-contract.sh`; surviving-change classes: refactor-and-integrate owner narrowing, Final Diff Self-Check protocol/checklist folded into the skill body, drift-test reference deletion from refactor-and-integrate, targeted contract-test wording. Suspicious hunk justifications: `skills/refactor-and-integrate/SKILL.md` implements Steps 1-4 by removing drift-test / semantic-boundary ownership, centering codebase minimum net diff, and carrying the self-check trail directly; deleting `skills/refactor-and-integrate/references/drift-test-quality.md` removes refactor-and-integrate drift-test ownership while Task 9 owns the result-protection target.
 
 ---
 
 ### Task 11: Re-audit the surviving diff under the current integration gate
 **Depends on:** Task 9, Task 10
-**Review status:** *(not started)*
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 **Files:** `skills/*`, `agents/*`, generated artifacts if canonical role specs change, `README.md`, `CLAUDE.md`, `skills/CATEGORIES.md`, `tests/*`, `PLAN.md`, `RESULTS.md`.
 **Input:** Task 8 review note, Tasks 9-10, `BASE_HEAD_SHA=30d6c91`, and the current `CLAUDE.md` DRY / Necessity gate for instruction-bearing files.
 **Output:** A line-by-line pruning pass over `git diff 30d6c91..HEAD` that removes wrapper/explanatory instruction lines, preserves behavior-shaping protocol, updates tests/docs only where the current contract requires it, and earns trusted integration approval.
 
-- [ ] **Step 1: Establish the audit surface**
-  List changed instruction-bearing files with `git diff --name-only 30d6c91..HEAD` and separate canonical sources from generated artifacts.
+- [x] **Step 1: Establish the audit surface**
+  Listed changed files with `git diff --name-only 30d6c91..HEAD`; canonical role changes regenerated derived Codex/direct-mode artifacts.
 
-- [ ] **Step 2: Apply the owner and necessity gates**
-  Remove lines that restate authoritative workflow, role, or ownership text. Keep only non-default constraints, ordering requirements, gates, and safety invariants that change agent behavior.
+- [x] **Step 2: Apply the owner and necessity gates**
+  Split result protection from codebase integration, folded the remaining codebase-integration reference into `refactor-and-integrate/SKILL.md`, removed stale drift-test ownership from public/contributor summaries, and kept Sync impact as supplied justification evidence only.
 
-- [ ] **Step 3: Preserve generated-artifact discipline**
-  If `agents/implementer.md` or `agents/reviewer.md` changes, run `python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project` and stage regenerated direct-mode refs / Codex TOMLs with the canonical edit.
+- [x] **Step 3: Preserve generated-artifact discipline**
+  Regenerated Codex role artifacts after the canonical reviewer wording changed.
 
-- [ ] **Step 4: Verify**
-  Run:
+- [x] **Step 4: Verify**
+  Passed:
   ```bash
   git diff --check
   bash tests/test-sync-integration-contract.sh
@@ -278,7 +278,9 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
   python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py
   rg -n "Stage: sync|Upstream Intent|merge-quality|sync-quality|sync-map-format|one minimal commit|one sync commit|Sync impact obligations|Post-sync obligations|Remaining Obligations|semantic propagation" skills agents README.md CLAUDE.md .codex tests -g '*.md' -g '*.toml' -g '*.py'
   ```
-  Inspect matches; the goal is no live legacy contract language outside intentional tests or blocker notes.
+  The legacy scan returned only intentional negative assertions in tests.
 
 - [ ] **Step 5: Review**
-  Integration reviewer walks `git diff 30d6c91..HEAD` line by line before approval, with special attention to `skills/result-protection/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, `skills/semantic-merge/SKILL.md`, and canonical role specs.
+  Integration reviewer walks `git diff 30d6c91..HEAD` line by line before approval, with special attention to `skills/result-protection/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/semantic-merge/SKILL.md`, and canonical role specs.
+
+**Final diff self-check:** `git diff 30d6c91..HEAD`; surviving-change classes: result-protection split, refactor-and-integrate owner narrowing, Codebase Integration checklist folded into `SKILL.md`, generated role artifact refresh, public/category summary currency, and contract-test updates. Suspicious hunk justifications: instruction edits under `skills/*` and `agents/*` implement Tasks 9-11 and remove duplicated ownership surfaces; generated `.codex/agents/superra_reviewer.toml` follows from `agents/reviewer.md`; deleted `skills/refactor-and-integrate/references/codebase-integration.md` is covered by the user decision to fold the remaining reference into the main skill.
