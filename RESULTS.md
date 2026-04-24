@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Tasks 1-6 APPROVED; Task 7 added — reframe both skills as tool skills split at semantic vs codebase coherence)
-**Status:** Tasks 1-6 APPROVED; Task 7 not started
+**Last updated:** 2026-04-23 (Tasks 1-6 APPROVED; Task 7 IMPLEMENTED — reframe both skills as tool skills split at semantic vs codebase coherence)
+**Status:** Tasks 1-6 APPROVED; Task 7 IMPLEMENTED; awaiting review
 
 ---
 
@@ -82,6 +82,40 @@ git diff --check  # clean
 
 ## Task 7: Reframe semantic-merge and refactor-and-integrate as tool skills; split at semantic vs codebase coherence
 
-**Status:** Not started
+**Status:** Implemented; awaiting review
 
-Implementer to fill in on completion: semantic-merge reframed as a tool skill teaching techniques for reaching semantic coherence (1 merge + N propagation commits within that scope); refactor-and-integrate reframed as a tool skill for codebase coherence; `sync-quality.md` gated checklist updated to encode semantic coherence as the stopping rule; `SEMANTIC_MERGE.md` record re-allows a propagation-commit list; cross-references rewired; public / contributor docs updated.
+Reframed both skills as tool skills split at the semantic vs codebase coherence boundary. Semantic-merge now teaches techniques for reaching semantic coherence (1 merge commit + N propagation commits as needed within that scope); refactor-and-integrate teaches techniques for codebase coherence (convention fit, utility reuse, PR-friendly diffs, Project Doc Audit, minimum net diff). `sync-quality.md §Scope boundary` is the gated stopping rule for semantic coherence. Every commit landed by semantic-merge must still leave existing protection passing — that is the per-commit lower bound, not the whole-mode stopping rule.
+
+File-by-file changes:
+
+- `skills/semantic-merge/SKILL.md` — renamed `## Shared Procedure` to `## Techniques` with a new opening paragraph stating the tool-skill framing: techniques not prescribed procedure, integration-workflow sequences at macro, within a single merge operation techniques follow a natural micro-order. Technique 5 (Resolve and land) now states "Land one merge commit plus N propagation commits as needed to reach semantic coherence" with per-commit protection-pass as the lower bound and `sync-quality.md §Scope boundary` as the whole-mode stopping rule; codebase-coherence work is named explicitly and deferred to `refactor-and-integrate`. Technique 6 renamed from "Verify — stale-reference sweep" to "Detect and resolve stale references" — resolution of stale references within the merge's semantic reach is now part of semantic coherence, with broader codebase-fit work deferred. `## Workflow Boundary` and `## Standalone Boundary` rewritten around the new coherence boundary.
+
+- `skills/semantic-merge/references/sync-quality.md` — opening paragraph updated to describe the checklist as the semantic-coherence stopping rule and point at `SKILL.md §Techniques`. `**Scope boundary:**` rewritten: the four old `[BLOCKING]` items (one-minimal-commit, protection-pass, deferred-propagation, deferred-recording) replaced with six items defining semantic coherence: stale references within the merge's reach resolved; generated outputs regenerated or escalated; docs describing merged code updated; no conflict markers; protection passes on every commit (per-commit lower bound); codebase-coherence work deferred. Intent preservation, Intent integrity, Handoff docs, and Verification sections unchanged.
+
+- `skills/semantic-merge/references/workflow-sync-author.md` — opening pointer flipped from `§Shared Procedure` to `§Techniques`; checklist described as encoding the semantic-coherence stopping rule. Process Step 4 now allows the merge commit plus any propagation commits needed to reach semantic coherence, with per-commit protection-pass as the lower bound and `sync-quality.md §Scope boundary` as the stopping rule. Step 5 records codebase-coherence obligations (convention fit, utility reuse, PR-friendly diffs, Project Doc Audit walk-up, minimum net diff) as Sync Map post-sync obligations.
+
+- `skills/semantic-merge/references/standalone-merge.md` — opening pointer flipped to `§Techniques`; intro reframed around semantic coherence and deferred codebase coherence. Process collapsed to four steps: create merge record, run operation, land merge + propagation commits to semantic coherence, record codebase-coherence obligations. `SEMANTIC_MERGE.md` record format gained a `**Propagation commits:**` header field (1 merge + N propagation SHAs). Report field updated to include propagation-commit SHAs.
+
+- `skills/semantic-merge/references/workflow-sync-reviewer.md` — single pointer flip: `SKILL.md §Shared Procedure` → `SKILL.md §Techniques`.
+
+- `skills/refactor-and-integrate/SKILL.md` — opening reframed as a tool skill for codebase coherence with the one-line pair-relationship note: "Paired with `semantic-merge`: run `semantic-merge` first to reach semantic coherence; this skill picks up to reach codebase coherence." Listed as three techniques with no prescribed order: drift-test creation, codebase-fit refactoring, Sync impact propagation.
+
+- `skills/integration-workflow/SKILL.md` — Sync-author dispatch `Use semantic-merge...` body updated: agent lands merge + propagation commits to semantic coherence (with `sync-quality.md §Scope boundary` as stopping rule), defers codebase coherence to `refactor-and-integrate`, returns all commit SHAs. Sync-reviewer dispatch `Sync commit:` field broadened to `Sync commits:` (merge + propagation SHAs). References lists unchanged.
+
+- `CLAUDE.md` — §DRY ownership entries for `semantic-merge` and `refactor-and-integrate` rewritten to describe the skills as owning *techniques for semantic coherence* and *techniques for codebase coherence* respectively.
+
+- `README.md` — utility-skill rows for both skills updated: semantic-merge described as tools for semantic coherence with propagation commits as needed; refactor-and-integrate described as tools for codebase coherence (convention fit, utility reuse, PR-friendly diffs, Project Doc Audit walk-up, minimum net diff).
+
+- `skills/CATEGORIES.md` — same utility-skill one-liner updates as README.
+
+- `skills/using-superra/SKILL.md` — same utility-skill one-liner updates in the Skill Inventory table.
+
+Verification on 2026-04-23:
+
+```bash
+rg -n "Shared Procedure" skills agents README.md CLAUDE.md .codex tests                                      # zero matches
+rg -n "exactly one minimal merge commit|one minimal commit|one sync commit" skills agents README.md CLAUDE.md # zero matches
+python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check                       # up to date
+python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py                                          # 6/6 passed
+git diff --check                                                                                              # clean
+```
