@@ -3,8 +3,8 @@
 > Mirrors `PLAN.md` structure. Updated after each task with key findings.
 > New agents: read `PLAN.md` for what to do, `RESULTS.md` for what was found.
 
-**Last updated:** 2026-04-23 (researcher-initiated restructure: `Define-Derive-Validate` replaced by a four-gate structure built around intuition/interpretability; Tasks 5 and 6 added; `Refactored` milestone rolled back for Phase B re-run after Task 6)
-**Status:** Tasks 1–4 APPROVED and preserved under the new structure; Tasks 5 and 6 not started; Phase B integration review pending on the restructured skill
+**Last updated:** 2026-04-24 (Task 7 integration refactor review APPROVED; `Refactored` milestone re-approved on the cleaned-up workflow/utility skills)
+**Status:** Tasks 1–7 APPROVED; `Refactored` milestone closed; Document phase deferred per 2026-04-24 PR-first decision
 
 ---
 
@@ -135,3 +135,23 @@ PY
 - Single source of truth preserved: the new references point at SKILL.md's four-gate checklist rather than restating its items. The Task 4 Principles bullet on the Notation Conventions living-record rule is untouched.
 - Example discipline for the Interpretation column matches the researcher's target shape ("risk aversion bounded so the value function is finite") without prescribing specific economic content beyond the one concrete example row needed for downstream implementers.
 - Minimum-net-diff preserved: only the two references were touched; both stale D-D-V mentions were replaced in place (no "Previously..." framing); no existing `[BLOCKING]` / `[ADVISORY]` items were reworded; no adjacent sections touched.
+
+---
+
+## Task 7: Make workflow and utility skills domain-neutral
+
+### Key Findings
+- Workflow skills (`planning-workflow`) and utility skills (`refactor-and-integrate`, `result-protection`, `result-protection/references/drift-test-quality.md`) plus the canonical reviewer role spec (`agents/reviewer.md`) had per-domain load directives ("For data-analysis ..., load `econ-data-analysis/references/X.md`. For theory/modeling ..., load `theory-modeling/references/Y.md`.") that duplicated each domain skill's own stage-load table. Per `CLAUDE.md` §"Teach the Protocol, Don't Prescribe Each Action" DRY/necessity tests, this is the most common drift surface when a vertical's reference layout changes.
+- Cleanup: dropped the redundant load-directive lines and the parallel "If data analysis: ... If theory/modeling: ..." stop-here paragraphs in `planning-workflow` Phase 1; collapsed §Remember and §Self-Review per-domain branches into one domain-neutral instruction; routed the artifact-format note in Phase 3 and the step-cycle reference in Phase 4 through the active domain skill instead of naming `econ-data-analysis` directly. `refactor-and-integrate` and `result-protection` now state that the active domain skill's stage-load table is the routing source.
+- Examples drawn from a particular domain (e.g., the Phase 4 step shapes naming "raw holdings data" or "Euler equation"; the Self-Review item-1 inventory examples; the §Remember bullet's "data: row counts" / "theory: notation" examples once collapsed into the active-domain pointer's parenthetical) were retained where they illustrate a domain-neutral concept.
+- Trigger column of the Phase 1 Currently-implemented-verticals table retained — it is routing input, not a redundant load directive. The "Planning reference" column was dropped because it restated the domain skill's own load map.
+- `using-superRA/SKILL.md` Skill Inventory and Discovery rows for both verticals retained (these are discovery surfaces, not duplicated load directives).
+
+### Verification
+- `bash tests/check-harness-compatibility.sh`: PASS (42 / 42; 0 failed). Updated the assertion at `tests/check-harness-compatibility.sh:69` from "refactor-and-integrate must POINT TO theory-modeling integration guidance" to "refactor-and-integrate must STAY DOMAIN-NEUTRAL" (negative assertions on both `theory-modeling/references/integration.md` and `econ-data-analysis/references/integration.md` substrings).
+- `python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project` regenerated `.codex/agents/superra_reviewer.toml` and `skills/using-superRA/references/direct-mode-reviewer.md` from the updated `agents/reviewer.md`. The Codex agent generation test passes (`Ran 6 tests in 0.302s; OK`).
+- `grep -rn -E "(econ-data-analysis|theory-modeling)/references/" skills/{planning,implementation,integration}-workflow/ skills/agent-orchestration/ skills/refactor-and-integrate/ skills/result-protection/ skills/handoff-doc/ skills/semantic-merge/ skills/using-superRA/SKILL.md agents/`: no surviving per-domain `references/X.md` load directives in workflow/utility skills or canonical role specs.
+
+### Notes
+- Minimum net diff: only the load-directive lines were touched in each file; the surrounding workflow choreography, review protocol, and gated checklists are untouched.
+- Phase B integration re-run pending: the project-level `Refactored` milestone was rolled back per the 2026-04-24 User Decisions Log entry so the integration reviewer walks the cleaned-up workflow/utility skills against current `main` before merge.
