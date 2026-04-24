@@ -123,7 +123,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 1: Create the `theory-modeling` domain skill and its stage-scoped references
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** APPROVED
+**Integration status:** APPROVED (post-sync re-review 2026-04-24)
 **Sync impact:** Cluster `main-restructure` updated cross-skill pointers in `references/integrate-drift-tests.md` (drift-quality now lives in `result-protection/`) and `references/integration.md` (codebase-integration folded into `refactor-and-integrate/SKILL.md`; verdict-protocol pointer rewritten). Source: `PLAN.md ## Sync Map`.
 
 **Script:** `skills/theory-modeling/SKILL.md`, `skills/theory-modeling/references/*.md`
@@ -138,8 +138,12 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 2: Wire the new vertical into runtime surfaces, docs, and discovery
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** APPROVED
+**Integration status:** REVISE (post-sync integration review 2026-04-24)
 **Sync impact:** Cluster `main-restructure` reshaped wiring surfaces — `refactor-and-integrate/SKILL.md` now carries domain-integration pointers (theory-modeling row added during sync); `CLAUDE.md` / `agents/*.md` / `.codex/agents/*.toml` / direct-mode role references adopted main's shorter wording, routing theory-modeling through the manifest rather than inline mentions. `.agents/skills/theory-modeling` symlink unaffected; new `.agents/skills/result-protection` symlink arrived from main. Source: `PLAN.md ## Sync Map`.
+
+> **Integration review notes (2026-04-24):**
+> 1. [MAJOR] Stale Domain-Skills description in `README.md:67` — the theory-modeling row reads "Define–Derive–Validate discipline for mathematical modeling. Explicit primitives, notation, and interpretable assumptions; step-by-step derivations with no skipped algebra; proof/special-case/numerical verification; and renderable markdown/LaTeX output." The 2026-04-23 restructure (Tasks 5/6) dropped the `Define–Derive–Validate` framing in favor of the four-gate structure (Objects & Notation / Assumptions / Derivations / Verification & Rendering). This row was added by Task 2 (commit `31bb0c2`) and never refreshed when Task 5 landed. `[BLOCKING]` under the refactor-and-integrate Documentation Currency gate ("Module `CLAUDE.md` / `AGENTS.md` / `README.md` files do not reference files, functions, outputs, or methodology that no longer exist or have been superseded"). Fix: rewrite the row to match the current SKILL.md flagship discipline (the four gates) while keeping the Domain Skills table shape. (`README.md:67`)
+> 2. [MAJOR] Stale flagship-discipline summary in `skills/CATEGORIES.md:25` — the theory-modeling row reads "Define-derive-validate discipline for mathematical modeling: explicit primitives and assumptions, notation discipline, traceable derivations, proof / special-case / numerical verification." Same root cause as item 1: the row was added by Task 2 and not refreshed after Task 5. `skills/using-superRA/SKILL.md:56` already names the four-gate structure correctly, so CATEGORIES.md disagrees with the inventory it companions. `[BLOCKING]` under Documentation Currency. Fix: rewrite the row to match the four-gate framing, consistent with `using-superRA/SKILL.md` and `theory-modeling/SKILL.md`. (`skills/CATEGORIES.md:25`)
 
 **Script:** Existing workflow/docs/hook/test files named in the Implementation Inventory, plus `.agents/skills/theory-modeling`
 **Input:** The approved skill name, the new file layout from Task 1, and the current runtime/docs wording in the repo
@@ -153,7 +157,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 3: Verify the new vertical end to end and reconcile any drift
 **Depends on:** Task 1, Task 2
 **Review status:** APPROVED
-**Integration status:** APPROVED
+**Integration status:** APPROVED (post-sync re-review 2026-04-24)
 **Sync impact:** Cluster `main-restructure` deleted the two `refactor-and-integrate/references/` files this task's assertions targeted (`codebase-integration.md`, `merge-quality.md`). `tests/check-harness-compatibility.sh` was updated during sync to read the new `refactor-and-integrate/SKILL.md` for the theory-modeling-integration-pointer assertion; tier-3-merge-phrase assertions and agent-body name assertions were dropped (the routing moved to the manifest surface already covered elsewhere). The test suite passes post-sync. Source: `PLAN.md ## Sync Map`.
 
 **Script:** Verification commands and any touched files needed to resolve resulting failures
@@ -185,7 +189,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 5: Restructure the `theory-modeling` SKILL body around intuition/interpretability as the through-line
 **Depends on:** Task 1, Task 4
 **Review status:** APPROVED
-**Integration status:**
+**Integration status:** APPROVED (post-sync integration review 2026-04-24)
 
 **Script:** `skills/theory-modeling/SKILL.md`
 **Input:** Existing SKILL.md body (Iron Law + `Define-Derive-Validate` checklist + Common Rationalizations); researcher feedback that intuition and interpretability must be the organizing spine, that the D-D-V framing mechanically mirrors the data-analysis vertical, and that assumption synthesis is currently absent
@@ -206,7 +210,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 ### Task 6: Propagate intuition/interpretability gates into `references/planning.md` and touch up `references/integration.md`
 **Depends on:** Task 5
 **Review status:** APPROVED
-**Integration status:**
+**Integration status:** APPROVED (post-sync integration review 2026-04-24)
 **Sync impact:** Cluster `main-restructure` directly touched this task's target file `skills/theory-modeling/references/integration.md` in two hunks — (a) preamble pointer retargeted from `refactor-and-integrate/references/codebase-integration.md` to `refactor-and-integrate/SKILL.md`, and (b) reviewer-verdict-protocol trailer rewritten to "walk this checklist alongside `refactor-and-integrate/SKILL.md`". Integration reviewer should classify these two hunks as sync-origin, distinct from this task's own new `[BLOCKING]` items around stated-intuition / interpretation / per-step-reason survival. Source: `PLAN.md ## Sync Map`.
 
 **Script:** `skills/theory-modeling/references/planning.md`, `skills/theory-modeling/references/integration.md`
