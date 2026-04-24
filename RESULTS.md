@@ -24,7 +24,7 @@ The branch is ready for a fresh integration reviewer pass; closeout should wait 
 
 **Status:** Implemented; awaiting review
 
-`skills/integration-workflow/SKILL.md` keeps base/ref anchoring in the workflow, dispatches a generic sync author, dispatches a generic sync reviewer before Integrate, and starts Integrate only after sync review approval.
+`skills/integration-workflow/SKILL.md` keeps base/ref anchoring in the workflow, dispatches a `Stage: sync` generic sync author, dispatches a `Stage: sync` generic sync reviewer before Integrate, and starts Integrate only after sync review approval.
 
 ## Task 3: Define Sync Map, task-local Sync impact, and standalone file-impact anatomy
 
@@ -197,14 +197,14 @@ The terminology scan returned only the intentional historical command record in 
 
 **Status:** IMPLEMENTED for integration; awaiting integration review.
 
-Result protection is now a standalone utility skill. Protect-stage agents load `result-protection` through the `Stage: drift-test` manifest row, while `refactor-and-integrate` remains the Integrate-stage codebase-coherence skill. Drift tests remain the current/default mechanism for protecting key results.
+Result protection is now a standalone utility skill. Protect-stage agents load `result-protection` through the `Stage: protection` manifest row, Sync-stage agents load `semantic-merge` through the `Stage: sync` manifest row, and `refactor-and-integrate` remains the Integrate-stage codebase-coherence skill. Drift tests remain the current/default mechanism for protecting key results.
 
 File-by-file changes:
 
 - `skills/result-protection/SKILL.md` — new lean skill body for key-result protection, with drift tests identified as the current/default mechanism and data-analysis tolerance guidance delegated to `econ-data-analysis`.
 - `skills/result-protection/references/drift-test-quality.md` — new generic drift-test quality checklist covering red-green verification, tolerance documentation, independence, clarity, project test conventions, and expectation-update escalation.
-- `skills/using-superRA/SKILL.md` — Skill Inventory includes `result-protection`; the `drift-test` manifest row now loads `result-protection`; `refactor-and-integrate` is described as codebase coherence plus Sync impact context.
-- `skills/integration-workflow/SKILL.md` — Protect wording now names key-result protection conceptually and routes `Stage: drift-test` agents to `result-protection`; concrete drift-test suite runs and the `Drift tests created` milestone remain in place.
+- `skills/using-superRA/SKILL.md` — Skill Inventory includes `result-protection`; the `protection` manifest row now loads `result-protection`; the `sync` manifest row loads `semantic-merge`; `refactor-and-integrate` is described as codebase coherence plus Sync impact context.
+- `skills/integration-workflow/SKILL.md` — Protect wording now names key-result protection conceptually and routes `Stage: protection` agents to `result-protection`; concrete drift-test suite runs and the `Drift tests created` milestone remain in place.
 - `skills/econ-data-analysis/SKILL.md` and `skills/econ-data-analysis/references/integrate-drift-tests.md` — data-analysis-specific key-result selection, tolerance, and failure-mode guidance remain in econ; generic drift-test quality now points to `result-protection`.
 - `.agents/skills/result-protection` — repo-local Codex discovery symlink for the new canonical skill.
 - `tests/test-sync-integration-contract.sh` — added contract checks for Protect routing, result-protection drift-test quality ownership, and the econ add-on pointer.

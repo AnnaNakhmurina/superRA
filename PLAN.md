@@ -20,7 +20,7 @@
 
 **Output:** Updated workflow, semantic-merge mode references, handoff anatomy, role docs, generated Codex artifacts, tests, and public/contributor documentation.
 
-**Expected Results / Hypotheses:** Workflow Sync dispatches generic sync author/reviewer agents that load semantic-merge mode references. `## Sync Map` records incoming intent, resolution thesis, and sync clusters; affected task blocks carry short `**Sync impact:**` pointers. Semantic-merge lands one merge commit plus any propagation commits needed for semantic coherence; refactor-and-integrate handles codebase coherence.
+**Expected Results / Hypotheses:** Workflow Sync dispatches `Stage: sync` generic sync author/reviewer agents that load semantic-merge mode references. `## Sync Map` records incoming intent, resolution thesis, and sync clusters; affected task blocks carry short `**Sync impact:**` pointers. Semantic-merge lands one merge commit plus any propagation commits needed for semantic coherence; refactor-and-integrate handles codebase coherence.
 
 **Sensitivity Analysis:** Verify the surviving diff does not preserve legacy sync-stage, upstream-intent, one-commit, sync-obligation, or boundary-wrapper prose except in intentional tests or current blocker notes.
 
@@ -212,7 +212,7 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
   Created `skills/result-protection/` with a lean skill body and a drift-test quality reference carrying red-green, tolerance, independence, and expectation-update gates. The legacy `refactor-and-integrate` copy remains untouched in this worktree because Task 10 owns that cleanup.
 
 - [x] **Step 2: Route Protect to result protection**
-  Routed `Stage: drift-test` to `result-protection` in `using-superRA`, updated Protect choreography to key-result protection vocabulary, and kept drift-test wording for the concrete default mechanism and suite runs.
+  Routed `Stage: protection` to `result-protection` and `Stage: sync` to `semantic-merge` in `using-superRA`, updated Protect choreography to key-result protection vocabulary, and kept drift-test wording for the concrete default mechanism and suite runs.
 
 - [x] **Step 3: Preserve domain add-ons**
   Kept data-analysis key-result selection, tolerance, and failure-mode guidance in `econ-data-analysis`; only the generic drift-test quality pointer moved to `result-protection`.
