@@ -212,7 +212,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 ### Task 7: Clarify shared-vs-mode-specific content in semantic-merge
 **Depends on:** Task 6
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 **Integration status:** *(pending)*
 
 **Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md` (to be deleted), `skills/integration-workflow/SKILL.md`, `CLAUDE.md`.
