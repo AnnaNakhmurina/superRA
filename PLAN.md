@@ -87,6 +87,10 @@
 > **Question asked:** Where should RESULTS.md land permanently under `docs/plans/`, or should the Document phase be deferred?
 > **Rationale:** User wants PR review to start in parallel; RESULTS.md maturation and relocation can land as a follow-up commit on the PR branch if reviewers need the permanent record before merge.
 
+> **User decision (2026-04-24):** Force-push with `--force-with-lease` to update existing DRAFT PR #17.
+> **Question asked:** Remote tracks pre-rebase history (HEAD `16dcfe7`) with DRAFT PR #17 open; update in place or open a new PR?
+> **Rationale:** The 2026-04-23 rebase-onto-main decision already rewrote the branch intentionally; updating #17 keeps the PR's existing draft discussion and is the standard flow for rebase-updated branches.
+
 ## Project Conventions
 
 Walked at planning time (2026-04-22). Re-walk on-demand only.
