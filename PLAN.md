@@ -79,6 +79,10 @@
 > **Question asked:** (1) Drop `Define-Derive-Validate` entirely for a four-gate structure, or keep D-D-V and push intuition into it more aggressively? (2) Is assumption synthesis a `[BLOCKING]` gate or `[ADVISORY]`?
 > **Rationale:** The researcher's original brief named intuition and interpretability as the top requirement ("most important"), with notation discipline and stepwise derivation downstream of that. The current shared checklist exercises those gates mechanically and leaves assumption synthesis out entirely. Full structural replacement is cleaner than bolting intuition onto a frame that was originally a mechanical mirror of `describe-analyze-validate` from the data-analysis vertical. Task 4's rules (notation narrative ordering, `PLAN.md` Notation Conventions as authoritative living record, atomic inline-edit of the table) compose cleanly under the new **Objects & Notation** and **Documentation and handoff** gates. Boxes unchecked: project-level `Refactored` only — Phase B re-runs after Task 6 lands; per-task `Review status` / `Integration status` on Tasks 1–4 remain APPROVED because their outputs are preserved, not reworked.
 
+> **User decision (2026-04-23):** Proceed with integration — dispatch `superRA:integration-workflow` to run Phases A–D (drift tests skipped per the 2026-04-22 decision, iterative sync+refactor re-runs Phase B against current `main` on the restructured skill, then docs finalization, then merge/PR).
+> **Question asked:** Completion menu after Tasks 5 and 6 APPROVED — proceed with integration, change the plan, keep branch as-is, or discard?
+> **Rationale:** Tasks 5 and 6 rewrote the skill body (four gates, new Iron Law, five new `[BLOCKING]` items) and propagated the framing into the planning and integration references; the `Refactored` milestone was rolled back by the earlier 2026-04-23 restructure decision so Phase B re-runs on the restructured skill before merge.
+
 ## Project Conventions
 
 Walked at planning time (2026-04-22). Re-walk on-demand only.
