@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Tasks 1-6 APPROVED; Task 7 IMPLEMENTED — reframe both skills as tool skills split at semantic vs codebase coherence)
-**Status:** Tasks 1-6 APPROVED; Task 7 IMPLEMENTED; awaiting review
+**Last updated:** 2026-04-23 (Tasks 1-6 APPROVED after Task 6-7 consolidation; new Task 7 pending — shared-vs-mode-specific clarity pass)
+**Status:** Tasks 1-6 APPROVED; new Task 7 pending
 
 ---
 
@@ -49,9 +49,11 @@ rg -n "Stage: sync|At sync stage|branch-level sync review|sync implementer|sync 
 
 The targeted terminology scan returned only the expected negative assertions in `skills/codex-superra-setup/scripts/test_sync_codex_agents.py`.
 
-## Task 6: Restructure semantic-merge skill for owner-located formats and symmetric procedural richness
+## Task 6: Restructure semantic-merge as a tool skill at the semantic-vs-codebase coherence boundary
 
-**Status:** Implemented; awaiting review
+**Status:** APPROVED. Ran in two commit passes — Part A (owner-located formats + procedural symmetry) and Part B (tool-skill reframe at the semantic-vs-codebase coherence boundary) — consolidated per the 2026-04-23 consolidation decision.
+
+### Part A: Owner-located formats and symmetric procedural richness
 
 Restructured the semantic-merge skill so format specs live with their owning mode and shared procedural richness lives in the SKILL.md body. Changes file-by-file:
 
@@ -80,9 +82,7 @@ python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py  # 6/6 pass
 git diff --check  # clean
 ```
 
-## Task 7: Reframe semantic-merge and refactor-and-integrate as tool skills; split at semantic vs codebase coherence
-
-**Status:** Implemented; awaiting review
+### Part B: Tool-skill reframe at the semantic-vs-codebase coherence boundary
 
 Reframed both skills as tool skills split at the semantic vs codebase coherence boundary. Semantic-merge now teaches techniques for reaching semantic coherence (1 merge commit + N propagation commits as needed within that scope); refactor-and-integrate teaches techniques for codebase coherence (convention fit, utility reuse, PR-friendly diffs, Project Doc Audit, minimum net diff). `sync-quality.md §Scope boundary` is the gated stopping rule for semantic coherence. Every commit landed by semantic-merge must still leave existing protection passing — that is the per-commit lower bound, not the whole-mode stopping rule.
 
@@ -119,3 +119,9 @@ python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project 
 python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py                                          # 6/6 passed
 git diff --check                                                                                              # clean
 ```
+
+## Task 7: Clarify shared-vs-mode-specific content in semantic-merge
+
+**Status:** Pending.
+
+Tightens the shared-vs-mode-specific split in the semantic-merge skill. SKILL.md will carry only shared content (core principle, mode selection, §Shared Steps, §Semantic Coherence Checklist, parallel-worktree Exception); mode references will carry §Boundary + §Inputs + §Mode-Specific Process + §Format + §Status/Report. `sync-quality.md` will be absorbed into SKILL.md as §Semantic Coherence Checklist (it was a must-load on every call path; SKILL.md is always loaded when the skill is used). Researcher's in-flight edits — `## Techniques` → `## Shared Steps` with a terse opener, 4-step `workflow-sync-author.md` process, "sync commit range" Status Return phrasing — are adopted as baseline.

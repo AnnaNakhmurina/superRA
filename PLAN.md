@@ -24,7 +24,7 @@
 
 ## Workflow Status
 
-- [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat; Task 6 added to address sync-map-format ownership and procedural symmetry; Task 7 added to reframe both skills as tool skills and split at the semantic-vs-codebase coherence boundary.
+- [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat. Task 6 originally tracked owner-located formats + procedural symmetry; Task 7 originally tracked the tool-skill reframe at the semantic-vs-codebase coherence boundary. Per the 2026-04-23 consolidation decision below, those two APPROVED tasks were collapsed into a single historical Task 6. A new Task 7 was added for the shared-vs-mode-specific clarity pass.
 - [ ] **Execution complete** - Tasks 1-6 APPROVED; Task 7 pending.
 - [ ] **Drift tests created** - not applicable for this skill-design change.
 - [ ] **Integrated** - pending after Task 7 approval.
@@ -64,7 +64,11 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 > **User decision (2026-04-23, Task 7 — skill-boundary reframe):** Split `semantic-merge` and `refactor-and-integrate` at the semantic coherence vs codebase coherence boundary. Reframe both skills as tool skills (techniques, not prescribed procedures); semantic-merge carries through to semantic coherence (1 merge commit + N propagation commits as needed); refactor-and-integrate handles codebase coherence (convention fit, utility reuse, Project Doc Audit walk-up, minimum net diff). `sync-quality.md` becomes the gated checklist for semantic coherence.
 > **Question asked:** If semantic-merge agents already carry every technique needed for semantic coherence (role classification, stale-reference detection, regeneration preference, intent preservation), should they just carry through the propagation themselves — with `sync-quality.md` as the specialized checklist — rather than defer to `refactor-and-integrate` for work they could do with their own tools?
-> **Rationale (if given):** The one-minimal-commit + defer-all design was clean but heavy for simple cases (invoking `refactor-and-integrate` for a two-line doc fix) and artificial for the natural 1+N merge pattern. Carving the skill boundary at *semantic* vs *codebase* coherence gives a principled split: semantic-merge owns everything needed to make the merge's meaning fully represented in the tree; refactor-and-integrate owns everything needed to make the resulting code fit the host project. Each skill carries the techniques its scope requires — no duplication, no forced cross-skill dispatch for small cases. Workflow impact: adds Task 7; previous one-minimal-commit decision becomes superseded.
+> **Rationale (if given):** The one-minimal-commit + defer-all design was clean but heavy for simple cases (invoking `refactor-and-integrate` for a two-line doc fix) and artificial for the natural 1+N merge pattern. Carving the skill boundary at *semantic* vs *codebase* coherence gives a principled split: semantic-merge owns everything needed to make the merge's meaning fully represented in the tree; refactor-and-integrate owns everything needed to make the resulting code fit the host project. Each skill carries the techniques its scope requires — no duplication, no forced cross-skill dispatch for small cases. Workflow impact: adds Task 7 (subsequently consolidated into Task 6 per the 2026-04-23 consolidation decision below); previous one-minimal-commit decision becomes superseded.
+
+> **User decision (2026-04-23, post-Task-7 consolidation + shared-vs-mode-specific clarity):** Consolidate the APPROVED Task 6 and Task 7 into a single historical Task 6 block; add a new Task 7 that tightens the shared-vs-mode-specific split in `semantic-merge`. In the new Task 7: `SKILL.md` should teach only shared principles — core intent rule, techniques, coherence checklist, and the parallel-worktree exception — while mode references carry the mode boundary, inputs, mode-specific process, format, and report/status. The `Workflow Boundary` and `Standalone Boundary` sections currently in `SKILL.md` move into `workflow-sync-author.md` and `standalone-merge.md` respectively. `sync-quality.md` is absorbed into `SKILL.md` as §Semantic Coherence Checklist and deleted as a separate reference.
+> **Question asked:** Does the current semantic-merge skill cleanly separate shared principles from mode-specific details? Where should `## Workflow Boundary` / `## Standalone Boundary` live? Does a separate `sync-quality.md` earn its keep when every call path loads it?
+> **Rationale (if given):** After Task 6 the mode differences reduce to inputs (dispatch-supplied vs inferred), artifact format (Sync Map + task-impact vs `SEMANTIC_MERGE.md`), and communication target (orchestrator status vs caller report); the boundary sections are mode scope statements that belong with their mode, not in the shared body. `sync-quality.md` is a must-load on every call path (sync author dispatch, sync reviewer dispatch, standalone), and `SKILL.md` is always loaded when the skill is used — folding the checklist into `SKILL.md` removes a file without reducing availability and preserves the shared-flow-checklist invariant (implementer and reviewer walk the same section). Workflow impact: clears `Execution complete`, `Integrated`, `Docs finalized`, and `Finished`; resets new Task 7 to pending.
 
 ---
 
@@ -187,85 +191,67 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 ---
 
-### Task 6: Restructure semantic-merge skill for owner-located formats and symmetric procedural richness
+### Task 6: Restructure semantic-merge as a tool skill at the semantic-vs-codebase coherence boundary
 **Depends on:** Task 1, Task 2, Task 3, Task 4, Task 5
 **Review status:** APPROVED
 **Integration status:** *(pending)*
 
-**Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/semantic-merge/references/sync-map-format.md` (to be deleted), `skills/handoff-doc/references/plan-anatomy.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, and any other file pointing at `sync-map-format.md`.
-**Input:** Current semantic-merge skill (after Task 3 DRY consolidation), the post-review decision above, and the global `semantic-merge-integration` skill as the procedural reference point.
-**Output:** Format specs live with their owning mode (workflow Sync Map + task-local Sync impact in `workflow-sync-author.md`; Standalone Merge Record in `standalone-merge.md`); `sync-map-format.md` is deleted; shared procedural knowledge (intent classification by role, regeneration preference, stale-reference sweep, mid-operation / dirty-state handling, synthesis preference) lives in `SKILL.md` so both modes carry equal richness; mode references shrink to mode-specific process + format + status return.
+**Files:** `skills/semantic-merge/SKILL.md`, all four `skills/semantic-merge/references/*.md` (with `sync-map-format.md` deleted), `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `CLAUDE.md`, `README.md`, `skills/CATEGORIES.md`.
+**Input:** Post-Task-5 semantic-merge (lean SKILL.md body; separate `sync-map-format.md`; one-minimal-commit rule with all propagation deferred). See the two post-Task-5 decisions in `## Decisions` for the design rationale (owner-located formats + symmetric procedural richness; tool-skill reframe at the semantic-vs-codebase coherence boundary).
 
-- [x] **Step 1: Expand SKILL.md body with shared procedural flow**
-  Added a canonical "Shared Procedure" section in `skills/semantic-merge/SKILL.md` covering repo-state grounding (branch / worktree / mid-operation / merge base / incoming range / touched files), reversible-stash dirty-state handling, intent research with role classification (behavior/API, data/schema, docs/narrative, generated outputs, tests, config/build), synthesis-then-regeneration preference, research-meaningful escalation, resolve-and-land, and a stale-reference sweep at verification. RA framing preserved: agent classifies and executes within each role; research-meaningful calls inside data, tests, and analysis outputs go to the researcher.
+**Output:**
+- Format specs owned by their mode: Workflow Sync Map + task-local Sync impact in `workflow-sync-author.md`; Standalone Merge Record in `standalone-merge.md`. `sync-map-format.md` deleted.
+- `SKILL.md` body carries shared techniques (repo-state grounding with reversible-stash dirty-state handling; intent investigation with role classification across behavior/API, data/schema, docs/narrative, generated outputs, tests, config/build; resolution plan with synthesis + regeneration preference; intent-changing escalation with `handoff-doc §User Decisions Log` pointer; resolve-and-land; detect-and-resolve stale references). Framed as tool-skill techniques, not prescribed procedure.
+- Commit-shape rule reset: 1 merge commit + N propagation commits as needed to reach **semantic coherence**; per-commit protection-pass is the lower bound; `sync-quality.md §Scope boundary` is the whole-mode stopping rule. Codebase-coherence work (convention fit, utility reuse, PR-friendly diffs, Project Doc Audit walk-up, minimum net diff) defers to `refactor-and-integrate`.
+- `refactor-and-integrate` reframed as a paired tool skill: opens with "Paired with `semantic-merge`: run `semantic-merge` first to reach semantic coherence; this skill picks up to reach codebase coherence." Three techniques (drift-test creation, codebase-fit refactor, Sync impact propagation), no prescribed order.
+- Public/contributor docs (CLAUDE.md §DRY ownership, README.md, CATEGORIES.md, using-superRA Skill Inventory) updated to the semantic-vs-codebase-coherence framing.
 
-- [x] **Step 2: Move Workflow Sync Map and task-local Sync impact format into `workflow-sync-author.md`**
-  Inlined the full `## Sync Map` template and the task-local `**Sync impact:**` anatomy into `workflow-sync-author.md` next to the process steps that write them. Preserved the parenthetical-inside-bold form `> **Sync review notes (present only while REVISE is active):**`. `workflow-sync-reviewer.md` now points at `workflow-sync-author.md §Workflow Sync Map Format` / `§Task-Local Sync Impact Format` for shape recognition.
-
-- [x] **Step 3: Move Standalone Merge Record format into `standalone-merge.md`**
-  Inlined the `SEMANTIC_MERGE.md` merge-record template (headers + File / Script Impact Map) into `standalone-merge.md` next to the step that writes it.
-
-- [x] **Step 4: Delete `sync-map-format.md` and rewire pointers**
-  `git rm skills/semantic-merge/references/sync-map-format.md`. Rewired pointers in `skills/semantic-merge/SKILL.md` §Choose a Mode, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/handoff-doc/references/plan-anatomy.md` (§Sync Map format pointer + §Task-local Sync impact format pointer — now point at `workflow-sync-author.md`), and `skills/integration-workflow/SKILL.md` dispatch templates (dropped `sync-map-format.md` from both sync-author and sync-reviewer reference lists). `skills/refactor-and-integrate/references/codebase-integration.md` did not point at `sync-map-format.md`. Verified: `rg -n "sync-map-format" skills agents README.md CLAUDE.md .codex tests` returns zero matches.
-
-- [x] **Step 5: Trim mode references so they stop repeating the SKILL.md body**
-  `workflow-sync-author.md` and `standalone-merge.md` now carry only mode-specific content: inputs, mode-specific process (commit shape, format writes, mode boundary), the format spec, status return. Each reference opens with a pointer to `SKILL.md §Shared Procedure` for the shared flow. `sync-quality.md` was trimmed to the gated checklist plus a one-paragraph pointer that the canonical procedure lives in `SKILL.md §Shared Procedure` and format specs live in the owning mode references; added checklist items for role classification and stale-reference sweep so the reviewer walks what the procedure teaches.
-
-- [x] **Step 6: Verify**
-  Ran:
-  ```bash
-  rg -n "sync-map-format" skills agents README.md CLAUDE.md .codex tests
-  python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check
-  python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py
-  git diff --check
-  ```
-  First command returned zero matches. Generator check reported all files up to date. Test suite passed 6/6. `git diff --check` clean.
+**Verification:** `rg` scans for `sync-map-format`, `Shared Procedure`, and legacy one-commit phrasings all return zero matches. Codex generator + tests pass. `git diff --check` clean. (Task ran in two APPROVED passes recorded in git history — owner-located formats + procedural symmetry, then the tool-skill reframe — consolidated here per the 2026-04-23 consolidation decision.)
 
 ---
 
-### Task 7: Reframe semantic-merge and refactor-and-integrate as tool skills; split at semantic vs codebase coherence
-**Depends on:** Task 1, Task 2, Task 3, Task 4, Task 5, Task 6
-**Review status:** APPROVED
+### Task 7: Clarify shared-vs-mode-specific content in semantic-merge
+**Depends on:** Task 6
+**Review status:** *(pending)*
 **Integration status:** *(pending)*
 
-**Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `CLAUDE.md`, `README.md`, `skills/CATEGORIES.md`.
-**Input:** Current semantic-merge + refactor-and-integrate skills (post-Task-6, one-minimal-commit design); the superseding decision in `## Decisions` (semantic-coherence-vs-codebase-coherence reframe).
-**Output:** `semantic-merge` is a tool skill teaching techniques for reaching semantic coherence (1 merge commit + N propagation commits as needed within that scope); `refactor-and-integrate` is a tool skill teaching techniques for codebase coherence. `sync-quality.md` is the gated checklist for semantic coherence. The two skills point at each other with one-line pair-relationship notes. Integration-workflow sequences both. No duplicated procedural content.
+**Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md` (to be deleted), `skills/integration-workflow/SKILL.md`, `CLAUDE.md`.
 
-- [x] **Step 1: Reframe semantic-merge SKILL.md around techniques, not prescribed procedure**
-  Rename `## Shared Procedure` -> `## Techniques`. State that the skill is a tool skill: it teaches techniques; integration-workflow sequences them at the macro level; within a single merge operation techniques follow a natural micro-order (investigate before resolving, resolve before landing, record obligations before returning). Keep the six numbered technique blocks (ground in repo state, investigate intent + role classification, build resolution plan, escalate intent-changing choices, resolve and land, detect stale references). Update content only where the new commit-shape rule requires — see Steps 2 and 4.
+**Input:** Post-Task-6 semantic-merge plus the researcher's in-flight uncommitted hand-edits (2026-04-23) that rename `## Techniques` back to `## Shared Steps` with a simple opener, drop Process Step 5 (codebase-coherence obligation recording) from `workflow-sync-author.md`, and restore "sync commit range" phrasing in the author Status Return. `SKILL.md` still carries mode-specific `## Workflow Boundary` and `## Standalone Boundary` sections. `sync-quality.md` is a separate must-load reference loaded on every call path (sync-author dispatch, sync-reviewer dispatch, standalone).
 
-- [x] **Step 2: Rewrite the stopping rule around semantic coherence**
-  Update Technique 5 (Resolve and land): semantic-merge lands 1 merge commit + N propagation commits as needed to reach semantic coherence. Every commit must leave existing protection (drift tests + key-result coverage in workflow mode; existing tests + drift tests in standalone mode) passing — protection-pass is the per-commit lower bound, not the whole-mode stopping rule. Stop when `sync-quality.md §Scope boundary` passes. Broader *codebase* work — naming conventions, utility reuse, PR-friendly diffs, Project Doc Audit walk-up, minimum net diff against host — is out of scope and defers to `refactor-and-integrate`.
+**Output:**
+- `SKILL.md` carries only shared content: core principle, mode selection, §Shared Steps (renamed from §Techniques per researcher edit, with the terse "The following steps are shared by all modes." opener), §Semantic Coherence Checklist (absorbed from `sync-quality.md`), and the parallel-worktree Exception. No mode-specific boundary sections remain.
+- Mode references each carry: §Boundary + §Inputs + §Mode-Specific Process + §Format + §Status/Report. The main differences between modes reduce to their essential axis — inputs (dispatch-supplied vs inferred), artifact format (Sync Map + task-impact vs `SEMANTIC_MERGE.md`), and communication target (orchestrator status vs caller report).
+- `workflow-sync-author.md` process is 4 steps (not 5); codebase-coherence obligations are recorded in §Boundary + Sync Map post-sync obligations, not as a separate process step. Status Return uses "sync commit range" phrasing.
+- `sync-quality.md` is deleted; its gated checklist lives as a `##` section of `SKILL.md` since the skill body is always loaded when any mode is used. Shared-flow-checklist invariant preserved: implementer and reviewer walk the same section.
+- All pointers rewired to `SKILL.md §Semantic Coherence Checklist` (or its sub-section `§Scope boundary`). Integration-workflow dispatch templates drop `sync-quality.md` from reference lists. CLAUDE.md §DRY ownership updated.
 
-- [x] **Step 3: Convert Technique 6 from detection-only to detect-and-resolve**
-  The stale-reference sweep enumerates stale references that the merge may have left behind. In the new design, resolving stale references that live within the merge's semantic reach is part of semantic coherence and belongs to semantic-merge. Update the technique text to "detect and resolve" with the scope caveat that broader codebase-fit work defers.
+- [ ] **Step 1: Adopt researcher's in-flight edits as the starting baseline.**
+  Keep the `## Shared Steps` rename (from `## Techniques`) and the terse opener "The following steps are shared by all modes." Keep `workflow-sync-author.md` process at 4 steps (no codebase-obligation step 5) and its "sync commit range" Status Return phrasing.
 
-- [x] **Step 4: Rewrite §Workflow Boundary and §Standalone Boundary around the new coherence boundary**
-  Workflow Boundary: Sync lands a minimal merge commit plus any propagation commits needed to reach semantic coherence; downstream Integrate handles codebase coherence. Standalone Boundary: semantic-merge carries the merge through to semantic coherence using its own techniques with `sync-quality.md` as the gated checklist; when codebase coherence is also wanted, the caller invokes `refactor-and-integrate` (or handles it manually).
+- [ ] **Step 2: Move `## Workflow Boundary` into `workflow-sync-author.md` as §Boundary at the top.**
+  Carry forward the semantic-coherence stopping rule and the deferral of codebase-coherence work to `refactor-and-integrate` via Integrate. The reviewer reference inherits the same boundary by reviewing the same work; point the reviewer's opener at the author's §Boundary rather than restating it.
 
-- [x] **Step 5: Rewrite sync-quality.md §Scope boundary to encode semantic coherence**
-  Replace the current "exactly one minimal merge commit; broader propagation deferred" items with items that define semantic coherence: stale references resolved within the merge's reach; generated outputs regenerated or escalated; docs describing the merged code updated; no conflict markers; protection passes on every commit; broader codebase-fit work deferred. Keep Intent preservation, Intent integrity, Handoff docs, and Verification sections intact.
+- [ ] **Step 3: Move `## Standalone Boundary` into `standalone-merge.md` as §Boundary at the top.**
+  Carry forward the semantic-coherence stopping rule and the caller-level deferral of codebase-coherence work to `refactor-and-integrate` or manual handling.
 
-- [x] **Step 6: Update workflow-sync-author.md and standalone-merge.md process steps**
-  workflow-sync-author.md: Step 4 allows multiple commits within semantic coherence scope; Step 5 records codebase-coherence obligations as Sync Map post-sync obligations. standalone-merge.md: collapse to "land merge commit + propagation commits to semantic coherence; `sync-quality.md` is the checklist; codebase work defers to `refactor-and-integrate` at the caller's discretion." `SEMANTIC_MERGE.md` record format restores a propagation-commit list (1 merge + N propagation SHAs) since standalone now lands multiple commits.
+- [ ] **Step 4: Absorb `sync-quality.md` into `SKILL.md` as §Semantic Coherence Checklist.**
+  Keep the `[BLOCKING]` / `[ADVISORY]` structure and sub-headings (Intent preservation, Scope boundary, Intent integrity, Handoff docs, Verification). Preserve the shared-flow-checklist invariant: implementer and reviewer walk the same section.
 
-- [x] **Step 7: Update refactor-and-integrate/SKILL.md opening**
-  Add a one-line pair-relationship note: "Paired with `semantic-merge`: run `semantic-merge` first to reach semantic coherence; this skill picks up to reach codebase coherence." Frame the skill as tool-shaped (three techniques: drift-test creation, codebase-fit refactor, Sync impact propagation); no prescribed order. Update the Disciplines / references section only if wording drifts from the new framing.
+- [ ] **Step 5: Rewire all pointers.**
+  - Mode references: drop "Also load `sync-quality.md`" lines; point at `SKILL.md §Semantic Coherence Checklist` for the checklist walk.
+  - `SKILL.md §Shared Steps` step 5 (Resolve and land): `sync-quality.md §Scope boundary` → `§Semantic Coherence Checklist §Scope boundary`.
+  - `integration-workflow/SKILL.md` sync-author and sync-reviewer dispatch bodies: drop `semantic-merge/references/sync-quality.md` from reference lists; update `sync-quality.md §Scope boundary` narration to the SKILL.md section.
+  - `CLAUDE.md §DRY ownership`: `sync-quality.md §Scope boundary` → `SKILL.md §Semantic Coherence Checklist §Scope boundary`.
+  - Delete `skills/semantic-merge/references/sync-quality.md` via `git rm`.
 
-- [x] **Step 8: Rewire cross-references**
-  Update `skills/semantic-merge/references/workflow-sync-reviewer.md` any `§Shared Procedure` pointer -> `§Techniques`; same for `workflow-sync-author.md`, `standalone-merge.md`, and `sync-quality.md` opening paragraph. `skills/handoff-doc/references/plan-anatomy.md §Sync Map` and `§Task-local Sync impact` ownership / format pointers still land on `workflow-sync-author.md` — no change needed there. `skills/integration-workflow/SKILL.md` Sync dispatch templates reference `semantic-merge/references/workflow-sync-author.md` + `sync-quality.md` (sync-author) and `workflow-sync-reviewer.md` + `sync-quality.md` (sync-reviewer) — verify still correct.
-
-- [x] **Step 9: Update public / contributor docs**
-  `CLAUDE.md §DRY ownership`: describe `semantic-merge` as tools for semantic coherence and `refactor-and-integrate` as tools for codebase coherence. `README.md` and `skills/CATEGORIES.md` utility-skill rows: update one-line summaries to reflect the semantic-vs-codebase split. `skills/using-superRA/SKILL.md` skill-inventory one-liner for semantic-merge: same update.
-
-- [x] **Step 10: Verify**
-  Ran:
+- [ ] **Step 6: Verify.**
+  Run:
   ```bash
-  rg -n "Shared Procedure" skills agents README.md CLAUDE.md .codex tests
-  rg -n "exactly one minimal merge commit|one minimal commit|one sync commit" skills agents README.md CLAUDE.md
+  rg -n "sync-quality" skills agents README.md CLAUDE.md .codex tests
+  rg -n "Workflow Boundary|Standalone Boundary" skills/semantic-merge/SKILL.md
   python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check
   python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py
   git diff --check
   ```
-  First two rg commands returned zero matches. Generator reported all files up to date. Test suite passed 6/6. `git diff --check` clean. RESULTS.md Task 7 section updated with file-by-file change summary.
+  First two rg commands should return zero matches; generator check should report up-to-date; test suite 6/6; `git diff --check` clean.
