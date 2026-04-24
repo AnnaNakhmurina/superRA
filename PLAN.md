@@ -23,7 +23,7 @@
 ## Workflow Status
 
 - [x] **Plan approved** - researcher requested the material redesign toward mechanisms over contingency prose on 2026-04-23.
-- [ ] **Execution complete** - Tasks 1-4 approved and closed, but Tasks 5-9 (over-prescription audit) were added 2026-04-23 and are not yet implemented.
+- [ ] **Execution complete** - Tasks 1-9 approved; Task 10 (post-audit refinement) added 2026-04-23 and awaiting review.
 - [ ] **Drift tests created** - not yet reached; documentation/package integration gate remains pending.
 - [ ] **Refactored** - not yet reached; integration review remains pending.
 - [ ] **Docs finalized** - not yet reached; this RESULTS.md is Stage 1 handoff state.
@@ -75,6 +75,10 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **User decision (2026-04-23):** Extend the plan with an over-prescription audit across package instruction surfaces.
 > **Question asked:** Should additional tasks be added to audit instructions for lines that restate what agents already know or can read from authoritative sources?
 > **Rationale (if given):** Current instructions in several places (e.g., the implementer's `Worktree:` wrapper, the "what the dispatch prompt carries" narration) tell agents what they would already do with the content they receive. The design principle to apply: keep a line only if, without it, agent behavior would be unstable — otherwise delete or replace with a pointer. The principle is documented in `CLAUDE.md §Teach the Protocol, Don't Prescribe Each Action` (Task 5). Tasks 6-9 audit role specs, workflow skills + orchestration, and utility/domain skills against the principle and apply the edits. This adds Tasks 5-9 and unchecks `Execution complete`; Tasks 1-4 remain APPROVED (the principle tightens future edits rather than overturning the resolver redesign).
+
+> **User decision (2026-04-23):** Refine the post-audit output — relocate the drift-test tolerance rubric, remove an inverted cross-reference, condense role-spec prose.
+> **Question asked:** Two design questions surfaced in the post-audit review: (1) should the drift-test tolerance rubric live in the cross-cutting `refactor-and-integrate/drift-test-quality.md` or in the domain-specific `econ-data-analysis/references/integrate-drift-tests.md`? (2) Should the cross-cutting `codebase-integration.md` carry a "Data-analysis work:" cross-reference back into a domain file?
+> **Rationale (if given):** (1) Tolerance calibration is econ-specific (t-stat crossing 1.96, percent-of-estimate scales, economic-reasoning thresholds) — it belongs in the domain skill so the cross-cutting file stays domain-agnostic and new verticals can carry their own rubric. (2) A cross-cutting file pointing back at a domain file is an inverted dependency; pointers flow domain → cross-cutting only. Alongside these, the researcher condensed `agents/implementer.md` and `agents/reviewer.md` by hand (WIP commit `93fda71`) and the refinement needs formalization into a Task 10 so the plan and RESULTS reflect what actually happened. This adds Task 10; Tasks 6-9 remain APPROVED (their approved outputs are being polished, not overturned).
 
 ---
 
@@ -282,3 +286,24 @@ Grepped `skills/`, `agents/`, and `CLAUDE.md` for behavior-shaping phrases (Data
 - [x] **Step 3: Anti-pattern regression check**
 
 Re-ran the four CLAUDE.md anti-pattern categories against the post-audit tree. No surviving unjustified instance of (a) wrapper-around-authoritative, (c) runtime-default reminder, or (d) Manifest restatement. One borderline (b) "Here is what you will receive" shape survives in `agents/implementer.md §Dispatch Inputs` and `agents/reviewer.md §Dispatch Inputs`; flagged in `RESULTS.md` Task 9 §Anti-Pattern Regression as behavior-shaping (the second sentence requires a baseline of what "more than this" means) — orchestrator adjudication left open.
+
+### Task 10: Formalize Post-Audit Refinements
+**Depends on:** Task 6, Task 7, Task 8, Task 9
+**Review status:** IMPLEMENTED
+**Integration status:** *(not started)*
+
+**Script:** Documentation refinement + generator regeneration.
+**Input:** Files touched by Tasks 6-8; the researcher's WIP commit `93fda71`.
+**Output:** Relocated tolerance rubric, removed inverted cross-reference, propagated role-spec condensation into the regenerated direct-mode refs and Codex TOMLs, fixed typo, and consistent state across all skill/agent surfaces.
+
+- [x] **Step 1: Relocate the drift-test tolerance rubric**
+
+Moved the full tolerance rubric (point estimates, standard errors, counts, signs/significance, document-every-choice example) from `skills/refactor-and-integrate/references/drift-test-quality.md §Tolerance calibration — worked examples` to `skills/econ-data-analysis/references/integrate-drift-tests.md §Tolerance Conventions for Econ Results`. Replaced the source section in `drift-test-quality.md` with a short header noting that tolerance calibration is domain-specific and pointing at the econ reference. Updated the gated-checklist parenthetical so the cross-cutting reference names the domain location rather than its own former section.
+
+- [x] **Step 2: Remove inverted cross-reference in `codebase-integration.md`**
+
+Deleted the `> **Data-analysis work:** also load econ-data-analysis/references/integration.md` blockquote and its HTML comment from `skills/refactor-and-integrate/references/codebase-integration.md`. The reverse pointer (domain → cross-cutting) already lives in `econ-data-analysis/references/integration.md`, which is the correct direction.
+
+- [x] **Step 3: Propagate role-spec condensation**
+
+Accepted the researcher's manual condensation of `agents/implementer.md` and `agents/reviewer.md` (WIP commit `93fda71`): shorter §Dispatch Inputs opening, clearer `PLAN.md`-authoritative rule, unified handoff-doc compact etiquette (including the new "Remove superseded content, don't stack it" bullet already authoritative in `handoff-doc §The Four Principles`). Fixed the typo `authorative → authoritative` in `agents/implementer.md` Before-You-Start bullet 3. Regenerated `skills/using-superRA/references/direct-mode-{implementer,reviewer}.md` and `.codex/agents/superra_{implementer,reviewer}.toml` via `sync_codex_agents.py --scope project`; verified `test_sync_codex_agents.py` 5/5 pass and `grep -Ei "first dispatch|re-dispatch prompt|parallel worktree dispatch|in the dispatch"` on the regenerated direct-mode refs returns no leaks.

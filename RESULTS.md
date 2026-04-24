@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Task 9 consolidated sweep implemented)
-**Status:** Tasks 1-6 approved; Tasks 7-8 implemented and awaiting review; Task 9 implemented and awaiting review.
+**Last updated:** 2026-04-23 (Task 10 post-audit refinement implemented)
+**Status:** Tasks 1-9 approved; Task 10 implemented and awaiting review.
 
 ---
 
@@ -348,3 +348,36 @@ Three of four anti-pattern categories show no regression. Category (b) has one c
 
 - `PLAN.md` (Task 9 status, step checkboxes, step notes)
 - `RESULTS.md` (Task 9 section)
+
+## Task 10: Formalize Post-Audit Refinements
+
+**Status:** Implemented; awaiting review.
+
+### Findings
+
+**Tolerance rubric relocation.** Moved the full rubric — point estimates, standard errors, counts, signs/significance, plus the worked "document every tolerance choice" example — from `refactor-and-integrate/references/drift-test-quality.md §Tolerance calibration — worked examples` into `econ-data-analysis/references/integrate-drift-tests.md §Tolerance Conventions for Econ Results`. The cross-cutting file now carries a one-paragraph domain-agnostic placeholder that points at the econ reference for data-analysis work; new verticals carry their own rubric in the same domain-reference slot. The `drift-test-quality.md` gated-checklist item for tolerance calibration was rephrased so it names domain reasoning generally and points at the econ reference for worked examples.
+
+**Inverted cross-reference removed.** Deleted the `> **Data-analysis work:** also load ...` blockquote from `codebase-integration.md`. Pointer flow is now domain → cross-cutting only: `econ-data-analysis/references/integration.md` retains its companion pointer into `codebase-integration.md`, and the reverse pointer no longer inverts the dependency.
+
+**Role-spec condensation (researcher WIP `93fda71`).** Accepted the researcher's manual edits to `agents/implementer.md` and `agents/reviewer.md`: shorter §Dispatch Inputs opening, new framing that `PLAN.md` is authoritative unless the dispatch explicitly overrides it (replaces the longer "treat paraphrased content as over-specification" wording with equivalent behavior-shaping content), unified handoff-doc compact etiquette, and a new "Remove superseded content, don't stack it" bullet that already matches `handoff-doc/SKILL.md §The Four Principles`. Typo `authorative → authoritative` fixed.
+
+**Downstream regeneration.** Ran `sync_codex_agents.py --scope project`; regenerated `skills/using-superRA/references/direct-mode-implementer.md`, `direct-mode-reviewer.md`, `.codex/agents/superra_implementer.toml`, `.codex/agents/superra_reviewer.toml`. Generator tests: `uv run pytest skills/codex-superra-setup/scripts/test_sync_codex_agents.py` — 5/5 pass. Leak grep (`first dispatch|re-dispatch prompt|parallel worktree dispatch|in the dispatch`) on the regenerated direct-mode refs — clean.
+
+### Files Changed
+
+- `agents/implementer.md` (typo fix; condensation already in `93fda71`)
+- `skills/econ-data-analysis/references/integrate-drift-tests.md` (tolerance rubric inserted)
+- `skills/refactor-and-integrate/references/drift-test-quality.md` (rubric replaced with pointer; checklist reworded)
+- `skills/refactor-and-integrate/references/codebase-integration.md` (inverted cross-ref + HTML comment removed)
+- `skills/using-superRA/references/direct-mode-implementer.md` (regenerated)
+- `skills/using-superRA/references/direct-mode-reviewer.md` (regenerated)
+- `.codex/agents/superra_implementer.toml` (regenerated)
+- `.codex/agents/superra_reviewer.toml` (regenerated)
+- `PLAN.md` (Task 10 added, decision log entry, Workflow Status sub-comment)
+- `RESULTS.md` (this section)
+
+### Verification Commands
+
+- `python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project`
+- `uv run pytest skills/codex-superra-setup/scripts/test_sync_codex_agents.py`
+- `grep -Ei "first dispatch|re-dispatch prompt|parallel worktree dispatch|in the dispatch" skills/using-superRA/references/direct-mode-*.md`
