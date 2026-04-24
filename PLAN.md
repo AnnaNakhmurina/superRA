@@ -1,6 +1,10 @@
 # Semantic Sync Integration Redesign Plan
 
 > **For agentic workers:** REQUIRED DISCIPLINE: Use `superRA:handoff-doc` for PLAN.md / RESULTS.md editing. Treat this as skill creation: load `skill-creator`, preserve RA framing and review gates, and keep instructions concise.
+>
+> **INTEGRATION-SPECIFIC DISCIPLINE (2026-04-23):** This branch itself redesigns superRA's workflow skills, so the installed plugin copy is out of date relative to what this branch teaches. When following any superRA workflow during this integration, **read the skill files directly from this repo** (`skills/<name>/SKILL.md` and `skills/<name>/references/*.md`) rather than calling the `Skill` tool — the in-repo versions are the authoritative contract for this integration pass. This applies to `integration-workflow`, `semantic-merge`, `agent-orchestration`, `refactor-and-integrate`, `handoff-doc`, and `using-superRA`. Pass explicit in-repo reference paths in every dispatch prompt.
+>
+> **UPSTREAM INTENT TO HONOR:** Main landed the `improve-design-principle` branch (see `docs/plans/2026-04-23-improve-design-principle-plan.md` after sync) which did two things: (1) redesigned the Workflow Frontier Resolver around a reusable re-entry mechanism, and (2) enshrined **"Teach the Protocol, Don't Prescribe Each Action"** as a gated check in `CLAUDE.md` with a Design Audit Checklist. Implementers must self-apply the gate before committing any edit under `skills/*` or `agents/*`; reviewers must verify it on every pass and **hold this gate tightly** when judging our surviving diff. Surviving hunks that restate what the agent already knows from authoritative sources should be trimmed, not preserved — this is also why every refactor follow-up in this integration must pass the **minimum-net-diff self-check** (`git diff BASE_HEAD_SHA..HEAD`) before each commit.
 
 **Objective:** Redesign superRA integration so semantic sync is a standalone utility skill, workflow Sync uses generic agents plus semantic-merge mode references, and downstream task agents receive sync intent through task-local annotations.
 
@@ -25,10 +29,10 @@
 ## Workflow Status
 
 - [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat. Task 6 originally tracked owner-located formats + procedural symmetry; Task 7 originally tracked the tool-skill reframe at the semantic-vs-codebase coherence boundary. Per the 2026-04-23 consolidation decision below, those two APPROVED tasks were collapsed into a single historical Task 6. A new Task 7 was added for the shared-vs-mode-specific clarity pass.
-- [ ] **Execution complete** - Tasks 1-6 APPROVED; Task 7 pending.
-- [ ] **Drift tests created** - not applicable for this skill-design change.
-- [ ] **Integrated** - pending after Task 7 approval.
-- [ ] **Docs finalized** - pending after Task 7 approval.
+- [x] **Execution complete** - All 7 tasks APPROVED (Task 7 approved in commit `c73c29e`).
+- [x] **Drift tests created** - not applicable for this skill-design change.
+- [ ] **Integrated** - in progress against `origin/main` (landed `improve-design-principle`, commit `30d6c91`).
+- [ ] **Docs finalized** - pending.
 - [ ] **Finished** - not requested in this session.
 
 ---
@@ -69,6 +73,14 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **User decision (2026-04-23, post-Task-7 consolidation + shared-vs-mode-specific clarity):** Consolidate the APPROVED Task 6 and Task 7 into a single historical Task 6 block; add a new Task 7 that tightens the shared-vs-mode-specific split in `semantic-merge`. In the new Task 7: `SKILL.md` should teach only shared principles — core intent rule, techniques, coherence checklist, and the parallel-worktree exception — while mode references carry the mode boundary, inputs, mode-specific process, format, and report/status. The `Workflow Boundary` and `Standalone Boundary` sections currently in `SKILL.md` move into `workflow-sync-author.md` and `standalone-merge.md` respectively. `sync-quality.md` is absorbed into `SKILL.md` as §Semantic Coherence Checklist and deleted as a separate reference.
 > **Question asked:** Does the current semantic-merge skill cleanly separate shared principles from mode-specific details? Where should `## Workflow Boundary` / `## Standalone Boundary` live? Does a separate `sync-quality.md` earn its keep when every call path loads it?
 > **Rationale (if given):** After Task 6 the mode differences reduce to inputs (dispatch-supplied vs inferred), artifact format (Sync Map + task-impact vs `SEMANTIC_MERGE.md`), and communication target (orchestrator status vs caller report); the boundary sections are mode scope statements that belong with their mode, not in the shared body. `sync-quality.md` is a must-load on every call path (sync author dispatch, sync reviewer dispatch, standalone), and `SKILL.md` is always loaded when the skill is used — folding the checklist into `SKILL.md` removes a file without reducing availability and preserves the shared-flow-checklist invariant (implementer and reviewer walk the same section). Workflow impact: clears `Execution complete`, `Integrated`, `Docs finalized`, and `Finished`; resets new Task 7 to pending.
+
+> **User decision (2026-04-23, integration kickoff):** Enter `integration-workflow` Sync + Integrate against `origin/main` (commit `30d6c91`, merged `improve-design-principle`). Anchors: `PRE_SYNC_BASE_SHA=b6e0640`, `BASE_HEAD_SHA=30d6c91`.
+> **Question asked:** Which base does this branch integrate against, and what upstream intent from main must this integration honor?
+> **Rationale (if given):** Main landed the `improve-design-principle` branch on 2026-04-23, which (a) redesigned the Workflow Frontier Resolver and (b) enshrined "Teach the Protocol, Don't Prescribe Each Action" as a gated check in `CLAUDE.md` with a Design Audit Checklist. The integration must adopt both upstream changes and honor the anti-over-prescription gate on our surviving diff — reviewers hold it tightly, implementers run the minimum-net-diff self-check before each commit.
+
+> **User decision (2026-04-23, integration discipline — authoritative skill source):** During this integration, dispatched agents MUST read the in-repo skill files under `skills/<name>/SKILL.md` and `skills/<name>/references/*.md` directly rather than invoking the `Skill` tool. The installed plugin copy is behind this branch's redesign, so invoking `Skill` would load stale contracts. Each dispatch prompt explicitly lists the in-repo reference paths the agent must open.
+> **Question asked:** How should agents access superRA skills when this branch is the superior / authoritative version relative to the installed plugin?
+> **Rationale (if given):** The whole point of this branch is to tighten integration-rule skills beyond the installed version; loading those same skills via the `Skill` tool would defeat the purpose. Following the in-repo files keeps the workflow dog-fooding its own current design.
 
 ---
 
