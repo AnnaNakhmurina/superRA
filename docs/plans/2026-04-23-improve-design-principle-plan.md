@@ -27,7 +27,7 @@
 - [x] **Drift tests created** - existing `skills/codex-superra-setup/scripts/test_sync_codex_agents.py` (5 tests, all passing) is the Phase A coverage per §Decisions 2026-04-23. No new drift tests authored.
 - [x] **Refactored** - Phase B integration review approved all 11 tasks (commit `5479838`); surviving diff justified against approved task objectives; one MINOR polish deferred to RESULTS.md §Known Follow-Ups.
 - [x] **Docs finalized** - PLAN.md + RESULTS.md relocated to `docs/plans/2026-04-23-improve-design-principle-{plan,results}.md` per user decision; no doc-writer/doc-reviewer maturation (contributor-docs change, not an analysis report).
-- [ ] **Merged** - branch has not been merged or opened as a PR by this workflow.
+- [x] **Merged** - branch pushed to `origin/improve-design-principle` and PR opened against `origin/main` on 2026-04-23 (Phase D Option 2: push + PR).
 
 ## Project Conventions
 
