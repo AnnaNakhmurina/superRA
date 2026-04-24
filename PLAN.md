@@ -83,6 +83,29 @@
 > **Question asked:** Completion menu after Tasks 5 and 6 APPROVED — proceed with integration, change the plan, keep branch as-is, or discard?
 > **Rationale:** Tasks 5 and 6 rewrote the skill body (four gates, new Iron Law, five new `[BLOCKING]` items) and propagated the framing into the planning and integration references; the `Refactored` milestone was rolled back by the earlier 2026-04-23 restructure decision so Phase B re-runs on the restructured skill before merge.
 
+## Sync Map
+
+**Base branch:** `origin/main`
+**Pre-sync merge base:** `b6e0640efce48e9dbf2ca9cec9ac1e310aaf82b3`
+**Synced base head:** `886fda8b6a7862a0a4af8ec7d30fd53ffed6fea3`
+**Incoming range:** `b6e0640..886fda8`
+**Sync commits:** (populated in the merge commit that follows this edit)
+**Sync review status:** IMPLEMENTED
+
+### Branch Summary
+
+**Incoming intent:** Main advanced 132 commits, led by the `tighten-integration-rules` initiative (PR #24) plus a follow-up README INTEGRATE section update. The initiative split `semantic-merge` into a core `SKILL.md` plus three mode references (`workflow-sync-author.md`, `workflow-sync-reviewer.md`, `standalone-merge.md`), split a new `result-protection` utility skill out of `refactor-and-integrate`, folded codebase-integration content into `refactor-and-integrate/SKILL.md`, folded merge-quality content into `semantic-merge/SKILL.md`, and deleted the three former `refactor-and-integrate/references/*` files. It also replaced `tests/test-phase-b-upstream-intent-contract.sh` with `tests/test-sync-integration-contract.sh`, reoriented `refactor-and-integrate` around minimum-net-diff, and substantially trimmed `CLAUDE.md`, `agents/implementer.md`, `agents/reviewer.md`, and the direct-mode role references under the new "teach the protocol, don't prescribe each action" principle.
+
+**Resolution thesis:** Accept main's new structural design wholesale — the theory-modeling vertical slots into it without friction. Drop the branch's edits to the three deleted `refactor-and-integrate/references/` files (their content now lives in the new skill split; the generalizations they carried were for data/theory parity, and main already generalized the surviving content). Update theory-modeling's own references to point at the new locations (`result-protection/references/drift-test-quality.md` and `refactor-and-integrate/SKILL.md`) so the stale-reference sweep closes. Adopt main's shorter agent-body wording — the manifest in `using-superRA/SKILL.md` (which lists theory-modeling) is the authoritative routing surface, so inline theory-modeling mentions in `agents/*.md` and `.codex/agents/*.toml` are correctly retired. Retarget the harness-compat theory-modeling wiring assertions at the new surviving locations (`refactor-and-integrate/SKILL.md` now carries the domain-pointer row that used to live in `codebase-integration.md`).
+
+### Sync Clusters
+
+> **Sync cluster `main-restructure` (2026-04-24):** commits `b6e0640..886fda8` (132); paths span `skills/semantic-merge/`, `skills/refactor-and-integrate/`, `skills/result-protection/`, `skills/using-superRA/`, `skills/integration-workflow/`, `skills/planning-workflow/`, `CLAUDE.md`, `README.md`, `agents/*.md`, `.codex/agents/*.toml`, `tests/`, and supporting plugin metadata; affects Tasks 1, 2, 3, 5, 6.
+> **Incoming intent:** Tighten the INTEGRATE-phase architecture — split the three concerns formerly bundled in `refactor-and-integrate` (drift/result protection, codebase coherence, merge/semantic coherence) into three owned skills; teach dispatch agents to consult the manifest instead of restating routing in agent bodies; reorient codebase integration around minimum net diff against a governing baseline; rename "Phase B" surfaces to the Sync / Integrate labels.
+> **Sync resolution:** Branch-side edits to the three deleted `refactor-and-integrate/references/*.md` files were dropped (upstream-delete honored — content is in the new owning skills, where main's own generalizations already cover data/theory parity). `refactor-and-integrate/SKILL.md` took main's new minimum-net-diff structure with one line added to route theory-modeling integration work to `theory-modeling/references/integration.md`; the Methodological-Questions `[BLOCKING]` bullet was generalized to mention equilibrium concepts and normalizations alongside control variables / sample filters. `CLAUDE.md`, `agents/implementer.md`, `agents/reviewer.md`, and the two `.codex/agents/*.toml` files took main's shorter wording verbatim — theory-modeling routing remains visible through the Skill Inventory and vertical routing table, which is the design-principle-compliant location. The two direct-mode role references adopted main's short single-line "Follow the discipline of the domain skill you loaded" phrasing. `theory-modeling/references/integrate-drift-tests.md` and `theory-modeling/references/integration.md` had their cross-skill pointers updated: `result-protection/references/drift-test-quality.md` replaces the old `refactor-and-integrate/references/drift-test-quality.md` (two occurrences), and `refactor-and-integrate/SKILL.md` replaces the old `codebase-integration.md` pointer (two occurrences, including the reviewer-verdict-protocol line rewritten to match the pattern in `econ-data-analysis/references/integration.md`). `tests/check-harness-compatibility.sh` was updated to read `refactor-and-integrate/SKILL.md` for the theory-modeling-integration-pointer assertion (the two former assertion targets — `codebase-integration.md` and `merge-quality.md` — are deleted) and the tier-3-phrase assertions and the agent-body theory-modeling-name assertions were dropped (the routing they protected moved to the manifest).
+> **Integration context:** Later codebase-integration review should verify that the theory-modeling skill body and references still compose correctly under the new `refactor-and-integrate/SKILL.md` structure (minimum-net-diff checklist, Project Doc Audit walk-up, Final Diff Self-Check). No Task 1-6 step text was altered by the sync.
+> **User decision:** None — the merge-guard hook fired on `git merge` inside this semantic-merge Step 5 execution; noted and continued under `semantic-merge §Mode-Specific Process` which authorizes the sync operation.
+
 ## Project Conventions
 
 Walked at planning time (2026-04-22). Re-walk on-demand only.
@@ -101,6 +124,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 **Depends on:** *(none)*
 **Review status:** APPROVED
 **Integration status:** APPROVED
+**Sync impact:** Cluster `main-restructure` updated cross-skill pointers in `references/integrate-drift-tests.md` (drift-quality now lives in `result-protection/`) and `references/integration.md` (codebase-integration folded into `refactor-and-integrate/SKILL.md`; verdict-protocol pointer rewritten). Source: `PLAN.md ## Sync Map`.
 
 **Script:** `skills/theory-modeling/SKILL.md`, `skills/theory-modeling/references/*.md`
 **Input:** Existing domain-skill pattern in `skills/econ-data-analysis/` plus the approved v1 requirements in this plan’s Decisions section
@@ -115,6 +139,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 **Depends on:** *(none)*
 **Review status:** APPROVED
 **Integration status:** APPROVED
+**Sync impact:** Cluster `main-restructure` reshaped wiring surfaces — `refactor-and-integrate/SKILL.md` now carries domain-integration pointers (theory-modeling row added during sync); `CLAUDE.md` / `agents/*.md` / `.codex/agents/*.toml` / direct-mode role references adopted main's shorter wording, routing theory-modeling through the manifest rather than inline mentions. `.agents/skills/theory-modeling` symlink unaffected; new `.agents/skills/result-protection` symlink arrived from main. Source: `PLAN.md ## Sync Map`.
 
 **Script:** Existing workflow/docs/hook/test files named in the Implementation Inventory, plus `.agents/skills/theory-modeling`
 **Input:** The approved skill name, the new file layout from Task 1, and the current runtime/docs wording in the repo
@@ -129,6 +154,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 **Depends on:** Task 1, Task 2
 **Review status:** APPROVED
 **Integration status:** APPROVED
+**Sync impact:** Cluster `main-restructure` deleted the two `refactor-and-integrate/references/` files this task's assertions targeted (`codebase-integration.md`, `merge-quality.md`). `tests/check-harness-compatibility.sh` was updated during sync to read the new `refactor-and-integrate/SKILL.md` for the theory-modeling-integration-pointer assertion; tier-3-merge-phrase assertions and agent-body name assertions were dropped (the routing moved to the manifest surface already covered elsewhere). The test suite passes post-sync. Source: `PLAN.md ## Sync Map`.
 
 **Script:** Verification commands and any touched files needed to resolve resulting failures
 **Input:** Completed outputs from Tasks 1 and 2
