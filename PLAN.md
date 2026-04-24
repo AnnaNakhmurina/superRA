@@ -130,7 +130,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 1: Refactor semantic-merge around shared principles and mode references
 **Depends on:** *(none)*
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 **Sync impact:** Cluster `S3-workflow-vocabulary-overlap` explains why the surviving semantic-merge diff is lean after main's teach-the-protocol trim. Source: `PLAN.md ## Sync Map`.
 
 **Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-map-format.md`.
@@ -154,7 +154,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 2: Rewrite integration-workflow Sync choreography for generic agents
 **Depends on:** Task 1
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 **Sync impact:** Cluster `S3-workflow-vocabulary-overlap` explains why our Protect/Sync/Integrate/Document/Finish step structure survives while main's trim removed obsolete vocabulary elsewhere. Source: `PLAN.md ## Sync Map`.
 
 **Files:** `skills/integration-workflow/SKILL.md`, `skills/agent-orchestration/SKILL.md` if dispatch-shape ownership needs a pointer.
@@ -178,7 +178,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 3: Define Sync Map, task-local Sync impact, and standalone file-impact anatomy
 **Depends on:** Task 1, Task 2
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 
 **Files:** `skills/handoff-doc/references/plan-anatomy.md`, `skills/semantic-merge/references/sync-map-format.md`, semantic-merge mode references, `skills/refactor-and-integrate/references/codebase-integration.md`.
 **Input:** Existing `## Sync Map` anatomy and the decision to keep branch-level and task-local sync state distinct.
@@ -201,7 +201,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 4: Simplify canonical role docs and post-sync integration consumption
 **Depends on:** Task 1, Task 2, Task 3
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 
 **Files:** `agents/implementer.md`, `agents/reviewer.md`, `skills/using-superRA/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, generated direct-mode and Codex agent files.
 **Input:** Current role docs with branch-level `Stage: sync` exceptions and the revised semantic-merge mode design.
@@ -224,7 +224,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 5: Update public docs and verify the revised design
 **Depends on:** Task 1, Task 2, Task 3, Task 4
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** REVISE
 
 **Files:** `README.md`, `skills/CATEGORIES.md`, `CLAUDE.md`, generated artifacts as needed, tests under `skills/codex-superra-setup/scripts/` or `tests/claude-code/` as needed.
 **Input:** Updated skills, references, workflow choreography, role docs, and generated artifacts.
@@ -246,12 +246,15 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
   ```
   Inspect the search results rather than requiring zero matches; the goal is to confirm remaining legacy sync terms are intentional.
 
+> **Review notes:**
+> 1. [MAJOR] The compatibility suite still runs the obsolete Phase B / `## Upstream Intent` contract test: `tests/check-harness-compatibility.sh:65` invokes `tests/test-phase-b-upstream-intent-contract.sh`, whose assertions still require `## Upstream Intent`, `MERGE_BASE_SHA`, and `skills/refactor-and-integrate/references/merge-quality.md` even though this branch intentionally replaces them with Sync Map / `BASE_HEAD_SHA` / semantic-vs-codebase coherence. `bash tests/check-harness-compatibility.sh` fails in that section with 33 failures, including missing `merge-quality.md`. Fix by replacing or renaming this contract test and harness section so they assert the current Sync Map / generic sync reviewer / codebase-integration contract, or remove the obsolete test from the suite if it is intentionally superseded; then rerun the compatibility suite.
+
 ---
 
 ### Task 6: Restructure semantic-merge as a tool skill at the semantic-vs-codebase coherence boundary
 **Depends on:** Task 1, Task 2, Task 3, Task 4, Task 5
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 
 **Files:** `skills/semantic-merge/SKILL.md`, all four `skills/semantic-merge/references/*.md` (with `sync-map-format.md` deleted), `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `CLAUDE.md`, `README.md`, `skills/CATEGORIES.md`.
 **Input:** Post-Task-5 semantic-merge (lean SKILL.md body; separate `sync-map-format.md`; one-minimal-commit rule with all propagation deferred). See the two post-Task-5 decisions in `## Decisions` for the design rationale (owner-located formats + symmetric procedural richness; tool-skill reframe at the semantic-vs-codebase coherence boundary).
@@ -270,7 +273,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 7: Clarify shared-vs-mode-specific content in semantic-merge
 **Depends on:** Task 6
 **Review status:** APPROVED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 **Sync impact:** Cluster `S3-workflow-vocabulary-overlap` explains why `semantic-merge/SKILL.md §Choose a Mode`, §Exception, and the Semantic Coherence Checklist carry the surviving shared guidance without re-introducing duplication. Source: `PLAN.md ## Sync Map`.
 
 **Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/semantic-merge/references/sync-quality.md` (to be deleted), `skills/integration-workflow/SKILL.md`, `CLAUDE.md`.
@@ -319,7 +322,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 8: Reframe Sync notes as post-sync context, not integration targets
 **Depends on:** Task 7
 **Review status:** IMPLEMENTED
-**Integration status:** *(pending)*
+**Integration status:** APPROVED
 
 **Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/integration-workflow/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `skills/CATEGORIES.md`, `README.md`, `CLAUDE.md`, `PLAN.md`, `RESULTS.md`.
 **Input:** The 2026-04-23 decision that Sync Map clusters, task-local `**Sync impact:**`, and standalone `SEMANTIC_MERGE.md` records explain the approved semantic sync result and should not become unresolved Integrate targets.
