@@ -227,24 +227,26 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 
 ### Task 10: Rebuild refactor-and-integrate around minimum net diff
 **Depends on:** Task 8
-**Review status:** *(not started)*
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 **Files:** `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/refactor-and-integrate/references/drift-test-quality.md` if removed, tests that inspect refactor-and-integrate wording.
 **Input:** Task 8 review note; user decision above; `CLAUDE.md` DRY / Necessity gate for this repo's instruction-bearing files.
 **Output:** `refactor-and-integrate` is a codebase-coherence utility centered on minimum net diff. It requires implementer final diff self-check evidence, treats absent pruning as suspicious rather than exempt, and keeps Sync impact as a justification context only when already provided by the workflow.
 
-- [ ] **Step 1: Narrow the skill owner**
+- [x] **Step 1: Narrow the skill owner**
   Remove drift-test ownership and semantic-boundary wrapper prose. Keep only codebase coherence, convention fit, project-doc audit, utility reuse, and minimum-net-diff discipline.
 
-- [ ] **Step 2: Make the governing-diff procedure load-bearing**
+- [x] **Step 2: Make the governing-diff procedure load-bearing**
   Require implementers to recompute the governing diff before returning, including no-change cases, and leave a compact self-check trail for reviewer verification.
 
-- [ ] **Step 3: Define proportionate justification**
+- [x] **Step 3: Define proportionate justification**
   Require summarized surviving-change classes by default. Require explicit hunk/line justification for suspicious cases: `skills/*` or `agents/*`, prior overprescription/scope-creep findings, base-side restoration, touched APPROVED tasks, broad formatting/rewrite hunks, and Sync-impact-only justifications.
 
-- [ ] **Step 4: Keep repo-specific gates local**
+- [x] **Step 4: Keep repo-specific gates local**
   For this repo's skill/agent prose, preserve the DRY / Necessity line-by-line gate. For general codebase integration, express the broader rule as minimum net diff: no unjustified cleanup, overengineering, defensive edits, or speculative abstractions.
+
+**Final diff self-check:** `git diff 30d6c91..HEAD -- skills/refactor-and-integrate/SKILL.md skills/refactor-and-integrate/references/codebase-integration.md skills/refactor-and-integrate/references/drift-test-quality.md tests/test-sync-integration-contract.sh`; surviving-change classes: refactor-and-integrate owner narrowing, Codebase Integration Final Diff Self-Check protocol/checklist, drift-test reference deletion from refactor-and-integrate, targeted contract-test wording. Suspicious hunk justifications: `skills/refactor-and-integrate/SKILL.md:3`, `skills/refactor-and-integrate/SKILL.md:8`, and `skills/refactor-and-integrate/SKILL.md:24` implement Steps 1 and 4 by removing drift-test / semantic-boundary ownership and centering codebase minimum net diff; `skills/refactor-and-integrate/references/codebase-integration.md:55`, `skills/refactor-and-integrate/references/codebase-integration.md:60`, and `skills/refactor-and-integrate/references/codebase-integration.md:75` implement Steps 2 and 3; deleting `skills/refactor-and-integrate/references/drift-test-quality.md` removes refactor-and-integrate drift-test ownership while Task 9 owns the result-protection target.
 
 ---
 
