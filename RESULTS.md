@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (integration approval invalidated; replanning needed)
-**Status:** Integration closeout blocked. The latest integration approval is not trusted for minimum-net-diff / no-overprescription enforcement.
+**Last updated:** 2026-04-24 (Task 9 implemented; awaiting review)
+**Status:** Integration closeout blocked. The latest integration approval is not trusted for minimum-net-diff / no-overprescription enforcement; Task 9 is implemented and awaiting review.
 
 ---
 
@@ -194,3 +194,21 @@ git diff --check
 ```
 
 The terminology scan returned only the intentional historical command record in `PLAN.md`.
+
+## Task 9: Split result protection out of refactor-and-integrate
+
+**Status:** IMPLEMENTED; awaiting review.
+
+Result protection is now a standalone utility skill. Protect-stage agents load `result-protection` through the `Stage: drift-test` manifest row, while `refactor-and-integrate` remains the Integrate-stage codebase-coherence skill. Drift tests remain the current/default mechanism for protecting key results.
+
+File-by-file changes:
+
+- `skills/result-protection/SKILL.md` — new lean skill body for key-result protection, with drift tests identified as the current/default mechanism and data-analysis tolerance guidance delegated to `econ-data-analysis`.
+- `skills/result-protection/references/drift-test-quality.md` — new generic drift-test quality checklist covering red-green verification, tolerance documentation, independence, clarity, project test conventions, and expectation-update escalation.
+- `skills/using-superRA/SKILL.md` — Skill Inventory includes `result-protection`; the `drift-test` manifest row now loads `result-protection`; `refactor-and-integrate` is described as codebase coherence plus Sync impact context.
+- `skills/integration-workflow/SKILL.md` — Protect wording now names key-result protection conceptually and routes `Stage: drift-test` agents to `result-protection`; concrete drift-test suite runs and the `Drift tests created` milestone remain in place.
+- `skills/econ-data-analysis/SKILL.md` and `skills/econ-data-analysis/references/integrate-drift-tests.md` — data-analysis-specific key-result selection, tolerance, and failure-mode guidance remain in econ; generic drift-test quality now points to `result-protection`.
+- `.agents/skills/result-protection` — repo-local Codex discovery symlink for the new canonical skill.
+- `tests/test-sync-integration-contract.sh` — added contract checks for Protect routing, result-protection drift-test quality ownership, and the econ add-on pointer.
+
+Task 10 still owns removing the legacy drift-test ownership text from `refactor-and-integrate`; this task intentionally did not modify that read-only surface.

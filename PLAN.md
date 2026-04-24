@@ -204,24 +204,24 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 
 ### Task 9: Split result protection out of refactor-and-integrate
 **Depends on:** Task 8
-**Review status:** *(not started)*
+**Review status:** IMPLEMENTED
 **Integration status:** *(not started)*
 
 **Files:** `skills/result-protection/SKILL.md`, `skills/result-protection/references/*`, `skills/using-superRA/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/econ-data-analysis/SKILL.md`, `skills/econ-data-analysis/references/integrate-drift-tests.md`, tests that route Protect / drift-test behavior.
 **Input:** User decision above; existing `skills/refactor-and-integrate/references/drift-test-quality.md`; `skills/econ-data-analysis`'s stage-scoped-reference style.
 **Output:** Result protection is a standalone utility skill. Integration Protect dispatches this skill for key-result protection; drift tests are documented as the current/default protection mechanism, not the whole concept. `refactor-and-integrate` no longer owns drift-test quality.
 
-- [ ] **Step 1: Create the result-protection skill**
-  Move the drift-test integrity discipline into a standalone skill that can cover broader key-result protection without weakening the current red-green, tolerance, and expectation-update gates.
+- [x] **Step 1: Create the result-protection skill**
+  Created `skills/result-protection/` with a lean skill body and a drift-test quality reference carrying red-green, tolerance, independence, and expectation-update gates. The legacy `refactor-and-integrate` copy remains untouched in this worktree because Task 10 owns that cleanup.
 
-- [ ] **Step 2: Route Protect to result protection**
-  Update the stage/load surfaces so Protect agents load the new skill. Prefer `result-protection` / key-result protection vocabulary over "create tests" where the workflow is conceptual, while retaining drift-test wording where the concrete artifact is a test.
+- [x] **Step 2: Route Protect to result protection**
+  Routed `Stage: drift-test` to `result-protection` in `using-superRA`, updated Protect choreography to key-result protection vocabulary, and kept drift-test wording for the concrete default mechanism and suite runs.
 
-- [ ] **Step 3: Preserve domain add-ons**
-  Keep econ-specific tolerance guidance in `econ-data-analysis`, with the new skill pointing there only for data-analysis result protection.
+- [x] **Step 3: Preserve domain add-ons**
+  Kept data-analysis key-result selection, tolerance, and failure-mode guidance in `econ-data-analysis`; only the generic drift-test quality pointer moved to `result-protection`.
 
-- [ ] **Step 4: Update targeted tests**
-  Adjust contract checks that expect `refactor-and-integrate` to own drift-test quality.
+- [x] **Step 4: Update targeted tests**
+  Added contract checks for the Protect route, result-protection drift-test quality reference, and econ add-on pointer.
 
 ---
 
