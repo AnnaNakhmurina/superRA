@@ -3,10 +3,18 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Task 5 compatibility fix approved in PLAN; Task 4 role-doc pruning fix implemented and awaiting narrow re-review)
-**Status:** Tasks 1-3 and 5-8 integration-approved; Task 4 integration fix implemented and awaiting re-review
+**Last updated:** 2026-04-23 (integration approval invalidated; replanning needed)
+**Status:** Integration closeout blocked. The latest integration approval is not trusted for minimum-net-diff / no-overprescription enforcement.
 
 ---
+
+## Integration Review Quality Blocker
+
+The `30e94f6` integration approval should not be used as a closeout gate. The reviewer later admitted the branch-wide pruning sweep was not a true line-by-line audit of `30d6c91..HEAD`; it relied on grouped diffs, targeted scans, and spot checks.
+
+Concrete issue to carry into replanning: `skills/refactor-and-integrate/SKILL.md` contains boundary-wrapper prose beginning "Semantic coherence itself belongs to `superRA:semantic-merge`..." that duplicates ownership / boundary content instead of changing agent behavior. This is a direct no-overprescription violation, and similar boundary-wrapper / explanatory-prose patterns likely remain across the surviving instruction diff.
+
+Next step: replan the integration-review gate before further fixes or closeout.
 
 ## Task 1: Refactor semantic-merge around shared principles and mode references
 

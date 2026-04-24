@@ -37,9 +37,9 @@
 ## Workflow Status
 
 - [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat. Task 6 originally tracked owner-located formats + procedural symmetry; Task 7 originally tracked the tool-skill reframe at the semantic-vs-codebase coherence boundary. Per the 2026-04-23 consolidation decision below, those two APPROVED tasks were collapsed into a single historical Task 6. A new Task 7 was added for the shared-vs-mode-specific clarity pass.
-- [ ] **Execution complete** - Tasks 1-7 APPROVED; Task 8 IMPLEMENTED and awaiting review after the sync-context design change.
+- [ ] **Execution complete** - blocked for replanning after the latest integration review failed to enforce the minimum-net-diff / no-overprescription gate line by line.
 - [x] **Drift tests created** - not applicable for this skill-design change.
-- [ ] **Integrated** - in progress against `origin/main` (landed `improve-design-principle`, commit `30d6c91`).
+- [ ] **Integrated** - blocked; integration approval at `30e94f6` is not trusted for closeout because the branch-wide pruning review was not line-by-line.
 - [ ] **Docs finalized** - pending.
 - [ ] **Finished** - not requested in this session.
 
@@ -97,6 +97,10 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **User decision (2026-04-23, Sync notes as context):** Sync Map clusters, task-local `**Sync impact:**`, and standalone `SEMANTIC_MERGE.md` records explain the approved semantic sync result and why the post-sync diff looks the way it does. They are reference context for Integrate or later codebase review, not unresolved sync targets.
 > **Question asked:** After Sync reaches semantic coherence and sync review approves it, should Integrate satisfy Sync impact / sync-note obligations, or use them only as context?
 > **Rationale (if given):** Semantic conflicts, propagation, stale-reference follow-through, and generated-output handling within the merge's reach are resolved by semantic-merge and guarded by the sync reviewer. Integrate should review codebase coherence against `BASE_HEAD_SHA..HEAD` without reconstructing incoming intent or turning Sync notes into a backlog. Affected statuses: uncheck `Execution complete` because this adds Task 8; preserve Tasks 1-7 `Review status: APPROVED`; leave `Drift tests created` checked because no drift-test-bearing outputs changed.
+
+> **User decision (2026-04-23, integration approval invalidated for replanning):** Do not proceed from the latest Integrate approval; replan the minimum-net-diff / no-overprescription enforcement before further integration closeout.
+> **Question asked:** Should we keep patching the current wording to stress the principle, or document the issue and replan?
+> **Rationale (if given):** The reviewer self-audit admitted the approval did not inspect every hunk line by line and instead spot-checked / theme-checked grouped diffs. The researcher identified a direct no-overprescription violation in `skills/refactor-and-integrate/SKILL.md`: "Semantic coherence itself belongs to `superRA:semantic-merge`. This skill reads task-local `**Sync impact:**` and referenced Sync Map clusters as context for the approved post-sync diff; it does not resolve branch syncs, review sync commits, or turn sync notes into independent refactor targets." This duplicates ownership / boundary content already carried by authoritative workflow and skill surfaces. Similar boundary-wrapper and explanatory-prose violations likely remain across the surviving diff. Affected statuses: keep `Integrated`, `Docs finalized`, and `Finished` unchecked; treat current task-local integration approvals as insufficient for closeout until replanning resolves the review-gate failure.
 
 ## Sync Map
 
@@ -321,7 +325,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 8: Reframe Sync notes as post-sync context, not integration targets
 **Depends on:** Task 7
 **Review status:** IMPLEMENTED
-**Integration status:** APPROVED
+**Integration status:** REVISE
 
 **Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/integration-workflow/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `skills/CATEGORIES.md`, `README.md`, `CLAUDE.md`, `PLAN.md`, `RESULTS.md`.
 **Input:** The 2026-04-23 decision that Sync Map clusters, task-local `**Sync impact:**`, and standalone `SEMANTIC_MERGE.md` records explain the approved semantic sync result and should not become unresolved Integrate targets.
@@ -348,3 +352,6 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
   git diff --check
   ```
   Inspect any remaining matches for historical decisions or intentional non-obligation uses.
+
+> **Review notes:**
+> 1. [MAJOR] The current Task 8 integration approval is invalid for minimum-net-diff / no-overprescription purposes. The branch-wide reviewer admitted it did not review every hunk line by line, and `skills/refactor-and-integrate/SKILL.md` still contains boundary-wrapper prose that explains ownership instead of changing behavior. Replan the enforcement mechanism before attempting another Integrate closeout.
