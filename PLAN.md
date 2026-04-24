@@ -191,22 +191,18 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 
 ### Task 8: Reframe Sync notes as post-sync context, not integration targets
 **Depends on:** Task 7
-**Review status:** IMPLEMENTED
-**Integration status:** IMPLEMENTED
+**Review status:** APPROVED
+**Integration status:** APPROVED
 
 **Files:** `skills/semantic-merge/SKILL.md`, semantic-merge mode references, `skills/integration-workflow/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `skills/CATEGORIES.md`, `README.md`, `CLAUDE.md`, `RESULTS.md`.
 **Output:** Sync Map clusters, task-local `**Sync impact:**`, and standalone `SEMANTIC_MERGE.md` records explain the approved post-sync diff. Integrate / refactor-and-integrate use those notes as context while reviewing codebase coherence against `BASE_HEAD_SHA..HEAD`.
-
-> **Review notes:**
-> 1. [MAJOR] Current integration approval is invalid for minimum-net-diff / no-overprescription closeout. The branch-wide reviewer did not inspect every hunk line by line, and `skills/refactor-and-integrate/SKILL.md` still contains boundary-wrapper prose that duplicates authoritative ownership / boundary content.
->    → implemented: branch-wide audit now uses `git diff origin/main..HEAD`; `refactor-and-integrate` carries only codebase coherence / minimum-net-diff protocol and caller baseline override (`skills/refactor-and-integrate/SKILL.md:8`, `skills/refactor-and-integrate/SKILL.md:24`), and dispatch templates avoid restating role protocol or manifest loads (`skills/agent-orchestration/SKILL.md:107`, `skills/integration-workflow/SKILL.md:191`).
 
 ---
 
 ### Task 9: Split result protection out of refactor-and-integrate
 **Depends on:** Task 8
-**Review status:** IMPLEMENTED
-**Integration status:** IMPLEMENTED
+**Review status:** APPROVED
+**Integration status:** APPROVED
 
 **Files:** `skills/result-protection/SKILL.md`, `skills/result-protection/references/*`, `skills/using-superRA/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/econ-data-analysis/SKILL.md`, `skills/econ-data-analysis/references/integrate-drift-tests.md`, tests that route Protect / drift-test behavior.
 **Input:** User decision above; existing `skills/refactor-and-integrate/references/drift-test-quality.md`; `skills/econ-data-analysis`'s stage-scoped-reference style.
@@ -228,8 +224,8 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
 
 ### Task 10: Rebuild refactor-and-integrate around minimum net diff
 **Depends on:** Task 8
-**Review status:** IMPLEMENTED
-**Integration status:** IMPLEMENTED
+**Review status:** APPROVED
+**Integration status:** APPROVED
 
 **Files:** `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/drift-test-quality.md` if removed, tests that inspect refactor-and-integrate wording.
 **Input:** Task 8 review note; user decision above; `CLAUDE.md` DRY / Necessity gate for this repo's instruction-bearing files.
@@ -282,7 +278,7 @@ Walked at planning time on 2026-04-23; refreshed in this consolidation on 2026-0
   ```
   The legacy scan returned only the intentional negative assertion in the Codex generator test. The wrapper/overprescription scan returned only the CLAUDE.md gate definition.
 
-- [ ] **Step 5: Review**
+- [x] **Step 5: Review**
   Integration reviewer walks `git diff origin/main..HEAD` line by line before approval, with special attention to `skills/result-protection/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/integration-workflow/SKILL.md`, `skills/semantic-merge/SKILL.md`, `skills/planning-workflow/SKILL.md`, and canonical role specs.
 
 **Final diff self-check:** `git diff origin/main..HEAD`; surviving-change classes: result-protection split, refactor-and-integrate owner narrowing, Codebase Integration checklist folded into `SKILL.md`, semantic-merge workflow/standalone mode references, integration-workflow Sync/Integrate choreography, canonical dispatch-template prefix removal, current-main planning header-field preservation, generated role artifact refresh, public/category summary currency, and contract-test updates. Suspicious hunk justifications: instruction edits under `skills/*` and `agents/*` implement Tasks 9-11 and remove duplicated ownership surfaces; `skills/agent-orchestration/SKILL.md` and `skills/agent-orchestration/references/agent-teams.md` remove dispatch prompt wrapper text that restated role protocol / manifest loads; `skills/planning-workflow/SKILL.md` preserves the newer `origin/main` header-field sweep while retaining this branch's Document/Sync vocabulary; `skills/codex-superra-setup/scripts/sync_codex_agents.py` deletes stale direct-mode reviewer cleanup for the retired `## Upstream Intent` role text; generated `.codex/agents/superra_reviewer.toml` follows from `agents/reviewer.md`; deleted `skills/refactor-and-integrate/references/codebase-integration.md` is covered by the user decision to fold the remaining reference into the main skill.
