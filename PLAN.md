@@ -88,7 +88,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 **Pre-sync merge base:** `b6e0640efce48e9dbf2ca9cec9ac1e310aaf82b3`
 **Synced base head:** `30d6c911c9a2fb62582ad948fd4de82b0b2bf150`
 **Incoming range:** `b6e0640..30d6c91`
-**Sync commits:** `<MERGE_COMMIT_SHA>` (merge of `origin/main` at `30d6c91` into `tighten-integration-rules`)
+**Sync commits:** `865339c` (merge commit of `origin/main` at `30d6c91` into `tighten-integration-rules`)
 **Sync review status:** `IMPLEMENTED`
 
 ### Branch Summary
