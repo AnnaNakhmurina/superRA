@@ -201,7 +201,7 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 ### Task 4: Simplify canonical role docs and post-sync integration consumption
 **Depends on:** Task 1, Task 2, Task 3
 **Review status:** APPROVED
-**Integration status:** IMPLEMENTED
+**Integration status:** APPROVED
 
 **Files:** `agents/implementer.md`, `agents/reviewer.md`, `skills/using-superRA/SKILL.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, generated direct-mode and Codex agent files.
 **Input:** Current role docs with branch-level `Stage: sync` exceptions and the revised semantic-merge mode design.
@@ -218,10 +218,6 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 - [x] **Step 4: Regenerate generated role artifacts**
   Run the Codex agent sync script after canonical role edits. Do not hand-edit generated direct-mode references or `.codex/agents` files.
-
-> **Review notes:**
-> 1. [MAJOR] Branch-wide integration pruning found the role docs still using broad "task-scoped stages" wording to scope handoff behavior, which duplicates the manifest / workflow-owned Sync boundary and can drift against it. Express the ownership rule in terms of assigned PLAN.md task blocks instead. (`agents/implementer.md:61`, `agents/implementer.md:126`, `agents/reviewer.md:89`)
->    → implemented: rewrote canonical role handoff lines around assigned PLAN.md task-block ownership and regenerated the direct-mode references plus Codex named-agent files from the canonical sources (`agents/implementer.md:61`, `agents/implementer.md:126`, `agents/reviewer.md:89`).
 
 ---
 
