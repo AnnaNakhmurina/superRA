@@ -24,11 +24,11 @@
 
 ## Workflow Status
 
-- [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat; Task 6 added after Tasks 1-5 review to address sync-map-format ownership and procedural symmetry.
-- [ ] **Execution complete** - Tasks 1-5 APPROVED; Task 6 pending.
+- [x] **Plan approved** - researcher approved the revised generic-agent / mode-reference design in chat; Task 6 added to address sync-map-format ownership and procedural symmetry; Task 7 added to reframe both skills as tool skills and split at the semantic-vs-codebase coherence boundary.
+- [ ] **Execution complete** - Tasks 1-6 APPROVED; Task 7 pending.
 - [ ] **Drift tests created** - not applicable for this skill-design change.
-- [ ] **Integrated** - pending after Task 6 approval.
-- [ ] **Docs finalized** - pending after Task 6 approval.
+- [ ] **Integrated** - pending after Task 7 approval.
+- [ ] **Docs finalized** - pending after Task 7 approval.
 - [ ] **Finished** - not requested in this session.
 
 ---
@@ -60,7 +60,11 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 
 > **User decision (2026-04-23, post-Task-6 clarification):** Collapse the sync commit shape to a single unambiguous rule for both modes — land exactly one minimal merge commit that leaves existing protection passing; defer broader propagation to Integrate (workflow) or to the caller / `refactor-and-integrate` (standalone).
 > **Question asked:** What does "exactly one sync commit" mean — does it include semantic propagation or only mechanical conflict resolution — and should workflow vs standalone have different commit-shape rules (1 vs 1+N)?
-> **Rationale (if given):** Two different commit-shape patterns across modes (1 vs 1+N) is confusing and blurs the Sync / Integrate boundary. A single rule — "one minimal commit that passes existing protection" — uses the Protection step (drift tests + key-result coverage from `integration-workflow` Phase A, or existing tests / drift tests for standalone) as the unambiguous definition of "not broken." Broader propagation (caller updates for renames, output regeneration, drift-test expectation updates, project-doc audit) defers out of semantic-merge's scope. Workflow impact: refines Task 6's semantic-merge output; no new task block needed.
+> **Rationale (if given):** Two different commit-shape patterns across modes (1 vs 1+N) is confusing and blurs the Sync / Integrate boundary. A single rule — "one minimal commit that passes existing protection" — uses the Protection step (drift tests + key-result coverage from `integration-workflow` Phase A, or existing tests / drift tests for standalone) as the unambiguous definition of "not broken." Broader propagation (caller updates for renames, output regeneration, drift-test expectation updates, project-doc audit) defers out of semantic-merge's scope. Workflow impact: refines Task 6's semantic-merge output; no new task block needed. **Superseded by the 2026-04-23 semantic-coherence-vs-codebase-coherence decision below.**
+
+> **User decision (2026-04-23, Task 7 — skill-boundary reframe):** Split `semantic-merge` and `refactor-and-integrate` at the semantic coherence vs codebase coherence boundary. Reframe both skills as tool skills (techniques, not prescribed procedures); semantic-merge carries through to semantic coherence (1 merge commit + N propagation commits as needed); refactor-and-integrate handles codebase coherence (convention fit, utility reuse, Project Doc Audit walk-up, minimum net diff). `sync-quality.md` becomes the gated checklist for semantic coherence.
+> **Question asked:** If semantic-merge agents already carry every technique needed for semantic coherence (role classification, stale-reference detection, regeneration preference, intent preservation), should they just carry through the propagation themselves — with `sync-quality.md` as the specialized checklist — rather than defer to `refactor-and-integrate` for work they could do with their own tools?
+> **Rationale (if given):** The one-minimal-commit + defer-all design was clean but heavy for simple cases (invoking `refactor-and-integrate` for a two-line doc fix) and artificial for the natural 1+N merge pattern. Carving the skill boundary at *semantic* vs *codebase* coherence gives a principled split: semantic-merge owns everything needed to make the merge's meaning fully represented in the tree; refactor-and-integrate owns everything needed to make the resulting code fit the host project. Each skill carries the techniques its scope requires — no duplication, no forced cross-skill dispatch for small cases. Workflow impact: adds Task 7; previous one-minimal-commit decision becomes superseded.
 
 ---
 
@@ -216,3 +220,52 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
   git diff --check
   ```
   First command returned zero matches. Generator check reported all files up to date. Test suite passed 6/6. `git diff --check` clean.
+
+---
+
+### Task 7: Reframe semantic-merge and refactor-and-integrate as tool skills; split at semantic vs codebase coherence
+**Depends on:** Task 1, Task 2, Task 3, Task 4, Task 5, Task 6
+**Review status:** *(not started)*
+**Integration status:** *(pending)*
+
+**Files:** `skills/semantic-merge/SKILL.md`, `skills/semantic-merge/references/sync-quality.md`, `skills/semantic-merge/references/workflow-sync-author.md`, `skills/semantic-merge/references/workflow-sync-reviewer.md`, `skills/semantic-merge/references/standalone-merge.md`, `skills/refactor-and-integrate/SKILL.md`, `skills/refactor-and-integrate/references/codebase-integration.md`, `skills/integration-workflow/SKILL.md`, `skills/handoff-doc/references/plan-anatomy.md`, `skills/using-superRA/SKILL.md`, `CLAUDE.md`, `README.md`, `skills/CATEGORIES.md`.
+**Input:** Current semantic-merge + refactor-and-integrate skills (post-Task-6, one-minimal-commit design); the superseding decision in `## Decisions` (semantic-coherence-vs-codebase-coherence reframe).
+**Output:** `semantic-merge` is a tool skill teaching techniques for reaching semantic coherence (1 merge commit + N propagation commits as needed within that scope); `refactor-and-integrate` is a tool skill teaching techniques for codebase coherence. `sync-quality.md` is the gated checklist for semantic coherence. The two skills point at each other with one-line pair-relationship notes. Integration-workflow sequences both. No duplicated procedural content.
+
+- [ ] **Step 1: Reframe semantic-merge SKILL.md around techniques, not prescribed procedure**
+  Rename `## Shared Procedure` -> `## Techniques`. State that the skill is a tool skill: it teaches techniques; integration-workflow sequences them at the macro level; within a single merge operation techniques follow a natural micro-order (investigate before resolving, resolve before landing, record obligations before returning). Keep the six numbered technique blocks (ground in repo state, investigate intent + role classification, build resolution plan, escalate intent-changing choices, resolve and land, detect stale references). Update content only where the new commit-shape rule requires — see Steps 2 and 4.
+
+- [ ] **Step 2: Rewrite the stopping rule around semantic coherence**
+  Update Technique 5 (Resolve and land): semantic-merge lands 1 merge commit + N propagation commits as needed to reach semantic coherence. Every commit must leave existing protection (drift tests + key-result coverage in workflow mode; existing tests + drift tests in standalone mode) passing — protection-pass is the per-commit lower bound, not the whole-mode stopping rule. Stop when `sync-quality.md §Scope boundary` passes. Broader *codebase* work — naming conventions, utility reuse, PR-friendly diffs, Project Doc Audit walk-up, minimum net diff against host — is out of scope and defers to `refactor-and-integrate`.
+
+- [ ] **Step 3: Convert Technique 6 from detection-only to detect-and-resolve**
+  The stale-reference sweep enumerates stale references that the merge may have left behind. In the new design, resolving stale references that live within the merge's semantic reach is part of semantic coherence and belongs to semantic-merge. Update the technique text to "detect and resolve" with the scope caveat that broader codebase-fit work defers.
+
+- [ ] **Step 4: Rewrite §Workflow Boundary and §Standalone Boundary around the new coherence boundary**
+  Workflow Boundary: Sync lands a minimal merge commit plus any propagation commits needed to reach semantic coherence; downstream Integrate handles codebase coherence. Standalone Boundary: semantic-merge carries the merge through to semantic coherence using its own techniques with `sync-quality.md` as the gated checklist; when codebase coherence is also wanted, the caller invokes `refactor-and-integrate` (or handles it manually).
+
+- [ ] **Step 5: Rewrite sync-quality.md §Scope boundary to encode semantic coherence**
+  Replace the current "exactly one minimal merge commit; broader propagation deferred" items with items that define semantic coherence: stale references resolved within the merge's reach; generated outputs regenerated or escalated; docs describing the merged code updated; no conflict markers; protection passes on every commit; broader codebase-fit work deferred. Keep Intent preservation, Intent integrity, Handoff docs, and Verification sections intact.
+
+- [ ] **Step 6: Update workflow-sync-author.md and standalone-merge.md process steps**
+  workflow-sync-author.md: Step 4 allows multiple commits within semantic coherence scope; Step 5 records codebase-coherence obligations as Sync Map post-sync obligations. standalone-merge.md: collapse to "land merge commit + propagation commits to semantic coherence; `sync-quality.md` is the checklist; codebase work defers to `refactor-and-integrate` at the caller's discretion." `SEMANTIC_MERGE.md` record format restores a propagation-commit list (1 merge + N propagation SHAs) since standalone now lands multiple commits.
+
+- [ ] **Step 7: Update refactor-and-integrate/SKILL.md opening**
+  Add a one-line pair-relationship note: "Paired with `semantic-merge`: run `semantic-merge` first to reach semantic coherence; this skill picks up to reach codebase coherence." Frame the skill as tool-shaped (three techniques: drift-test creation, codebase-fit refactor, Sync impact propagation); no prescribed order. Update the Disciplines / references section only if wording drifts from the new framing.
+
+- [ ] **Step 8: Rewire cross-references**
+  Update `skills/semantic-merge/references/workflow-sync-reviewer.md` any `§Shared Procedure` pointer -> `§Techniques`; same for `workflow-sync-author.md`, `standalone-merge.md`, and `sync-quality.md` opening paragraph. `skills/handoff-doc/references/plan-anatomy.md §Sync Map` and `§Task-local Sync impact` ownership / format pointers still land on `workflow-sync-author.md` — no change needed there. `skills/integration-workflow/SKILL.md` Sync dispatch templates reference `semantic-merge/references/workflow-sync-author.md` + `sync-quality.md` (sync-author) and `workflow-sync-reviewer.md` + `sync-quality.md` (sync-reviewer) — verify still correct.
+
+- [ ] **Step 9: Update public / contributor docs**
+  `CLAUDE.md §DRY ownership`: describe `semantic-merge` as tools for semantic coherence and `refactor-and-integrate` as tools for codebase coherence. `README.md` and `skills/CATEGORIES.md` utility-skill rows: update one-line summaries to reflect the semantic-vs-codebase split. `skills/using-superRA/SKILL.md` skill-inventory one-liner for semantic-merge: same update.
+
+- [ ] **Step 10: Verify**
+  Run:
+  ```bash
+  rg -n "Shared Procedure" skills agents README.md CLAUDE.md .codex tests
+  rg -n "exactly one minimal merge commit|one minimal commit|one sync commit" skills agents README.md CLAUDE.md
+  python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project --check
+  python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py
+  git diff --check
+  ```
+  First command: expect zero matches (all pointers flipped to `§Techniques`). Second command: expect zero matches (old commit-shape rule replaced). Generator / test / diff-check clean. Update RESULTS.md Task 7 section with file-by-file change summary.

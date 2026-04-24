@@ -3,8 +3,8 @@
 > Mirrors PLAN.md structure. Updated after each step with key findings.
 > New agents: read PLAN.md for what to do, RESULTS.md for what was found.
 
-**Last updated:** 2026-04-23 (Task 6 implemented — semantic-merge restructured for owner-located formats + symmetric procedural richness)
-**Status:** Tasks 1-5 APPROVED; Task 6 IMPLEMENTED, awaiting review
+**Last updated:** 2026-04-23 (Tasks 1-6 APPROVED; Task 7 added — reframe both skills as tool skills split at semantic vs codebase coherence)
+**Status:** Tasks 1-6 APPROVED; Task 7 not started
 
 ---
 
@@ -79,3 +79,9 @@ python3 skills/codex-superra-setup/scripts/sync_codex_agents.py --scope project 
 python3 skills/codex-superra-setup/scripts/test_sync_codex_agents.py  # 6/6 passed
 git diff --check  # clean
 ```
+
+## Task 7: Reframe semantic-merge and refactor-and-integrate as tool skills; split at semantic vs codebase coherence
+
+**Status:** Not started
+
+Implementer to fill in on completion: semantic-merge reframed as a tool skill teaching techniques for reaching semantic coherence (1 merge + N propagation commits within that scope); refactor-and-integrate reframed as a tool skill for codebase coherence; `sync-quality.md` gated checklist updated to encode semantic coherence as the stopping rule; `SEMANTIC_MERGE.md` record re-allows a propagation-commit list; cross-references rewired; public / contributor docs updated.
