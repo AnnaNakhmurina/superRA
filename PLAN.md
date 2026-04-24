@@ -90,6 +90,10 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 > **Question asked:** How should agents access superRA skills when this branch is the superior / authoritative version relative to the installed plugin?
 > **Rationale (if given):** The whole point of this branch is to tighten integration-rule skills beyond the installed version; loading those same skills via the `Skill` tool would defeat the purpose. Following the in-repo files keeps the workflow dog-fooding its own current design.
 
+> **User decision (2026-04-23, workflow Sync Map current-intent field):** Workflow-mode Sync Maps should not restate current-branch intent; `PLAN.md` / `RESULTS.md` already carry it. The Sync Map records incoming intent and the resolution thesis.
+> **Question asked:** Should workflow Sync Map `### Branch Summary` include a `Current branch intent` field?
+> **Rationale (if given):** Repeating current branch intent inside the Sync Map duplicates the authoritative plan record and creates another stale-content surface.
+
 ## Sync Map
 
 **Base branch:** `origin/main`
@@ -106,8 +110,6 @@ Walked at planning time (2026-04-23). Re-walk on-demand only.
 >    → implemented: PLAN header now states the 1+N semantic-coherence commit contract and defers only broader codebase-coherence work.
 
 ### Branch Summary
-
-**Current branch intent:** Redesign superRA integration so `semantic-merge` is a standalone tool skill with shared principles in `SKILL.md` and mode-specific content in `references/workflow-sync-author.md`, `references/workflow-sync-reviewer.md`, and `references/standalone-merge.md`. Workflow Sync dispatches generic sync author/reviewer agents that load those mode references; `## Sync Map` + task-local `**Sync impact:**` carry branch-to-task propagation; `refactor-and-integrate` absorbs codebase-coherence techniques at the semantic-vs-codebase coherence boundary.
 
 **Incoming intent:** Main landed the `improve-design-principle` branch (PR #21), which (1) redesigned the Workflow Frontier Resolver around a reusable re-entry mechanism owned by `using-superRA/references/main-agent.md`, and (2) enshrined the **"Teach the Protocol, Don't Prescribe Each Action"** principle as a gated check in `CLAUDE.md` with a Design Audit Checklist. Every edit under `skills/*` and `agents/*` must now pass the DRY + Necessity tests. Main's diff applied these tests across role specs, workflow skills, and utility/domain skills, producing trimmed instruction surfaces.
 
