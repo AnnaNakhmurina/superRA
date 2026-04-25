@@ -155,3 +155,19 @@ PY
 ### Notes
 - Minimum net diff: only the load-directive lines were touched in each file; the surrounding workflow choreography, review protocol, and gated checklists are untouched.
 - Phase B integration re-run pending: the project-level `Refactored` milestone was rolled back per the 2026-04-24 User Decisions Log entry so the integration reviewer walks the cleaned-up workflow/utility skills against current `main` before merge.
+
+---
+
+## Task 8: Notation & assumption necessity gate, RESULTS.md ledger, and user-gated canonical promotion
+
+### Key Findings
+*(pre-allocated; populated when Task 8 is implemented)*
+
+### Verification
+*(pre-allocated)*
+
+### Notes
+*(pre-allocated)*
+
+### Notation & Assumptions Ledger
+*(pre-allocated — populated per the Task 8 Documentation and handoff rule once implemented; the ledger schema itself is one of Task 8's deliverables)*
