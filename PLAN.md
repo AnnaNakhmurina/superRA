@@ -268,7 +268,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Task 9: Restructure §Four Gates as artifact-first; add recursive signposting and falsification tests
 **Depends on:** Task 8
-**Review status:** PENDING
+**Review status:** APPROVED
 
 **Script:** `skills/theory-modeling/SKILL.md`
 **Input:** Existing §Four Gates with checklist-first per-gate structure and the per-task Notation & Assumptions Ledger living in §Documentation as a paraphrase of the §Objects & Notation two-test gate. Diagnosed failure mode: a ledger entry bundling five distinct symbols ($\mathbf{c}_k$, $\mathbf{v}$, $m_D$, $m_B$, $\Xi_k$) under a single shared justification ("local proof-only objects used to verify $h_k = m_D \beta_{E,k}$") with a Meaning slot describing usage in the proof rather than what the object is. Five structural reasons the gate failed: paraphrastic restatement of gate text, post-hoc documentation ordering, gate-as-threshold rather than required artifacts, no reviewer falsification handle, silent allowance of bundled entries.
