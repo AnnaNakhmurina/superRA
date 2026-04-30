@@ -428,16 +428,36 @@ teaching material rather than as task-introduced model objects.
 
 ## Task 12: Sharpen Gate 3 in `theory-modeling/SKILL.md` and update the stage-scoped reference table
 
-**Status:** Not started
+**Status:** IMPLEMENTED
 
 ### Key Findings
-*To be filled by implementer.*
+
+Three surgical edits to `skills/theory-modeling/SKILL.md`:
+
+1. **Gate 3 minimal goal-statement floor** (line 249, replacing pre-edit line 246). Final wording:
+
+   > `[BLOCKING]` Top-level proof goal stated in one sentence before the first displayed equation. Derivations whose first move is algebra without a stated target are REVISE. (Full reader-facing recursive signposting — sub-arguments at every level, transition prose — lives in `references/integration.md` Section A as ex-post rewriting discipline.)
+
+   The full recursive discipline (sub-arguments at every level, transition prose, "reader entering at any point can recover local goal" test) is now owned solely by `references/integration.md` Section A.
+
+2. **Gate 3 citation-floor `[BLOCKING]`** (line 250, new item immediately after the goal-statement item). Final wording:
+
+   > `[BLOCKING]` When a derivation step depends on a previously established equation, lemma, or proposition, the dependency is cited by name or equation number. Asserted equations with no path to a named source are REVISE. (Cite-with-operative-form-recall for distant sources is owned by `references/integration.md` Section B.)
+
+   Pointer-only to Section B; no paraphrase of the operative-form-recall discipline.
+
+3. **Stage-scoped reference table expanded** (lines 29–36, was 29–33). The integration stage now occupies four rows pointing at `references/integration.md`, `references/objective-first.md`, `references/audience-discipline-modeling.md`, and `references/audience-discipline-writing.md`. Existing two-column format preserved.
 
 ### Notes
-*To be filled by implementer.*
+
+- **Single surviving authoritative location for recursive signposting.** `grep -rn "Recursive roadmap signposting\|recursive roadmap signposting" skills/ agents/` returns zero matches. The lowercase partial phrase "recursive signposting" appears in `theory-modeling/SKILL.md:249` only as a pointer to Section A, and in `references/integration.md` at its authoritative locations (Section A body lines 55–72 + Section D self-reference at line 413).
+- **Audit chain unchanged for messy exploration output.** The Gate 3 creation-time correctness items remain intact: active solution concept named, one-move-per-step, rule labels, rule + reason, case splits, comparative statics, reused-symbol meaning, existence/uniqueness arguments, necessity lens, equation-length advisory. The cut removed the *reader-facing* full-recursion item; it did not touch the *correctness* items.
+- **Cross-document consistency with `integration.md`.** Section A's "Differentiation from creation-time discipline" paragraph (lines 66–72) describes Gate 3 as "enforces stating the top-level proof goal at creation time as an audit floor" — consistent with the post-edit Gate 3 goal-statement item. No follow-up edit to `integration.md` is required.
+- **Audience-discipline file tracking.** The two `audience-discipline-*.md` files referenced in the new table rows are still untracked in git as of this commit; Task 13 owns `git add` for them. Listing them in the SKILL.md table is intent-only — the table is a map, not an authority over file presence.
 
 ### Notation & Assumptions Ledger
-*To be filled by implementer (expected: None — meta-work on Gate 3 wording and the stage-scoped reference table).*
+
+None — meta-work on Gate 3 wording and the stage-scoped reference table; no new symbols or assumptions introduced.
 
 ## Task 13: Wire per-task `Stage: integration` note + inventory updates
 
