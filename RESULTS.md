@@ -187,6 +187,33 @@ PY
 ### Notation & Assumptions Ledger
 None. Task 8 introduces no mathematical symbols or model assumptions (it is meta-work on the skill body itself).
 
+## Task 9: Restructure §Four Gates as artifact-first; add recursive signposting and falsification tests
+
+**Status:** IMPLEMENTED
+
+### Key Findings
+- **§Four Gates inverted to artifact-first** in `skills/theory-modeling/SKILL.md`. Each gate now leads with the artifact the implementer produces (per-symbol ledger entry / per-assumption ledger entry / proof body / verification record + rendered output) and a checklist of quality items walked while producing it. Documentation is built into the artifact definitions, not a separate phase.
+- **§Reviewer verdict protocol restructured** to "verify the artifact exists, then walk the checklist against it." Two new falsification tests added at the protocol level: **substitution test** (per ledger entry — if "What the name carries" still reads as true with a hypothetical extra symbol substituted in, the justification is structurally vacuous → BLOCKING) and **proof-deletion test** (per Meaning slot — if deleting the surrounding proof makes the slot vacuous, it was a usage description, not a meaning → BLOCKING).
+- **Gate 1 Objects & Notation rewritten** with per-symbol ledger entry as the artifact. 7-slot template (Symbol / Meaning / First-use site / Reuse sites / Inline alternative / What the name carries / Nearest existing / Why this name); inline guidance for the Meaning slot via the type-space + denotation + origin recipe; anti-pattern table with the canonical "used to verify..." bad example. Checklist enforces entry-before-use, no bundling (one entry per object; indexed families count as one), falsifiable "none in scope" claims, concrete content for one-site symbols.
+- **Gate 2 Assumptions rewritten** with parallel per-assumption ledger entry structure. Slot template (Statement / Interpretation / Attached to / First-bite site / Reuse / Without-this-assumption / What it carries / Nearest existing / Why this way); checklist requires concrete content in necessity / non-duplication slots and a named conclusion that changes if the assumption is removed.
+- **Gate 3 Derivations reframed** with the proof / derivation body declared as the artifact. All existing checklist items preserved. New `[BLOCKING]` recursive roadmap signposting item added — every derivation opens with a one-sentence strategy; sub-arguments of non-trivial length carry their own opening signpost; transition prose names where we are in the parent plan; falsification test "can a reader entering mid-proof recover the local goal from surrounding signposts?". (Note: this `[BLOCKING]` was subsequently relocated to `references/integration.md` Section A by Task 12, with a minimal goal-statement floor remaining in Gate 3.)
+- **Gate 4 Verification & Rendering reframed** with (verification record + rendered output) as the artifacts. All existing checklist items preserved.
+- **§Documentation and handoff shrunk to cross-cutting items only** — `RESULTS.md` update in place, `PLAN.md` user-gating, definitions alongside math, `report-in-markdown` reuse, consistent notation across rendered math / prose / code, no dangling TODOs. The ledger schema migrated into Gates 1–2 rather than living here as paraphrase.
+- **Common Rationalizations table extended** with three new rows for the diagnosed failure modes: "It's a local proof-only object." → locality is scope, not content; bundling dodges per-symbol scrutiny by reframing the unit of evaluation. "Each is used in the proof step that uses it." → restatement of the gate, not evidence; walk the slots. "The meaning is clear from how it's used." → usage is not meaning; apply the type / denotation / origin recipe.
+
+### Verification
+- Self-walk of the restructured §Four Gates against the Iron Law (defined objects, interpretable assumptions, stated intuition) — every gate now has an explicit artifact tying back to one of the three Iron Law clauses.
+- Reviewer dispatch (commit `315d53d review: Task 9 APPROVED`) confirmed internal consistency with the four-gate structure and with Task 8's per-task ledger requirement (now reorganized as the artifact for Gates 1–2 rather than a paraphrase living in §Documentation).
+- No `agents/reviewer.md` or Codex artifact regeneration needed — no canonical role text changed in this task.
+
+### Notes
+- **Diagnosed failure mode the restructure addresses.** A draft-review failure produced a ledger entry bundling five distinct symbols ($\mathbf{c}_k$, $\mathbf{v}$, $m_D$, $m_B$, $\Xi_k$) under a single shared justification ("local proof-only objects used to verify $h_k = m_D \beta_{E,k}$") with a Meaning slot describing usage rather than what the object is. Five structural reasons the prior gate failed: paraphrastic restatement of gate text, post-hoc documentation ordering, gate-as-threshold rather than required artifacts, no reviewer falsification handle, silent allowance of bundled entries. The artifact-first restructure makes paraphrasing structurally impossible: Reuse sites cite refs (not claims); Inline alternative shows the actual substituted expression (not a description); What the name carries demands concrete interpretive payload; Nearest existing is a falsifiable claim.
+- **Task 8 design preserved, reorganized.** The four-part Task 8 design (two-test gate, per-task ledger, user-gated canonical table, Step 4 promotion stop point) is intact. The ledger requirement now lives inside Gate 1 / Gate 2 as the artifact rather than in §Documentation as paraphrase.
+- **Gate 3 recursive-signposting `[BLOCKING]` superseded by Task 12.** Per the 2026-04-30 Decisions log, the full recursive-roadmap-signposting item added here was relocated to `references/integration.md` Section A as ex-post rewriting discipline; Gate 3 retains a minimal "top-level proof goal stated" floor and gains a citation-floor item. Task 9's restructure is preserved; only the cut line between creation-time and integration-time recursive signposting moved.
+
+### Notation & Assumptions Ledger
+None. Task 9 introduces no mathematical symbols or model assumptions (it is meta-work on the skill body itself).
+
 ## Task 10: Rewrite `theory-modeling/references/integration.md` as the rewriting reference
 
 **Status:** IMPLEMENTED
