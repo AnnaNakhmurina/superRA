@@ -308,16 +308,123 @@ symbols or model assumptions are introduced.
 
 ## Task 11: Add `theory-modeling/references/objective-first.md` — worked example + identification training
 
-**Status:** Not started
+**Status:** IMPLEMENTED
 
 ### Key Findings
-*To be filled by implementer.*
+
+`skills/theory-modeling/references/objective-first.md` created as a new
+single-purpose sibling reference loaded on demand from
+`references/integration.md` Section A. The file is teaching material with
+no `[BLOCKING]` checklist — Section A of `integration.md` is cross-cited
+in the frontmatter blockquote as the home of the gates.
+
+Four sections in the planned three-layer shape (principle + worked example
+in two parts + identification training):
+
+- **§Principle.** One short paragraph: start from the object the proof
+  needs; expand only required terms; forward writing runs along a
+  backward dependency walk; the good pattern keeps the proof linear
+  (target object → needed derivative → structural cancellation →
+  canonical column → final substitution).
+- **§Worked bad pattern.** The user's `z_j`-first walkthrough rendered
+  verbatim. Target FOC stated, then the local placeholder
+  `z_j \equiv [\boldsymbol{\beta}_P^{\intercal}\mathbf e_E]_{US,j}`
+  introduced before its purpose is named; annotated with five
+  reader-experience failure points (reader does not know why $z_j$
+  matters; notation lives for one detour; objective hidden;
+  cancellation looks coincidental; non-canonical notation risked).
+  Closes with the hidden-logic dependency chain $\dot{\boldsymbol{\Sigma}}
+  \to \dot{\boldsymbol{\sigma}}_R \to \boldsymbol{\beta}_{P,E}$ that the
+  bad ordering walks in writing the wrong way around.
+- **§Worked good pattern.** The user's objective-first rewrite rendered
+  verbatim. Starts from $\boldsymbol{\Sigma} = \boldsymbol{\sigma}_R
+  \boldsymbol{\sigma}_R^{\intercal}$, differentiates, identifies the
+  canonical return-loading column $\boldsymbol{\sigma}_R =
+  \boldsymbol{\beta}_P^{\intercal}\mathbf G$, applies the symmetry
+  cancellation $\dot{\boldsymbol{\beta}}_P^{\intercal}\mathbf G\mathbf e_g
+  = \mathbf 0$, then solves $\boldsymbol{\beta}_{P,E}$ via law of one
+  price + the $\hat E$ column of the return-loading equation +
+  state-loading market clearing, ending at
+  $\boldsymbol{\beta}_{P,E} = \tfrac{1}{2}(\bar P_s,\bar P_f,\bar P_s,\bar P_f)^{\intercal}$.
+  Closing paragraph names the visible dependency walk in prose so the
+  reader sees why each equation appeared.
+- **§Identification training.** Three short held-out snippets, each
+  followed by a target-object / backward-walk / anti-pattern diagnosis:
+  - **Snippet 1** — Euler equation derivation that opens by defining
+    $\eta \equiv u'(c_1)/u'(c_0)$. Anti-pattern: **local placeholder
+    before target named**.
+  - **Snippet 2** — comparative-static for $\mathrm dp/\mathrm d\theta$
+    under market clearing, opening with "We compute." Anti-pattern:
+    **deferred goal — target not named before the first displayed
+    equation**.
+  - **Snippet 3** — Proposition 2 proof showing concavity then
+    differentiability of a value function, with no prose between the
+    two algebra blocks. Anti-pattern: **signpost-less sub-arguments**.
 
 ### Notes
-*To be filled by implementer.*
+
+- **Math rendering convention.** `$$...$$` for display math and
+  `$...$` for inline math, matching the convention in
+  `references/integration.md` (e.g., the in-text `$\mathbf{c}_k$`
+  recall example at line 200 and the symbol references throughout
+  Sections A–D). No align environments were needed; the user's worked
+  example breaks naturally into separate displays.
+- **Verbatim rendering.** The user's bad-pattern annotations and
+  good-pattern walkthrough are rendered without paraphrase — the
+  five-bullet "why this is bad" list, the structural-cancellation
+  prose, the three-step procedure for solving $\boldsymbol{\beta}_{P,E}$
+  (law of one price → return-loading equation → state-loading market
+  clearing), and the closing "linear in the reader's experience" line
+  all preserved as written. The only added prose is one closing
+  sentence after the §Worked good pattern that surfaces the dependency
+  walk in the form requested by the PLAN step ("the proof needs
+  $\dot{\boldsymbol{\Sigma}}\bar{\mathbf Q}$ → requires $\dot{\boldsymbol{\Sigma}}$
+  → requires $\dot{\boldsymbol{\sigma}}_R$ → requires $\boldsymbol{\beta}_{P,E}$").
+- **No checklist.** Per the dispatch's anti-checklist guidance and the
+  2026-04-30 Decisions log, the file ends with §Identification training
+  and does not contain `[BLOCKING]` / `[ADVISORY]` items. The
+  frontmatter blockquote points readers to Section A of
+  `references/integration.md` for the gates.
+- **Frontmatter shape.** Followed the convention used by sibling
+  references (`integration.md`, `planning.md`,
+  `integrate-drift-tests.md`): a markdown blockquote intro paragraph
+  carrying load conditions and scope, no YAML frontmatter.
+- **Identification-training snippet length.** Each snippet is one
+  blockquote-style passage plus a three-bullet diagnosis. Length was
+  chosen to mirror the size of typical proof passages an integration
+  reviewer encounters; longer snippets would push the file toward
+  cataloguing failure modes rather than exercising the diagnostic move.
+- **Internal-consistency check against `integration.md` Section A.** The
+  three anti-patterns named in Snippet 1–3 (local placeholder,
+  deferred goal, signpost-less sub-argument) match the three
+  pattern-watch items in Section A's identification protocol
+  (`integration.md` lines 100–106) without restating its checklist
+  items. The §Principle paragraph here is consistent with Section A's
+  principle prose but tighter — Section A carries the recursive
+  framing in detail; this file's principle is the floor restatement
+  the worked example and drills require.
+
+### Open caveats
+
+- **Gate 3 differentiation paragraph (Task 12 dependency).**
+  `integration.md` Section A lines 66–72 carry a "Differentiation from
+  creation-time discipline" paragraph distinguishing Section A's
+  ex-post detection-and-rewrite framing from Gate 3's creation-time
+  audit floor. This file's identification-training Snippet 2 fix
+  ("one sentence before the differentiation step") and Snippet 3 fix
+  ("one sentence at the head of each sub-argument") both describe the
+  recursive-signposting discipline as Section A owns it. Once Task 12
+  cuts Gate 3 to the minimal goal-statement floor, the snippet
+  diagnoses and fixes here remain valid (they reference Section A's
+  framing, not Gate 3's), but Snippet 3's fix wording could be
+  re-checked once Task 12 lands to confirm it is consistent with the
+  reduced Gate 3 phrasing.
 
 ### Notation & Assumptions Ledger
-*To be filled by implementer. The file renders the user's `\dot{\boldsymbol{\Sigma}}\bar{\mathbf Q}` walkthrough verbatim as illustrative content; symbols appear inside teaching material rather than as task-introduced model objects, so the expected ledger is None.*
+
+None. The file renders the user's `\dot{\boldsymbol{\Sigma}}\bar{\mathbf Q}`
+walkthrough verbatim as illustrative content; symbols appear inside
+teaching material rather than as task-introduced model objects.
 
 ## Task 12: Sharpen Gate 3 in `theory-modeling/SKILL.md` and update the stage-scoped reference table
 
