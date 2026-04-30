@@ -186,3 +186,55 @@ PY
 
 ### Notation & Assumptions Ledger
 None. Task 8 introduces no mathematical symbols or model assumptions (it is meta-work on the skill body itself).
+
+## Task 10: Rewrite `theory-modeling/references/integration.md` as the rewriting reference
+
+**Status:** Not started
+
+### Key Findings
+*To be filled by implementer.*
+
+### Notes
+*To be filled by implementer.*
+
+### Notation & Assumptions Ledger
+*To be filled by implementer (expected: None — meta-work on the rewriting reference).*
+
+## Task 11: Add `theory-modeling/references/objective-first.md` — worked example + identification training
+
+**Status:** Not started
+
+### Key Findings
+*To be filled by implementer.*
+
+### Notes
+*To be filled by implementer.*
+
+### Notation & Assumptions Ledger
+*To be filled by implementer. The file renders the user's `\dot{\boldsymbol{\Sigma}}\bar{\mathbf Q}` walkthrough verbatim as illustrative content; symbols appear inside teaching material rather than as task-introduced model objects, so the expected ledger is None.*
+
+## Task 12: Sharpen Gate 3 in `theory-modeling/SKILL.md` and update the stage-scoped reference table
+
+**Status:** Not started
+
+### Key Findings
+*To be filled by implementer.*
+
+### Notes
+*To be filled by implementer.*
+
+### Notation & Assumptions Ledger
+*To be filled by implementer (expected: None — meta-work on Gate 3 wording and the stage-scoped reference table).*
+
+## Task 13: Wire per-task `Stage: integration` note + inventory updates
+
+**Status:** Not started
+
+### Key Findings
+*To be filled by implementer.*
+
+### Notes
+*To be filled by implementer.*
+
+### Notation & Assumptions Ledger
+*To be filled by implementer (expected: None — wiring and inventory work).*
