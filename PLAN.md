@@ -321,7 +321,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Task 12: Sharpen Gate 3 in `theory-modeling/SKILL.md` and update the stage-scoped reference table
 **Depends on:** Task 9, Task 10, Task 11
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 
 **Script:** `skills/theory-modeling/SKILL.md`
 **Input:** Post-Task-9 `theory-modeling/SKILL.md` carrying the artifact-first §Four Gates structure with Gate 3 line ~246 holding the full recursive-roadmap-signposting `[BLOCKING]` item; the 2026-04-30 Decisions log specifying the cut line (Section A in `integration.md` owns full recursive signposting; Gate 3 keeps a minimal goal-statement floor and gains a citation-floor item); the stage-scoped reference table at lines ~24–33 currently listing only `integration.md` for the integration stage. Tasks 10 and 11 must have landed so the table can point to `integration.md` (rewritten), `objective-first.md` (new), and the two now-tracked audience-discipline files.
