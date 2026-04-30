@@ -335,7 +335,7 @@ Walked at planning time (2026-04-22). Re-walk on-demand only.
 
 ### Task 13: Wire per-task `Stage: integration` note + inventory updates
 **Depends on:** Task 10, Task 12
-**Review status:** IMPLEMENTED
+**Review status:** APPROVED
 
 **Script:** `skills/implementation-workflow/SKILL.md`, `skills/CATEGORIES.md`, `README.md`, `CLAUDE.md`, plus `git add` for the two currently-untracked `audience-discipline-*.md` files
 **Input:** The 2026-04-30 Decisions log records that per-task `Stage: integration` dispatch is current orchestrator flexibility — no new mechanism, just a one-line note in `implementation-workflow/SKILL.md` Step 2 advertising it. The two files `skills/theory-modeling/references/audience-discipline-modeling.md` and `audience-discipline-writing.md` are present in the working directory but untracked; Tasks 10 and 12 wire them into `integration.md` Section C and the stage-scoped reference table respectively, but they must also be tracked by git. `skills/CATEGORIES.md`, `README.md` skill inventory, and `CLAUDE.md` ownership table currently mention `theory-modeling` without surfacing the rewriting/coherence concern.
