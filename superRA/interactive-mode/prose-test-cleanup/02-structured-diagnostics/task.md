@@ -8,7 +8,7 @@ depends_on:  []
 
 Delete exact diagnostic, warning, UI-label, heading-count, and remediation-copy assertions across the audited test surfaces. Keep an existing behavioral assertion when it already exposes a cheap important outcome such as exit status, unchanged files, JSON shape, event order, or secret absence. Do not modify production code or add helper APIs. Success: the test diff is net-negative, no new execution cost is introduced, and the remaining assertions protect stable behavior rather than wording.
 
-## Planner Guidance
+## Details
 
 Use the completed audit as navigation across harness contract/diagnostics, task-tree CLI/dashboard/comments, worktree-data-sync, hook adapter, Zotero CLI, and report-in-markdown. Replacements are allowed only when they reuse an existing result/state in a few local assertions; otherwise delete. Preserve the branch-specific interactive transcript/seat behavioral checks already present before this task.
 
@@ -37,8 +37,8 @@ audited test surfaces without changing production code:
 - Residual Markdown and generated-agent tests retain rule/line identity and
   verify an unmanaged file remains unchanged instead of matching remediation
   copy
-  ([test_md_integrity.py](../../../../skills/report-in-markdown/scripts/test_md_integrity.py),
-  [test_sync_codex_agents.py](../../../../skills/codex-superra-setup/scripts/test_sync_codex_agents.py)).
+  ([test_md_integrity.py](../../../../skills/communicate/scripts/test_md_integrity.py),
+  and `test_sync_codex_agents.py`, since retired with its generator).
 
 The test-only diff is 122 insertions and 1,002 deletions across 16 existing
 files. It adds no files, helpers, subprocesses, live calls, or production
